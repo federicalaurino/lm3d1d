@@ -1,0 +1,377 @@
+% SIAM Article Template
+\documentclass[r]{siamart171218}
+% Packages and macros go here
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{fullpage}
+\usepackage{color}
+\usepackage{enumitem}  
+\usepackage{epstopdf}
+
+
+% Title. If the supplement option is on, then "Supplementary Material"
+% is automatically inserted before the title.
+%\title{On the weak coupling of 3D and 1D second order elliptic problems}
+\title{Coupling PDEs on 3D-1D domains with Lagrange multipliers}
+
+% Authors: full names plus addresses.
+\author{Miroslav Kuchta, Federica Laurino, Kent-Andre Mardal, Paolo Zunino,\thanks{Authors are listed in alphabetical order}}
+
+\begin{document}
+
+\maketitle
+
+% REQUIRED
+\begin{abstract}
+These are personal notes written to keep track of the developments on this topic, to be kept confidential.
+\end{abstract}
+
+% REQUIRED
+\begin{keywords}
+elliptic problems, high dimensionality gap, essential coupling conditions, Lagrange multipliers
+\end{keywords}
+
+% REQUIRED
+\begin{AMS}
+n.a.
+\end{AMS}
+
+% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ 
+% definitions here
+
+\def\ud{u_{\odot}}
+\def\vd{v_{\odot}}
+\def\uf{u_{\ominus}}
+\def\up{u_{\oplus}}
+\def\eps{\epsilon}
+\def\nn{\boldsymbol n}
+\def\rr{\boldsymbol r}
+\def\RR{\boldsymbol R}
+\def\kk{\boldsymbol k}
+\def\ss{\boldsymbol s}
+\def\uu{\boldsymbol u}
+\def\vv{\boldsymbol v}
+\def\xx{\boldsymbol x}
+\def\bu{\overline{u}}
+\def\bv{\overline{v}}
+\def\tu{\widetilde{u}}
+\def\tv{\widetilde{v}}
+\def\TT{\boldsymbol T}
+\def\NN{\boldsymbol N}
+\def\BB{\boldsymbol B}
+\def\ttu{\widetilde{\widetilde{u}}}
+\def\ttv{\widetilde{\widetilde{v}}}
+\def\cv{\check{v}}
+\def\mesh{{\cal T}^h}
+\def\ball{{\cal B}}
+\def\R{\mathbb{R}}
+\def\D{\mathcal{D}}
+\def\DD{\partial\mathcal{D}}
+\def\trace{\overline{\mathcal{R}}}
+\def\ext{\mathcal{E}}
+\def\ide{\mathcal{I}}
+\def\ii{\hat{\imath}}
+\newcommand{\avrd}[1]{\overline{\overline{#1}}}
+\newcommand{\avrc}[1]{\overline{#1}}
+\newcommand{\refe}[1]{{#1}_{\mathrm{ref}}}
+
+\newcommand{\vertiii}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1 
+    \right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prop}{Property}[section]
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+ 
+% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+\section{Introduction}\label{sec:intro}
+
+We address the geometrical configuration of the problem for a 3D coupled problem formulation based on from Dirichlet-Neumann interface conditions. Then, we apply a model reduction technique that transforms the problem into 3D-1D coupled PDEs. We develop and analyze a robust definition of the coupling operators form a 3D domain, $\Omega$, to 1D manifold, $\Lambda$, and vice versa. This is a non trivial objective because the standard trace operator form a domain $\Omega$ to a subset $\Lambda$ is not well posed if $\Lambda$ is a manifold of co-dimension two of $\Omega$.
+
+% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+\section{Problem setting}\label{sec:setting}
+
+Let $\Omega \subset \mathbb{R}^3$ be a bounded, convex open set. Let $\Sigma$ be a generalized cylinder embedded into $\Omega$ and be $\Omega_\oplus = \Omega \setminus \overline{\Sigma}$ be the complementary set of the cylinder. We also introduce the set $\Lambda$, a 1D manifold that is the centerline of $\Sigma$. We define the arc-length coordinate along $\Lambda$, denoted by $s \in (0,S)$. We denote with $\mathcal{D}(s)$ and $\partial\mathcal{D}(s)$ a cross section of $\Sigma$ and its boundary, respectively. In what follows, we assume for simplicity of notation that $\Sigma$ has a constant cross section, but this is not a restriction of the approach. We also assume that $\Sigma$ crosses $\Omega$ from side to side and we call $\Gamma$ the lateral (cylindrical) surface of $\Sigma$, while the upper and lower side faces of $\Sigma$ belong to $\partial\Omega$. We refer to Figure \ref{fig1} for an illustration of the notation. 
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.5\textwidth]{3D-1D-simple.png}
+\end{center}
+\caption{Geometrical setting of the problem}
+\label{fig1}
+\end{figure}
+
+We consider the problem arising from \emph{Dirichlet-Neumann} conditions. 
+It consists to find $\up,\uf$ s.t.:
+\begin{subequations}\label{eq:dirneu}
+\begin{align}
+\label{eq:dirneu1}
+- \Delta \up  + \up &= f  && \text{ in } \Omega_{\oplus},\\
+\label{eq:dirneu2}
+- \Delta \uf  + \uf &= g  && \text{ in } \Sigma,\\
+\label{eq:dirneu3}
+-\nabla \uf \cdot \nn_{\ominus} &= -\nabla \up \cdot \nn_{\ominus}  && \text{ on } \Gamma,\\
+\label{eq:dirneu4}
+\uf &= \up && \text{ on }  \Gamma,\\
+\label{eq:dirneu5}
+\up &= 0 && \text{ on } \partial \Omega\,.
+\end{align}
+\end{subequations}
+
+The objective of this work is to derive and alalyze a simplified version of problem \eqref{eq:dirneu}, where the domain $\Sigma$ shrinks to its centerline $\Lambda$ and the corresponding partial differential equation is averaged on the cylinder cross section, namely $\mathcal{D}$. This new problem setting will be called the \emph{reduced} problem. Form the mathematical standpoint it is more challenging than \eqref{eq:dirneu}, because it involves the coupling of 3D/1D elliptic problems.
+For the model reduction process, we decompose integrals as follows, for any sufficiently regular function $w$,
+\begin{equation*}
+\int_\Sigma w d\omega 
+= \int_\Lambda \int_{\mathcal{D}} w d\sigma ds
+= \int_\Lambda |\mathcal{D}|\avrd{w} ds\,,
+\quad
+\int_{\Gamma} w d\sigma 
+= \int_\Lambda \int_{\partial\mathcal{D}} w d\gamma ds
+= \int_\Lambda  |\partial \mathcal{D}| \avrc{w} ds\,,
+\end{equation*}
+where $\avrd{w}, \ \avrc{w}$ denote the following mean values respectively,
+\begin{equation*}
+\avrd{w} = |\mathcal{D}|^{-1} \int_{\mathcal{D}} w d\sigma\,,
+\quad
+\avrc{w} = |\partial\mathcal{D}|^{-1} \int_{\partial\mathcal{D}} w d\gamma\,.
+\end{equation*}
+
+We apply the model reduction approach at the level of the variational formulation.
+We start from the variational formulation of problem \eqref{eq:dirneu}, 
+that is to find $\up \in H^1_{\partial\Omega}(\Omega_\oplus), \ \uf \in H^1_{\partial\Sigma\setminus\Gamma}(\Sigma), \ \lambda \in H^{-\frac12}(\partial\Sigma)$ s.t.
+\begin{subequations}\label{eq:weak_dirneu}
+\begin{align}
+&(u_\oplus,v_\oplus)_{H^1(\Omega_\oplus)} + (u_\ominus,v_\ominus)_{H^1(\Sigma)} 
++ \langle v_\ominus - v_\oplus, \lambda \rangle_{H^{-\frac12}(\Gamma)} 
+\\
+\nonumber
+&\qquad\qquad = (f,v_\oplus)_{L^2(\Omega_\oplus)} + (g,v_\ominus)_{L^2(\Sigma)}
+\quad \forall v_\oplus \in H^1_{\partial\Omega}(\Omega_\oplus), \ v_\ominus \in H^1_{\partial\Sigma\setminus\Gamma}(\Sigma)
+\\
+& \langle u_\ominus - u_\oplus, \mu \rangle_{H^{-\frac12}(\Gamma)} = 0
+\quad \forall  \mu \in H^{-\frac12}(\Gamma)\,,
+\end{align}
+\end{subequations}
+where $\langle v, \mu \rangle_{H^{-\frac12}(\Gamma)}$ denotes the duality pairing between 
+$ \mu \in H^{-\frac12}(\Gamma)$ and $v \in H^{\frac12}(\Gamma)$.
+In this case, the additional variable $\lambda$ is equivalent to $\lambda  = - \nabla \uf \cdot \nn_\ominus$.
+
+Using the averaging tools for the model reduction approach, we end up with a reduced problem
+for the unknown $u$ defined on the entire 3D domain $\Omega$, coupled with the unknown $\ud$, defined on the 1D manifold $\Lambda$
+and a Lagrange multiplier $L$ defined on $\Lambda$. In the reduced problem the multiplier assumes the following interpretation,
+\begin{equation*}
+L = - \frac{1}{|\partial{\cal D}|} \int_{\partial{\cal D}} \nabla \uf \cdot \nn_\ominus
+   = - \frac{1}{|\partial{\cal D}|} \int_{\partial{\cal D}} \lambda \,.
+\end{equation*}
+
+We consider two alternative formulations. The scope of this work is to compare them, 
+with the aim to determine which is the most suitable as a computational model based on 3D-1D coupled PDEs.
+
+% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+\subsection{Problem 1}
+The idea is to couple a 3D PDE with a 1D one, using a Lagrange multiplier space defined on a 2D surface that surrounds the 1D manifold.
+Let $\langle \cdot , \cdot \rangle_\Gamma$ denote the duality pairing between 
+$H^\frac12_{00}(\Gamma)$ and $H^{-\frac12}(\Gamma)$.
+The problem consists to find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ L \in H^{-\frac12}(\Gamma )$, such that
+\begin{subequations}\label{eq:problem1}
+\begin{align}
+&(u,v)_{H^1(\Omega)} + |{\cal D}|(\ud,\vd)_{H^1(\Lambda)} 
++ \langle \Pi_1 v  - \Pi_2 \vd, L \rangle_\Gamma
+\\
+\nonumber
+&\qquad\qquad= (f,v)_{L^2(\Omega)} + |{\cal D}| (\avrd{g},\vd)_{L^2(\Lambda)}
+\quad \forall v \in H^1_0(\Omega), \ \vd \in H^1(\Lambda)
+\\
+&   \langle \Pi_1 u - \Pi_2 \ud , M \rangle_\Gamma = 0
+\quad \forall M \in H^{-\frac12}(\Gamma)\,.
+\end{align}
+\end{subequations}
+Here, $\Pi_1: H^1_0(\Omega) \rightarrow H^{\frac12}_{00}(\Gamma)$
+and $\Pi_2: H^1_0(\Lambda) \rightarrow H^{\frac12}_{00}(\Gamma)$
+and we remark that $\Sigma$ may be considered as a virtual surface
+not necessarily of the same size as the underlying physical structure that is modeled.  
+The $\Pi_1$ and $\Pi_2$ operators may be defined in terms of the averaging operators above, but may also be realized in terms of e.g. Green functions (I don't know if this is a good idea). Furthermore,  $\Gamma$ may be discretized in terms of facets neighboring $\Lambda$ and may as such not be represented as a separate structure in the implementation. 
+
+% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+\subsection{Problem 2}
+Another form of the reduced problem uses Lagrange multipliers defined directly on the 1D manifold.
+In this case, $\langle \cdot , \cdot \rangle_\Lambda$ denotes the duality pairing between 
+$H^\frac12_{00}(\Lambda)$ and $H^{-\frac12}(\Lambda)$.
+The problem requires to find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ L \in H^{-\frac12}(\Lambda)$, such that
+\begin{subequations}\label{eq:problem2}
+\begin{align}
+&(u,v)_{H^1(\Omega)} + |{\cal D}|(\ud,\vd)_{H^1(\Lambda)} 
++ |\partial {\cal D}| \langle \Pi_1 v - \Pi_2 \vd, L \rangle_{H^{-\frac12}(\Lambda)} 
+\\
+\nonumber
+&\qquad\qquad= (f,v)_{L^2(\Omega)} + |{\cal D}| (\avrd{g},V)_{L^2(\Lambda)}
+\quad \forall v \in H^1_0(\Omega), \ \vd \in H^1_0(\Lambda)
+\\
+&  |\partial {\cal D}| \langle \Pi_1 u -  \Pi_2 \ud, M \rangle_{H^{-\frac12}(\Lambda)} = 0
+\quad \forall M \in H^{-\frac12}(\Lambda)\,.
+\end{align}
+\end{subequations}
+We notice that all the integrals of the reduced problem are well defined because $u,v \in H^1_0(\Omega)$, 
+$u,v|_{\Gamma} \in H^\frac12_{00}(\Gamma)$ and thus $\avrc{u},\avrc{v} \in H^\frac12_{00}(\Lambda)$.
+More precisely, $\Pi_1 : H^1_0(\Omega) \rightarrow H^\frac12_{00}(\Lambda$ such that
+$\Pi_1 u = \avrc{(u|_\Gamma)}$ is the combination between the trace on $\Gamma$ and the average on $\partial{\cal D}$.
+The operator $\Pi_2: H^1_0(\Lambda) \rightarrow H^\frac12_{00}(\Lambda)$ is the injection form $H^1_0(\Lambda)$ and $H^\frac12_{00}(\Lambda)$.
+It is apparent that problems \eqref{eq:weak_dirneu} and \eqref{eq:red_dirneu} share the same mathematical structure.
+For this reason, the well-posedness of \eqref{eq:red_dirneu} can be studied in the framework of the classical theory of saddle point problems.
+
+%Assuming now that 
+%$\Pi_1: H^1(\Omega) \rightarrow H^{\frac12}(\Gamma)$ or $\Pi_2: H^1(\Gamma) \rightarrow H^{\frac12}(\Gamma)$ are isomorphisms in the sense that 
+%\[
+%\| \Pi_1 \|_{L(H^1(\Omega), H^{\frac12}(\Gamma))} \le C \mbox{, } 
+%\| \Pi_1^{-1} \|_{L(H^{\frac12}(\Gamma), H^1(\Omega))} \le 1/c,  
+%\]
+%and 
+%\[
+%\| \Pi_2 \|_{L(H^1(\Omega), H^{\frac12}(\Gamma))} \le C \mbox{, } 
+%\| \Pi_2^{-1} \|_{L(H^{\frac12}(\Gamma), H^1(\Omega))} \le 1/c .   
+%\]
+%We obtain the inf-sup condition as follows. Assume that $\Pi_1$ is an isomorphism then  
+%we may show the inf-sup conditioning by letting $\Pi_1 \hat u = M $ and $ \hat \ud = 0$ (i.e., we need the lower bound only for one
+%of the operators).  
+%\begin{eqnarray}
+%\sup_{u,\ud}\frac{
+%\langle \Pi_1 u - \Pi_2 \ud , M \rangle_{(H^{\frac12}(\Gamma), H^{-\frac12}(\Gamma))} 
+%}{(|u|_1^2 + |\ud|_1^2)^{1/2}} 
+%\ge \\ 
+%\frac{ \langle \Pi_1 \hat u - \Pi_2 \hat \ud , M \rangle_{(H^{\frac12}(\Gamma), H^{-\frac12}(\Gamma))} 
+%}{(|\hat u|_1^2 + |\hat \ud|_1^2)^{1/2}}  \ge \\
+%\frac{ \langle M , M \rangle_{(H^{\frac12}(\Gamma), H^{-\frac12}(\Gamma))} 
+%}{|\Pi_1^{-1} M |_{H^1(\Omega})} \ge \\ 
+%\frac{ \langle M , M \rangle_{(H^{\frac12}(\Gamma), H^{-\frac12}(\Gamma))} 
+%}{| M |_{H^\frac12(\Gamma)}} \ge \\ 
+%c | M |_{H^{-\frac12}(\Gamma)}  
+%\end{eqnarray}
+%I think the other Brezzi conditions also follows, but for the boundedness we
+%would need that both $\Pi_1$ and $\Pi_2$ are bounded. Not sure I am 
+%happy with the $\langle \cdot, \cdot \rangle$ notation and in particular not when we spesify the
+%spaces. I would rather just say that $(\cdot, \cdot)$ denotes both the $L_2$ inner product and the
+%duality pairing.  
+%If we find it useful we may also  
+%consider $\Pi_2: H^1(\Gamma) \rightarrow X(\Gamma)$ where $X$ may e.g. be $H^1$.  
+%If so, $L, M$ in $ H^{-\frac12}(\Gamma) \cap X(\Gamma)$  
+
+\input{infsup}
+
+\input{infsup_discrete}
+
+\section{A benchmark problem with analytical solution}
+
+We consider the following 3D-1D coupled problem,
+\begin{subequations}\label{benchmark}
+\begin{align}
+\label{benchm_3d}
+-\Delta u=f \quad &\text{in $\Omega$}\\
+\label{benchm_1d}
+-d_{zz}^2 \ud =g \quad &\text{on $\Lambda$}\\
+u=0 \quad &\text{on $\partial \Omega$}\\
+\label{benchm_coupl}
+\ud -\avrc{u}=q \quad &\text{on $\Lambda$}
+\end{align}
+\end{subequations}
+
+where $\Omega=[0,1]\times [0,1]\times [0,H]$, $\Lambda=\{x=0.5\}\times \{y=0.5\} \times [0,H] $ and
+\begin{eqnarray*}
+f=8\pi ^2 \sin (2\pi x) \sin (2\pi y)\\
+%g=-\exp(-z)\\
+%q=1+\exp(-z).
+g=\frac{\pi ^2}{H^2} \sin \left(\frac{\pi z}{H}\right)\\
+q=\sin \left(\frac{\pi z}{H}\right).
+\end{eqnarray*}
+In this case the $z$ coordinate coincides with the axial coordinate along $\Lambda$. We define $\Sigma=[0.25,0.75]\times [0.25,0.75]\times [0,H]$. The average of the 3D solution $\avrc{u}$ in \eqref{benchm_coupl} is computed on the cross section $\DD$ of the virtual interface $\Gamma=\partial \Sigma$. The exact solution of \eqref{benchmark} is given by
+\begin{eqnarray}
+\label{benchm_sol3d}
+u=\sin (2\pi x) \sin (2\pi y)\\
+\label{benchm_sol1d}
+%\ud=1+\exp(-z).
+\ud=\sin \left(\frac{\pi z}{H}\right) 
+\end{eqnarray}
+Let us notice that $\ud$ satisfies homogeneous Dirichlet conditions at the boundary of $\Lambda$.
+Moreover, the solution \eqref{benchm_sol3d}-\eqref{benchm_sol1d} satisfies on $\Gamma$ the relation
+\begin{equation}\label{benchm_flux}
+\lambda=\nabla u \cdot \textbf{n}_{\oplus}=d_z \ud n_{\oplus,z}=0,
+\end{equation}
+being $n_{\oplus,z}$ the $z-$component of the normal unit vector to $\Gamma$.
+
+We prove that \eqref{benchm_sol3d}-\eqref{benchm_sol1d} is solution of \eqref{eq:problem1} and \eqref{eq:problem2} in the simplified case in which the starting 3D-3D problem is
+\begin{subequations}\label{eq:dirneu_simple}
+\begin{align}
+- \Delta \up  &= f  && \text{ in } \Omega_{\oplus},\\
+- \Delta \uf &= g  && \text{ in } \Sigma,\\
+-\nabla \uf \cdot \nn_{\ominus} &= -\nabla \up \cdot \nn_{\ominus}  && \text{ on } \Gamma,\\
+\uf - \up &= q  && \text{ on }  \Gamma,\\
+\up &= 0 && \text{ on } \partial \Omega\,.
+\end{align}
+\end{subequations}
+instead of \eqref{eq:dirneu}. Therefore the reduced problems in the two different formulations \eqref{eq:problem1} and \eqref{eq:problem2} become respectively
+ 
+\begin{subequations}\label{eq:problem1_simple}
+\begin{align}
+\label{eq:problem1_simple_eq1}
+&(\nabla u,\nabla v)_{L^2(\Omega)} + |{\cal D}|(d_s \ud,d_s \vd)_{L^2(\Lambda)} 
++ \langle \Pi_1 v  - \Pi_2 \vd, L \rangle_\Gamma
+\\
+\nonumber
+&\qquad\qquad= (f,v)_{L^2(\Omega)} + |{\cal D}| (\avrd{g},\vd)_{L^2(\Lambda)}
+\quad \forall v \in H^1_0(\Omega), \ \vd \in H^1(\Lambda)
+\\
+\label{eq:problem1_simple_eq2}
+&   \langle \Pi_1 u - \Pi_2 \ud , M \rangle_\Gamma =  \langle q , M \rangle_\Gamma
+\quad \forall M \in H^{-\frac12}(\Gamma)\,.
+\end{align}
+\end{subequations}
+
+and
+
+\begin{subequations}\label{eq:problem2_simple}
+\begin{align}
+&(\nabla u,\nabla v)_{L^2(\Omega)} + |{\cal D}|(d_s \ud,d_s \vd)_{L^2(\Lambda)} 
++ |\partial {\cal D}| \langle \Pi_1 v - \Pi_2 \vd, L \rangle_{H^{-\frac12}(\Lambda)} 
+\\
+\nonumber
+&\qquad\qquad= (f,v)_{L^2(\Omega)} + |{\cal D}| (\avrd{g},V)_{L^2(\Lambda)}
+\quad \forall v \in H^1_0(\Omega), \ \vd \in H^1_0(\Lambda)
+\\
+&  |\partial {\cal D}| \langle \Pi_1 u -  \Pi_2 \ud, M \rangle_{H^{-\frac12}(\Lambda)} =|\partial {\cal D}| \langle \avrc{q}, M \rangle_{H^{-\frac12}(\Lambda)}
+\quad \forall M \in H^{-\frac12}(\Lambda)\,.
+\end{align}
+\end{subequations}
+
+Let us prove that \eqref{benchm_sol3d}-\eqref{benchm_sol1d} is solution of \eqref{eq:problem1_simple}. Using the integration by part formula and homogeneous boundary conditions on $\Omega$ and $\Lambda$, from \eqref{eq:problem1_simple_eq1} we have
+\begin{align*}
+&-(\Delta u, v)_{L^2(\Omega)} - |{\cal D}|(d^2_{ss} \ud, \vd)_{L^2(\Lambda)} 
++ \langle \Pi_1 v  - \Pi_2 \vd, L \rangle_\Gamma
+\\
+\nonumber
+&\qquad\qquad= (f,v)_{L^2(\Omega)} + |{\cal D}| (\avrd{g},\vd)_{L^2(\Lambda)}
+\quad \forall v \in H^1_0(\Omega), \ \vd \in H^1(\Lambda).
+\\
+\end{align*}
+Clearly, since \eqref{benchm_sol3d} satisfies \eqref{benchm_3d} and \eqref{benchm_sol1d} satisfies \eqref{benchm_1d}, we have that \begin{align*}
+-(\Delta u, v)_{L^2(\Omega)} =  (f,v)_{L^2(\Omega)} \\
+-|{\cal D}|(d^2_{ss} \ud, \vd)_{L^2(\Lambda)}  = |{\cal D}| (\avrd{g},\vd)_{L^2(\Lambda)}
+\end{align*}
+and being $L=\lambda=0$, we can conclude that \eqref{benchm_sol3d}-\eqref{benchm_sol1d} satisfy \eqref{eq:problem1_simple_eq1}. The fact that the solution satisfy \eqref{eq:problem1_simple_eq2} follows from \eqref{benchm_coupl}. We can prove in the same way that \eqref{benchm_sol3d}-\eqref{benchm_sol1d} is solution of \eqref{eq:problem2_simple}, exploiting the fact that in this case $L=\avrc{\lambda}=0$. 
+
+\begin{remark}
+Let us notice that the 3D solution \eqref{benchm_sol3d} is such that $\avrc{u}=0$. Therefore in \eqref{benchmark} it is like we are solving two separated problems, one in $\Omega$ and the other on $\Lambda$.
+\end{remark}
+\begin{remark}
+It would be interesting to make a comparison between the solution of the fully coupled 3D-3D problem \eqref{eq:dirneu} (also in the simplified case of type \eqref{eq:dirneu_simple}) and the solution of the reduced problems \eqref{eq:problem1} and \eqref{eq:problem2}. 
+Therefore, we could set the values of the data of the problem such that the reduced formulation becomes non-trivial and fully coupled.
+Then, we will solve both the original and reduced problem to observe the differences in the solutions and the values of the Lagrange multiplier.
+\end{remark}
+%\bibliographystyle{siamplain}
+%\bibliography{3d1d_coupled}
+\end{document}

@@ -1,0 +1,148 @@
+\section{Finite element approximation}
+Let us introduce an admissibile triangulation $\mathcal{T}^{\Omega}_h$ of $\Omega$ and an admissible partition $\mathcal{T}^{\Lambda}_{\tilde{h}}$ of $\Lambda$. We denote with $X_h(\Omega)\subset H^1_0(\Omega)$ the conforming finite element space of continuous piecewise linear functions defined on $\Omega$ and by $X_{\tilde{h}}(\Lambda)\subset H^1_0(\Lambda)$ the space of continuous piecewise linear functions defined on $\Lambda$. Moreover, $Q_H$ denotes a suitable trial space for the lagrange multiplier $L_H$: $Q_H \subset H^{-\frac12}(\Gamma )$ in the case of Problem 1 and $Q_H \subset H^{-\frac12}(\Lambda)$ in the case of Problem 2. 
+
+\subsection{Problem 1}
+
+\def\udh{u_{\odot_{\tilde{h}}}}
+\def\vdh{v_{\odot_{\tilde{h}}}}
+
+It consists to find $u_h \in X_h(\Omega) ,\ \udh \in X_{\tilde{h}}(\Lambda) , \ L_H \in Q_H(\Gamma) \subset H^{-\frac12}(\Gamma )$, such that
+\begin{subequations}\label{eq:red_dirneu}
+\begin{align}
+&(u_h,v_h)_{H^1(\Omega)} + |{\cal D}| (\udh,\vdh)_{H^1(\Lambda)} 
++ \langle \Pi_1 v_h  - \Pi_2 \vdh, L_H \rangle_\Gamma 
+\\
+\nonumber
+&\qquad\qquad= (f,v_h)_{L^2(\Omega)} + |{\cal D}(\avrd{g},\vdh)_{L^2(\Lambda)}
+\quad \forall v_h \in X_h(\Omega), \ \vdh \in X_{\tilde{h}}(\Lambda)
+\\
+&   \langle \Pi_1 u_h - \Pi_2 \udh , M_H \rangle_\Gamma = 0
+\quad \forall M_H \in Q_H(\Gamma)\,,
+\end{align}
+\end{subequations}
+
+\begin{theorem}
+$\exists \gamma _1 >0$ s.t.
+\begin{equation}\label{inf_sup_discrete_prob1}
+\inf_{L_H \in Q_H(\Gamma)} 
+\sup_{\substack{v_h \in X_h(\Omega),\\ \vdh \in X_{\tilde{h}}(\Lambda)}} \frac{ \langle \Pi_1 v_h - \Pi_2 \vdh, L_H \rangle _{\Gamma}} {\vertiii{[v_h, \vdh]} \|L_H\|_{H^{-\frac 12 }(\Gamma)}} 
+\geq \gamma _1. 
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let $L_H \in Q_H(\Gamma)$. As in the continuos case, let us choose $\vdh =0$, therefore 
+\begin{equation*}
+\sup_{\substack{v_h \in X_h(\Omega),\\ \vdh \in X_{\tilde{h}}(\Lambda)}} \frac{ \langle \Pi_1 v_h - \Pi_2 \vdh, L_H \rangle _{\Gamma}} {\vertiii{[v_h, \vdh]}}
+\geq \sup_{v_h \in X_h(\Omega)} \frac{ \langle \Pi_1 v_h, L_H \rangle _{\Gamma} } {\|v_h\|_{H^1(\Omega)}}.
+\end{equation*}
+Following Steinbach, Theorem 11.5, it can be shown under the following assumptions 
+\begin{itemize}
+\item the mesh size $h$ of the trial space $X_h(\Omega)$ is sufficiently small compared to the mesh size $H$ of $Q_H(\Gamma)$, i.e. $h \leq c_0 H$ with $c_0 < 1$, and
+\item a global inverse inequality for the trial space $Q_H(\Gamma)$ holds,
+\end{itemize}
+that exists a positive constant $c_S$
+\begin{equation}\label{infsup_tracespace}
+c_S \|L_H\|_{H^{-\frac 12}(\Gamma)} \leq 
+\sup_{w_h \in X_h(\Gamma)} \frac{ \langle w_h, L_H \rangle _{\Gamma} } {\|w_h\|_{H^{\frac 12}(\Gamma)}} \qquad \forall L_H \in Q_H(\Gamma),
+\end{equation}
+being $X_h(\Gamma)$ the trace space of the functions in $X_h(\Omega)$, namely the space of the restrictions of the functions in $X_h(\Omega)$ to $\Gamma$. 
+Using the boundedness of the extension operator $E$ from $H^{\frac 12}(\Gamma)$ to $H^1_0(\Omega)$ introduced in the previous section, we have
+\begin{equation*}
+\sup_{w_h \in X_h(\Gamma)} \frac{ \langle w_h, L_H \rangle _{\Gamma} } {\|w_h\|_{H^{\frac 12}(\Gamma)}} 
+\leq 
+\|E\| \sup_{w_h \in X_h(\Gamma)} \frac{ \langle w_h, L_H \rangle _{\Gamma} } {\|E w_h\|_{H^1(\Omega)}}.
+\end{equation*}
+Let $R_h: H^1(\Omega) \rightarrow X_h(\Omega)$ be a quasi interpolation operator satisfying 
+\begin{equation*}
+\|R_h v\|_{H^1(\Omega)} \leq c_R \|v\|_{H^1(\Omega)} \qquad \forall v \in H^1(\Omega).
+\end{equation*}
+Therefore, we obtain 
+\begin{equation*}
+\|E\| \sup_{w_h \in X_h(\Gamma)} \frac{ \langle w_h, L_H \rangle _{\Gamma} } {\|E w_h\|_{H^1(\Omega)}}
+\leq
+\|E\| c_R \sup_{w_h \in X_h(\Gamma)} \frac{ \langle w_h, L_H \rangle_{\Gamma} } {\|R_hE w_h\|_{H^1(\Omega)}}
+\end{equation*}
+and using \eqref{infsup_tracespace}, we have
+\begin{multline}
+c_S \|L_H\|_{H^{-\frac 12}(\Gamma)} 
+\leq 
+\sup_{w_h \in X_h(\Gamma)} \frac{ \langle w_h, L_H \rangle_{\Gamma} } {\|w_h\|_{H^{\frac 12}(\Gamma)}} 
+\leq
+\|E\| c_R \sup_{w_h \in X_h(\Gamma)} \frac{ \langle w_h, L_H \rangle_{\Gamma} } {\|E w_h\|_{H^1(\Gamma)}}
+\\
+=
+\|E\| c_R \sup_{w_h \in X_h(\Gamma)} \frac{ \langle \Pi_1 \ R_h E w_h, L_H \rangle_{\Gamma} } {\|R_h E w_h\|_{H^1(\Omega)}} 
+\leq \|E\| c_R \sup_{v_h \in X_h(\Omega)} \frac{ \langle \Pi_1 v_h, L_H \rangle_{\Gamma} } {\|v_h\|_{H^1(\Omega)}}. 
+\end{multline}
+Therefore the inf-sup condition $\eqref{inf_sup_discrete_prob1}$ holds with $\gamma_1 = c_S\|E\|^{-1} c_R^{-1}$.
+\end{proof}
+
+
+\subsection{Problem 2}
+This problem requires to find  $u_h \in X_h(\Omega) ,\ \udh \in X_{\tilde{h}}(\Lambda), \ L_H \in Q_H(\Lambda) \subset H^{-\frac12}(\Lambda)$, such that
+\begin{subequations}
+\begin{align*}
+&(u_h,v_h)_{H^1(\Omega)} + |{\cal D}|(\udh,\vdh)_{H^1(\Lambda)} 
++ |\partial {\cal D}| \langle  \Pi_1 \vdh - \Pi_2 v_h, L_H \rangle_\Lambda 
+\\
+\nonumber
+&\qquad\qquad= (f,v_h)_{L^2(\Omega)} + |{\cal D}| (\avrd{g},\vdh)_{L^2(\Lambda)}
+\quad \forall v_h \in X_h(\Omega), \ \vdh \in X_{\tilde{h}}(\Lambda)
+\\
+&  |\partial {\cal D}| \langle \Pi_1 \udh - \Pi_2 u_h, M_H \rangle_\Lambda = 0
+\quad \forall M_H \in Q_H(\Lambda)\,.
+\end{align*}
+\end{subequations}
+
+\begin{theorem}
+$\exists \gamma _2 >0$ s.t.
+\begin{equation}\label{inf_sup_discrete_prob2}
+\inf_{L_H \in Q_H(\Lambda)} 
+\sup_{\substack{vh \in X_h(\Omega),\\ \vdh \in X_{\tilde{h}}(\Lambda)} }\frac{\langle \Pi_1 v_h - \Pi_2 \vdh, L_H \rangle _{\Lambda} } {\vertiii{[v_h, \vdh]} \|L_H\|_{H^{-\frac 12 }(\Lambda)}  } 
+\geq \gamma _2. 
+\end{equation}
+\end{theorem}
+\begin{proof}
+Let $L_H$ be arbitrarly chosen in $Q_H(\Lambda)$. Again, we choose $\vdh =0$, so that \eqref{inf_sup_discrete_prob2} reduces to prove
+\begin{equation*}
+\gamma _2 \|L_H\|_{H^{\frac 12}(\Lambda)}
+\leq 
+\sup_{v_h \in X_h(\Omega)} \frac{ \langle \Pi_2 v_h , L_H \rangle _{\Lambda} } {\|v_h\|_{H^1(\Omega)} } \qquad \forall L_H \in Q_H(\Lambda).
+\end{equation*}
+Assume that
+\begin{itemize}
+\item the mesh size $h$ of the trial space $X_h(\Omega)$ is sufficiently small compared to the mesh size $H$ of $Q_H(\Lambda)$, i.e. $h \leq c_1 H$ with $c_1 < 1$,
+\item a global inverse inequality for the trial space $Q_H(\Lambda)$ holds and
+\item the space $X_h(\Lambda)$, defined as the space of the restrictions on $\Gamma$ of the functions in $X_h(\Omega)$ averaged on the cross section, has the approximation property, namely if $Q_h^{\sigma}$ denotes the projection from $H^\sigma (\Lambda)$ to $X_h(\Lambda)$, we have
+\begin{equation*}
+\|w-Q_h^{\sigma} w\|_{H^{\sigma} (\Lambda)} \leq c_A h^{s-\sigma} |w|_{H^s(\Lambda)} \qquad \forall w \in H^s(\Lambda).
+\end{equation*}
+(I think $X_h(\Lambda)$ concides with the space of piecewise linear continuous polinomials on $\Lambda$).
+\end{itemize}
+Under the previous assumptions, an inequality similar to \eqref{infsup_tracespace} holds also for $X_h(\Lambda)$. In particular, following the same proof in Steinbach, we can prove 
+\begin{equation}
+c_{S_2} \|L_H\|_{H^{-\frac 12}(\Lambda)} \leq 
+\sup_{w_h \in X_h(\Lambda)} \frac{ \langle w_h, L_H \rangle _{\Lambda} } {\|w_h\|_{H^{\frac 12}(\Lambda)}} \qquad \forall L_H \in Q_H(\Lambda).
+\end{equation}
+If we denote with $\mathcal{U}_E$ the uniform extension operator from $\Lambda$ to $\Gamma$, using Lemma \ref{lemma:H12norm_avrc}, we easily have for any $w_h \in H^{\frac 12}(\Lambda)$,
+\begin{equation*}
+\|\mathcal{U}_E w\|_{H^{\frac 12}(\Gamma)}=|\DD| \|w\|_{H^{\frac 12}(\Lambda)}.
+\end{equation*}
+Consequently, using again the extension operator $E$ from $H^{\frac 12}(\Omega)$ to $H^1_0(\Omega)$ and the quasi interpolation operator $R_h$ from $H^1(\Omega)$ to $X_h(\Omega)$, we obtain
+\begin{multline}
+c_{S_2} \|L_H\|_{H^{-\frac 12}(\Lambda)} \leq 
+\sup_{w_h \in X_h(\Lambda)} \frac{ \langle w_h, L_H \rangle_{\Lambda} } {\|w_h\|_{H^{\frac 12}(\Lambda)}} 
+\\
+\leq |\DD|^{-1} \sup_{w_h \in X_h(\Lambda)} \frac{ \langle w_h, L_H \rangle _{\Lambda}} {\|\mathcal{U}_E w_h\|_{H^{\frac 12}(\Gamma)}} 
+\leq |\DD|^{-1}\|E\| \sup_{w_h \in X_h(\Lambda)} \frac{ \langle w_h, L_H \rangle _{\Lambda} } {\|E \mathcal{U}_E w_h\|_{H^1(\Omega)}} 
+\\
+\leq |\DD|^{-1}\|E\| C_R \sup_{w_h \in X_h(\Lambda)} \frac{ \langle w_h, L_H \rangle _{\Lambda} } {\|R_h E \mathcal{U}_E w_h\|_{H^1(\Omega)}}
+\\ 
+=  |\DD|^{-1}\|E\| C_R \sup_{w_h \in X_h(\Lambda)} \frac{ \langle \Pi _1  R_h E \mathcal{U}_E w_h, L_H \rangle _{\Lambda}} {\|R_h E \mathcal{U}_E w_h\|_{H^1(\Omega)}}
+\\
+\leq |\DD|^{-1}\|E\| C_R \sup_{v_h \in X_h(\Omega)} \frac{ \langle \Pi _2  v_h, L_H \rangle _{\Lambda}} {\|v_h\|_{H^1(\Omega)}}. 
+\end{multline}
+Therefore, \eqref{inf_sup_discrete_prob2} holds with $\gamma_2=  c_{S_2} |\DD| \|E\|^{-1} C_R^{-1}$
+\end{proof}
+

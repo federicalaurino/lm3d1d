@@ -136,10 +136,8 @@ We shall subsequently refer to the two cases as \emph{matching} and \emph{non-ma
 \end{tikzpicture}
 %
 \end{center}
-  \caption{Two different settings considered for the Babu{\v s}ka problem
-    \eqref{eq:bab}. Trace mesh (on $\Gamma_L$) of $\Omega_h$ equals (left)
-    or differs (right) from $\Gamma_H$.
-  }
+  \caption{Matching (left) and non-mathching (right) setting considered
+    for the Babu{\v s}ka problem.}
 \label{fig:domains}
 \end{figure}
 
@@ -183,9 +181,9 @@ constructed such that they satisfy the boundary conditions $p=0$ on $\partial\Ga
 
 MinRes iteration counts with the Riesz map preconditioner are shown in
 Table \ref{tab:p1_p1}. Here, the $Q$ block of the preconditioner is based
-on the inverse of the bilinear 
+on the inverse of the bilinear form
 \[
-\langle (-\Delta_{00})^{1/2} p, q\rangle + \sum_{K\in\Gamma_H}\int_{K} H_K^3\nabla p \cdot\nabla q,\quad p, q\in Q_H.
+\langle -\Delta_{00}^{1/2} p, q\rangle + \sum_{K\in\Gamma_H}\int_{K} H_K^3\nabla p \cdot\nabla q,\quad p, q\in Q_H.
 \]
 %
 
@@ -207,7 +205,7 @@ on the inverse of the bilinear
     \hline
   \end{tabular}
   }
-    \caption{Approximation errors, number of preconditioner MinRes iterations ($n$) and
+    \caption{Approximation errors, number of preconditioned MinRes iterations ($n$) and
       condition number of the preconditioned problem \eqref{eq:bab} ($\kappa$) discretized
       with P1-P1 elements. (left) Matching case. (right) Non-matching case.}
   \label{tab:p1_p1}
@@ -222,7 +220,7 @@ Dirichlet boundary conditions employed in the discrete problem.
 
 \subsection{Discretization by P1-P0 elements}\label{sec:p1_p0}
 We consider finite element discretization of \eqref{eq:bab} in terms P1 elements
-for the space $V$ while the multiplier space used piecewise constants elements
+for the space $V$ while the multiplier space uses piecewise constants elements
 (P0). In both the matching and non-matching case the discretization is unstable
 and inf-sup stability is obtained by using stabilization \cite{burman2014projection}.
 That is, the disretization of \eqref{eq:bab} reads: Find $u\in V_h$, $q\in Q_H$ such that
@@ -258,7 +256,7 @@ the P1-P1 discretization in Table \ref{tab:p1_p1}.
     \hline
   \end{tabular}
     }
-    \caption{Approximation errors, number of preconditioner MinRes iterations ($n$) and
+    \caption{Approximation errors, number of preconditioned MinRes iterations ($n$) and
       condition number of the preconditioned problem \eqref{eq:bab} ($\kappa$) discretized
       with P1-P0 elements. (left) Matching case. (right) Non-matching case.}
   \label{tab:p1_p0}
@@ -275,7 +273,7 @@ cf. Figure \ref{fig:coupled_domain}. We are then interested in solving
   \begin{equation}\label{eq:coupled}
     \begin{aligned}
       -\Delta u^i &= f &\mbox{ in }\Omega^{i}, i\in\left\{+, -\right\},\\
-      u^i &= g^i &\mbox{ on }\Gamma^i_D\partial\Omega^{i}\setminus\Gamma,\\
+      u^i &= g^i &\mbox{ on }\Gamma^i_D=\partial\Omega^{i}\setminus\Gamma,\\
       \jump{u} &= 0 &\mbox{ on }\Gamma,\\
       -\Delta \hat{u} - \jump{\nabla u\cdot n}&= \hat{f} &\mbox{ on }\Gamma,\\
       \hat{u} &= \hat{g} &\mbox{ on }\partial\Gamma,\\
@@ -442,11 +440,24 @@ and based on the properties of the finite element meshes $\Omega_h$, $\Gamma_H$
 we shall distinguish three different settings, cf. Figure \ref{fig:multi_domains}.
 Here, a conforming case implies that the trace mesh of $\Omega_h$ on $\Gamma$
 consists only of the existing facets of the mesh. In the conforming setting 
-we consider matching and non-matching cases as defined above. Let us also
-remark that the approximation of the space $\hat{V}$ shall always be constructed
+we consider matching and non-matching cases as defined above. We remark
+that the approximation of the space $\hat{V}$ shall always be constructed
 on the multiplier mesh $\Gamma_H$.
 
-\subsubscection{P1-P1-P1 discretization with $\Gamma$ conformity}
+\subsection{P1-P1-P1 discretization with $\Gamma$ conformity}
+Let us first consider a conforming setting and an approximation of all
+the spaces involved in \eqref{eq:coupled_weak} in terms of P1 elements.
+As with the Babu{\v s}ka problem \eqref{eq:bab} the discrete multiplier
+space is such that $q=0$ on $\partial\Gamma$ for all $q\in Q_H$. In fact,
+the boundary conditions are necessary to obtain an invertible linear system.
+
+Table \ref{tab:coupled_p1_p1} summarizes the results for both matching
+and non-matching tessilations. In the latter case, a stabilization term
+\cite{burman2009interior} is added similar to \eqref{eq:p1_stab} (we set $\gamma=1$).
+In both cases the results show evidence of the inf-sup stability of the
+discretization. We note that the $L^2$ error of the multiplier converges
+quadratically; in contrast to the test problem in \eqref{eq:bab} the solution
+here \emph{does} satisfy $p=0$ on $\partial\Gamma$.
 
 \begin{table}
   \begin{center}
@@ -466,7 +477,7 @@ on the multiplier mesh $\Gamma_H$.
     \hline
   \end{tabular}
     }
-    \caption{Approximation errors, number of preconditioner MinRes iterations ($n$) and
+    \caption{Approximation errors, number of preconditioned MinRes iterations ($n$) and
       condition number of the preconditioned problem \eqref{eq:coupled_weak} ($\kappa$) discretized
       with P1-P1-P1 elements. Conforming (left) matching and (right) non-matching case.}
   \label{tab:coupled_p1_p1}
@@ -475,7 +486,11 @@ on the multiplier mesh $\Gamma_H$.
 
 % --------------------------------------------------------------------
 
-\subsubscection{P1-P1-P0 discretization with $\Gamma$ conformity}
+\subsection{P1-P1-P0 discretization with $\Gamma$ conformity} 
+We shall next have the multiplier space be spanned by piecewise constant
+functions. Following \eqref{eq:bab} a stabilization \cite{burman2014projection}
+is employed in both the matching and non-matching cases. Table \ref{tab:coupled_p1_p0}
+confirms that the discretization is inf-sup stable. 
 
 \begin{table}
   \begin{center}
@@ -495,7 +510,7 @@ on the multiplier mesh $\Gamma_H$.
     \hline
   \end{tabular}
     }
-    \caption{Approximation errors, number of preconditioner MinRes iterations ($n$) and
+    \caption{Approximation errors, number of preconditioned MinRes iterations ($n$) and
       condition number of the preconditioned problem \eqref{eq:coupled_weak} ($\kappa$) discretized
       with P1-P1-P0 elements. Conforming (left) matching and (right) non-matching case.}
   \label{tab:coupled_p1_p0}
@@ -504,7 +519,15 @@ on the multiplier mesh $\Gamma_H$.
 
 % -------------------------------------------------------------------
 
-\subsubscection{Non-conforming setting}
+\subsection{Non-conforming setting}
+Finally a non-conforming setting is considered with P1-P1-P1 and P1-P1-P0
+discretizations. In both cases stabilization terms are employed to obtain
+inf-sup stability, cf. Table \ref{tab:coupled_non}. Note that compared to the
+conforming case the multiplier convergence with P1 elements is only linear.
+The order from the conforming case is preserved with P0 elements. Note also
+that with both elements $u_h$ converges with order $\tfrac{1}{2}$; the approximation
+struggles to capture the kink of the solution which now occurs within the finite element
+cells.
 
 \begin{table}
   \begin{center}
@@ -524,7 +547,7 @@ on the multiplier mesh $\Gamma_H$.
     \hline
   \end{tabular}
     }
-    \caption{Non-conforming setting. Approximation errors, number of preconditioner MinRes iterations ($n$) and
+    \caption{Non-conforming setting. Approximation errors, number of preconditioned MinRes iterations ($n$) and
       condition number of the preconditioned problem \eqref{eq:coupled_weak} ($\kappa$) discretized
       with P1-P1-P1 (left) and P1-P1-P0 (right) elements.}
   \label{tab:coupled_non}

@@ -86,12 +86,12 @@ $p\in Q$ such that
 %
 
 In the following experiments $\Omega=(0, 1)^2$, $\Gamma_L=\left\{(x, y)\in\partial\Omega; x=0\right\}$
-while $\Gamma_D=\partial\Omega\setminus \Gamma_L$. Letting $\Omega_h$, $\Gamma_H$
+while $\Gamma_D=\partial\Omega\setminus \Gamma_L$. Letting $\Omega_H$, $\Gamma_h$
 denote respectively the discretizations of $\Omega$ and $\Gamma_L$ we shall consider
 two different geometrical settings, cf. Figure \ref{fig:domains}, (i) either
-$\Gamma_H$ is the trace mesh (on $\Gamma_L$) of $\Omega$, i.e. there is a one-to-one
-mapping between vertices/cells of the two meshes or (ii) $\Gamma_H$ is not the
-trace mesh of $\Omega$ and $\Gamma_H$ is finer relative to the trace mesh.
+$\Gamma_h$ is the trace mesh (on $\Gamma_L$) of $\Omega$, i.e. there is a one-to-one
+mapping between vertices/cells of the two meshes or (ii) $\Gamma_h$ is not the
+trace mesh of $\Omega$ and $\Gamma_h$ is finer relative to the trace mesh.
 We shall subsequently refer to the two cases as \emph{matching} and \emph{non-matching}.
 
 %
@@ -100,7 +100,7 @@ We shall subsequently refer to the two cases as \emph{matching} and \emph{non-ma
 \begin{tikzpicture}
   \draw[black, very thick] (1,0) rectangle (4, 3);
   \draw[black, very thick] (1,0) -- (4, 3);
-  \node[fill=white, opacity=0.9] at (2.5, 1.5) {$\Omega_{h}$};
+  \node[fill=white, opacity=0.9] at (2.5, 1.5) {$\Omega_{H}$};
 
   \node[mark size=3pt, color=black] at (1, 0) {\pgfuseplotmark{*}};
   \node[mark size=3pt, color=black] at (4, 0) {\pgfuseplotmark{*}};
@@ -108,7 +108,7 @@ We shall subsequently refer to the two cases as \emph{matching} and \emph{non-ma
   \node[mark size=3pt, color=black] at (4, 3) {\pgfuseplotmark{*}};
 
   \draw[black, very thick] (0.5,0) -- (0.5, 3);
-  \node[opacity=0.9, left] at (0.5, 1.5) {$\Gamma_{H}$};
+  \node[opacity=0.9, left] at (0.5, 1.5) {$\Gamma_{h}$};
 
   \node[mark size=3pt, color=black] at (0.5, 0) {\pgfuseplotmark{*}};
   \node[mark size=3pt, color=black] at (0.5, 3) {\pgfuseplotmark{*}};
@@ -119,7 +119,7 @@ We shall subsequently refer to the two cases as \emph{matching} and \emph{non-ma
 \begin{tikzpicture}
   \draw[black, very thick] (1,0) rectangle (4, 3);
   \draw[black, very thick] (1,0) -- (4, 3);
-  \node[fill=white, opacity=0.9] at (2.5, 1.5) {$\Omega_{h}$};
+  \node[fill=white, opacity=0.9] at (2.5, 1.5) {$\Omega_{H}$};
 
   \node[mark size=3pt, color=black] at (1, 0) {\pgfuseplotmark{*}};
   \node[mark size=3pt, color=black] at (4, 0) {\pgfuseplotmark{*}};
@@ -127,7 +127,7 @@ We shall subsequently refer to the two cases as \emph{matching} and \emph{non-ma
   \node[mark size=3pt, color=black] at (4, 3) {\pgfuseplotmark{*}};
 
   \draw[black, very thick] (0.5,0) -- (0.5, 3);
-  \node[opacity=0.9, left] at (0.5, 1.5) {$\Gamma_{H}$};
+  \node[opacity=0.9, left] at (0.5, 1.5) {$\Gamma_{h}$};
 
   \node[mark size=3pt, color=black] at (0.5, 0) {\pgfuseplotmark{*}};
   \node[mark size=3pt, color=black] at (0.5, 1) {\pgfuseplotmark{*}};
@@ -163,27 +163,27 @@ operator is based on the eigenvalue problem
 \]
 %
 
-\subsubsection{Non-matching case} Here $\dim Q_H$ is (considerably) larger
-than the trace space of $V_h$ and stabilization of \cite{burman2009interior}
+\subsubsection{Non-matching case} Here $\dim Q_h$ is (considerably) larger
+than the trace space of $V_H$ and stabilization of \cite{burman2009interior}
 is needed to obtain inf-sup stability. More precisely, the discretization
-of \eqref{eq:bab} reads: Find $u\in V_h$, $q\in Q_H$ such that
+of \eqref{eq:bab} reads: Find $u\in V_H$, $q\in Q_h$ such that
 %
 \begin{equation}\label{eq:p1_stab}
 \begin{aligned}
-&\int_{\Omega} \nabla u\cdot \nabla v &+ \int_{\Gamma_L}p v &= \int_{\Omega} f v &\forall v\in V_h,\\
-  &\int_{\Gamma_L}q u  &-\gamma \sum_{K\in\Gamma_H}\int_{K} H_K^3\nabla p\cdot\nabla q &= \int_{\Gamma} g q &\forall q\in Q_H.
+&\int_{\Omega} \nabla u\cdot \nabla v &+ \int_{\Gamma_L}p v &= \int_{\Omega} f v &\forall v\in V_H,\\
+  &\int_{\Gamma_L}q u  &-\gamma \sum_{K\in\Gamma_h}\int_{K} h_K^3\nabla p\cdot\nabla q &= \int_{\Gamma} g q &\forall q\in Q_h.
   \end{aligned}
 \end{equation}
 %
 Here $\gamma$ is a stabilization parameter and we use $\gamma=1$ in the
-following. As before, the trial and test functions of the space $Q_H$ are
+following. As before, the trial and test functions of the space $Q_h$ are
 constructed such that they satisfy the boundary conditions $p=0$ on $\partial\Gamma_L$.
 
 MinRes iteration counts with the Riesz map preconditioner are shown in
 Table \ref{tab:p1_p1}. Here, the $Q$ block of the preconditioner is based
 on the inverse of the bilinear form
 \[
-\langle -\Delta_{00}^{1/2} p, q\rangle + \sum_{K\in\Gamma_H}\int_{K} H_K^3\nabla p \cdot\nabla q,\quad p, q\in Q_H.
+\langle -\Delta_{00}^{1/2} p, q\rangle + \sum_{K\in\Gamma_h}\int_{K} h_K^3\nabla p \cdot\nabla q,\quad p, q\in Q_h.
 \]
 %
 
@@ -192,8 +192,8 @@ on the inverse of the bilinear form
     \footnotesize{
   \begin{tabular}{c|cc|c|c||cc|c|c}
     \hline
-    $h$ & $\norm{u-u_h}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$
-        & $\norm{u-u_h}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$ \\
+    $h$ & $\norm{u-u_H}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$
+        & $\norm{u-u_H}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$ \\
     \hline
 8.84E-02 & 6.91E+00(--)   & 6.37E+00(--)   & 29 & 5.131 & 6.90E+00(--)  & 5.94E+00(--)    & 31 & 4.836\\
 4.42E-02 & 3.54E+00(0.97) & 1.61E+00(1.98) & 26 & 5.176 & 3.54E+00(0.96) & 1.76E+00(1.75) & 29 & 4.846\\
@@ -223,16 +223,16 @@ We consider finite element discretization of \eqref{eq:bab} in terms P1 elements
 for the space $V$ while the multiplier space uses piecewise constants elements
 (P0). In both the matching and non-matching case the discretization is unstable
 and inf-sup stability is obtained by using stabilization \cite{burman2014projection}.
-That is, the disretization of \eqref{eq:bab} reads: Find $u\in V_h$, $q\in Q_H$ such that
+That is, the disretization of \eqref{eq:bab} reads: Find $u\in V_H$, $q\in Q_h$ such that
 %
 \begin{equation}\label{eq:p0_stab}
 \begin{aligned}
-&\int_{\Omega} \nabla u\cdot \nabla v &+ \int_{\Gamma_L}p v &= \int_{\Omega} f v &\forall v\in V_h,\\
-  &\int_{\Gamma_L}q u  &-\gamma \sum_{\mathcal{V}^0} \avg{H_K}^2\jump{p}\jump{q} &= \int_{\Gamma} g q &\forall q\in Q_H,
+&\int_{\Omega} \nabla u\cdot \nabla v &+ \int_{\Gamma_L}p v &= \int_{\Omega} f v &\forall v\in V_H,\\
+  &\int_{\Gamma_L}q u  &-\gamma \sum_{\mathcal{V}^0} \avg{h_K}^2\jump{p}\jump{q} &= \int_{\Gamma} g q &\forall q\in Q_h,
   \end{aligned}
 \end{equation}
 %
-where $\mathcal{V}^0$ is the set of all interior vertices of $\Gamma_H$.
+where $\mathcal{V}^0$ is the set of all interior vertices of $\Gamma_h$.
 
 Table \ref{tab:p1_p0} shows stability and convergence properties of the approximation.
 Note that the error in the multiplier converges linearly, cf. $\tfrac{1}{2}$ for
@@ -243,8 +243,8 @@ the P1-P1 discretization in Table \ref{tab:p1_p1}.
     \footnotesize{
   \begin{tabular}{c|cc|c|c||cc|c|c}
     \hline
-    $h$ & $\norm{u-u_h}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$
-        & $\norm{u-u_h}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$ \\
+    $h$ & $\norm{u-u_H}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$
+        & $\norm{u-u_H}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$ \\
     \hline
 8.84E-02 & 6.88E+00(--)   & 2.83E+00(--)  & 26 & 4.749  & 6.91E+00(--)   & 1.17E+01(--)  & 35 & 6.940 \\
 4.42E-02 & 3.54E+00(0.96) & 2.12E+00(0.42)& 28 & 4.817  & 3.54E+00(0.96) & 2.33E+00(2.33)& 35 & 6.973 \\
@@ -293,7 +293,7 @@ cf. Figure \ref{fig:coupled_domain}. We are then interested in solving
 
   \node[black!60!white, fill=white, opacity=0.9] at (1, 2) {$\Omega^{-}$};
   \node[black!60!white, fill=white, opacity=0.9] at (3, 2) {$\Omega^{+}$};
-  \node[black!60!white, fill=white, opacity=0.9, right] at (4, 0) {$\Gamma_D$};
+  \node[black!60!white, opacity=0.9, right] at (4, 0) {$\Gamma_D$};
   
   \draw[black, very thick] (2, 0) -- (2, 4);
   \draw[->, black] (2, 1) -- (3, 1);
@@ -309,7 +309,7 @@ cf. Figure \ref{fig:coupled_domain}. We are then interested in solving
 \end{minipage}
 %
 Let $\Omega=\Omega^{+}\cup\Omega^{-}$ and $\Gamma_D=\Gamma^{+}_D\cup\Gamma^{-}_N$.
-Introducing a Lagrange multiplier $p=\jump{\nabla\cdot n}\in Q=(H^{-1/2}_{00}(\Gamma))^{\prime}$
+Introducing a Lagrange multiplier $p=\jump{\nabla u \cdot n}\in Q=(H^{-1/2}_{00}(\Gamma))^{\prime}$
 the weak form of \eqref{eq:coupled} reads: Find $u\in V=H^1_{0, \Gamma_D}(\Omega)$,
 $\hat{v}\in\hat{V}=H^1_{0, \partial\Gamma}(\Gamma)$, $p\in Q$ such that
 %
@@ -327,7 +327,7 @@ $\hat{v}\in\hat{V}=H^1_{0, \partial\Gamma}(\Gamma)$, $p\in Q$ such that
       % Minus
   \draw[black, very thick] (1,0) rectangle (4, 3);
   \draw[black, very thick] (1,0) -- (4, 3);
-  \node[fill=white, opacity=0.9] at (2.5, 1.5) {$\Omega^{-}_{h}$};
+  \node[fill=white, opacity=0.9] at (2.5, 1.5) {$\Omega^{-}_{H}$};
 
   \node[mark size=3pt, color=black] at (1, 0) {\pgfuseplotmark{*}};
   \node[mark size=3pt, color=black] at (4, 0) {\pgfuseplotmark{*}};
@@ -341,14 +341,14 @@ $\hat{v}\in\hat{V}=H^1_{0, \partial\Gamma}(\Gamma)$, $p\in Q$ such that
   \draw[black, thin, dotted] (4.5, 3) -- (5, 3);
   
   \draw[black, very thick] (4.5,0) -- (4.5, 3);
-  \node[opacity=0.9, below] at (4.5, 0) {$\Gamma_{H}$};
+  \node[opacity=0.9, below] at (4.5, 0) {$\Gamma_{h}$};
 
   \node[mark size=3pt, color=black] at (4.5, 0) {\pgfuseplotmark{*}};
   \node[mark size=3pt, color=black] at (4.5, 3) {\pgfuseplotmark{*}};
   % Right
     \draw[black, very thick] (5,0) rectangle (8, 3);
   \draw[black, very thick] (5,0) -- (8, 3);
-  \node[fill=white, opacity=0.9] at (6.5, 1.5) {$\Omega^{+}_{h}$};
+  \node[fill=white, opacity=0.9] at (6.5, 1.5) {$\Omega^{+}_{H}$};
 
   \node[mark size=3pt, color=black] at (5, 0) {\pgfuseplotmark{*}};
   \node[mark size=3pt, color=black] at (8, 0) {\pgfuseplotmark{*}};
@@ -361,7 +361,7 @@ $\hat{v}\in\hat{V}=H^1_{0, \partial\Gamma}(\Gamma)$, $p\in Q$ such that
       % Minus
   \draw[black, very thick] (1,0) rectangle (4, 3);
   \draw[black, very thick] (1,0) -- (4, 3);
-  \node[fill=white, opacity=0.9] at (2.75, 1.5) {$\Omega^{-}_{h}$};
+  \node[fill=white, opacity=0.9] at (2.75, 1.5) {$\Omega^{-}_{H}$};
 
   \node[mark size=3pt, color=black] at (1, 0) {\pgfuseplotmark{*}};
   \node[mark size=3pt, color=black] at (4, 0) {\pgfuseplotmark{*}};
@@ -375,7 +375,7 @@ $\hat{v}\in\hat{V}=H^1_{0, \partial\Gamma}(\Gamma)$, $p\in Q$ such that
   \draw[black, thin, dotted] (4.5, 3) -- (5, 3);
      % Center
   \draw[black, very thick] (4.5,0) -- (4.5, 3);
-  \node[opacity=0.9, below] at (4.5, 0) {$\Gamma_{H}$};
+  \node[opacity=0.9, below] at (4.5, 0) {$\Gamma_{h}$};
 
   \node[mark size=3pt, color=black] at (4.5, 0) {\pgfuseplotmark{*}};
   \node[mark size=3pt, color=black] at (4.5, 1) {\pgfuseplotmark{*}};
@@ -384,7 +384,7 @@ $\hat{v}\in\hat{V}=H^1_{0, \partial\Gamma}(\Gamma)$, $p\in Q$ such that
   % Right
     \draw[black, very thick] (5,0) rectangle (8, 3);
   \draw[black, very thick] (5,0) -- (8, 3);
-  \node[fill=white, opacity=0.9] at (6.5, 1.5) {$\Omega^{+}_{h}$};
+  \node[fill=white, opacity=0.9] at (6.5, 1.5) {$\Omega^{+}_{H}$};
 
   \node[mark size=3pt, color=black] at (5, 0) {\pgfuseplotmark{*}};
   \node[mark size=3pt, color=black] at (8, 0) {\pgfuseplotmark{*}};
@@ -397,7 +397,7 @@ $\hat{v}\in\hat{V}=H^1_{0, \partial\Gamma}(\Gamma)$, $p\in Q$ such that
       % Minus
   \draw[black, very thick] (0,0) rectangle (3, 3);
   \draw[black, very thick] (0,0) -- (3, 3);
-  \node[fill=white, opacity=0.9] at (2.25, 1.5) {$\Omega^{-}_{h}$};
+  \node[fill=white, opacity=0.9] at (2.25, 1.5) {$\Omega^{-}_{H}$};
 
   \node[mark size=3pt, color=black] at (0.0, 0) {\pgfuseplotmark{*}};
   \node[mark size=3pt, color=black] at (3.0, 0) {\pgfuseplotmark{*}};
@@ -406,7 +406,7 @@ $\hat{v}\in\hat{V}=H^1_{0, \partial\Gamma}(\Gamma)$, $p\in Q$ such that
   
      % Center
   \draw[black, very thick] (4.5,0) -- (4.5, 3);
-  \node[opacity=0.9, below] at (4.5, 0) {$\Gamma_{H}$};
+  \node[opacity=0.9, below] at (4.5, 0) {$\Gamma_{h}$};
 
   \node[mark size=3pt, color=black] at (4.5, 0) {\pgfuseplotmark{*}};
   \node[mark size=3pt, color=black] at (4.5, 1) {\pgfuseplotmark{*}};
@@ -419,7 +419,7 @@ $\hat{v}\in\hat{V}=H^1_{0, \partial\Gamma}(\Gamma)$, $p\in Q$ such that
   % Right
     \draw[black, very thick] (6,0) rectangle (9, 3);
   \draw[black, very thick] (6,0) -- (9, 3);
-  \node[fill=white, opacity=0.9] at (6.75, 1.5) {$\Omega^{+}_{h}$};
+  \node[fill=white, opacity=0.9] at (6.75, 1.5) {$\Omega^{+}_{H}$};
 
   \node[mark size=3pt, color=black] at (6, 0) {\pgfuseplotmark{*}};
   \node[mark size=3pt, color=black] at (9, 0) {\pgfuseplotmark{*}};
@@ -436,19 +436,19 @@ $\hat{v}\in\hat{V}=H^1_{0, \partial\Gamma}(\Gamma)$, $p\in Q$ such that
 \end{figure}
 %
 In the following $\Omega=(0, 1)$, $\Gamma=\left\{(x, y)\in\Omega; x=\tfrac{1}{2}\right\}$
-and based on the properties of the finite element meshes $\Omega_h$, $\Gamma_H$
+and based on the properties of the finite element meshes $\Omega_H$, $\Gamma_h$
 we shall distinguish three different settings, cf. Figure \ref{fig:multi_domains}.
-Here, a conforming case implies that the trace mesh of $\Omega_h$ on $\Gamma$
+Here, a conforming case implies that the trace mesh of $\Omega_H$ on $\Gamma$
 consists only of the existing facets of the mesh. In the conforming setting 
 we consider matching and non-matching cases as defined above. We remark
 that the approximation of the space $\hat{V}$ shall always be constructed
-on the multiplier mesh $\Gamma_H$.
+on the multiplier mesh $\Gamma_h$.
 
 \subsection{P1-P1-P1 discretization with $\Gamma$ conformity}
 Let us first consider a conforming setting and an approximation of all
 the spaces involved in \eqref{eq:coupled_weak} in terms of P1 elements.
 As with the Babu{\v s}ka problem \eqref{eq:bab} the discrete multiplier
-space is such that $q=0$ on $\partial\Gamma$ for all $q\in Q_H$. In fact,
+space is such that $q=0$ on $\partial\Gamma$ for all $q\in Q_h$. In fact,
 the boundary conditions are necessary to obtain an invertible linear system.
 
 Table \ref{tab:coupled_p1_p1} summarizes the results for both matching
@@ -464,8 +464,8 @@ here \emph{does} satisfy $p=0$ on $\partial\Gamma$.
     \scriptsize{
   \begin{tabular}{c|ccc|c|c||ccc|c|c}
     \hline
-    $h$ & $\norm{u-u_h}_1$ & $\norm{\hat{u}-\hat{u}_h}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$
-        & $\norm{u-u_h}_1$ & $\norm{\hat{u}-\hat{u}_h}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$ \\
+    $h$ & $\norm{u-u_H}_1$ & $\norm{\hat{u}-\hat{u}_h}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$
+        & $\norm{u-u_H}_1$ & $\norm{\hat{u}-\hat{u}_h}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$ \\
     \hline
 8.8E-2 & 8.8E-1(--)   & 2.0E0(--)    & 8.9E-1(--)   & 20 & 8.0 & 8.6E-1(--)   & 6.7E-1(--)   & 1.7E-1(--)   & 23 & 4.5  \\
 4.4E-2 & 4.4E-1(1.01) & 1.0E0(0.99)  & 2.1E-1(2.10) & 22 & 8.4 & 4.4E-1(0.99) & 3.4E-1(1.00) & 4.5E-2(1.89) & 25 & 4.5  \\
@@ -534,8 +534,8 @@ cells.
     \scriptsize{
   \begin{tabular}{c|ccc|c|c||ccc|c|c}
     \hline
-    $h$ & $\norm{u-u_h}_1$ & $\norm{\hat{u}-\hat{u}_h}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$
-        & $\norm{u-u_h}_1$ & $\norm{\hat{u}-\hat{u}_h}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$ \\
+    $h$ & $\norm{u-u_H}_1$ & $\norm{\hat{u}-\hat{u}_h}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$
+        & $\norm{u-u_H}_1$ & $\norm{\hat{u}-\hat{u}_h}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$ \\
     \hline
 8.3E-2 & 1.3E0(--)    & 7.0E-1(--)   & 1.2E0(--)    & 28 & 5.2 & 1.3E0(--)    & 7.0E-1(--)   & 1.7E0(--)     & 31 & 8.6\\   
 4.3E-2 & 8.1E-1(0.68) & 3.5E-1(1.04) & 6.4E-1(0.95) & 29 & 5.6 & 8.1E-1(0.68) & 3.5E-1(1.04) & 7.6E-1(1.18)  & 34 & 9.3\\ 

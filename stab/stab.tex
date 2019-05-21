@@ -26,6 +26,8 @@
 Miroslav Kuchta, Federica Laurino, Kent-Andre Mardal, Paolo Zunino,\thanks{Authors are listed in alphabetical order}
 }
 
+\newcommand{\Miro}[1]{\textcolor{cyan}{Miro: #1}}
+
 \begin{document}
 
 \maketitle
@@ -315,8 +317,8 @@ $\hat{v}\in\hat{V}=H^1_{0, \partial\Gamma}(\Gamma)$, $p\in Q$ such that
 %
 \begin{equation}\label{eq:coupled_weak}
   \begin{aligned}
-    &\int_{\Omega}\nabla u\cdot \nabla v &\phantom{+\int_{\Gamma}\nabla \hat{u}\cdot \nabla \hat{v}} &+\int{\Gamma}p v &= \int_{\Omega}f v \quad &\forall v\in V,\\
-    &\phantom{\int_{\Omega}\nabla u\cdot \nabla v} &+{\int_{\Gamma}\nabla \hat{u}\cdot \nabla \hat{v}} &-\int{\Gamma}p\hat{v} &= \int_{\Gamma}\hat{f}\hat{v} \quad &\forall \hat{v}\in \hat{V},\\
+    &\int_{\Omega}\nabla u\cdot \nabla v &\phantom{+\int_{\Gamma}\nabla \hat{u}\cdot \nabla \hat{v}} &+\int_{\Gamma} p v &= \int_{\Omega}f v \quad &\forall v\in V,\\
+    &\phantom{\int_{\Omega}\nabla u\cdot \nabla v} &+{\int_{\Gamma}\nabla \hat{u}\cdot \nabla \hat{v}} &-\int_{\Gamma} p\hat{v} &= \int_{\Gamma}\hat{f}\hat{v} \quad &\forall \hat{v}\in \hat{V},\\
     &\int_{\Gamma}u q &-\int_{\Gamma}\hat{u}q &\phantom{-\int{\Gamma}q\hat{v}} &= \int_{\Gamma}h q \quad &\forall q\in Q.
   \end{aligned}
 \end{equation}
@@ -554,6 +556,164 @@ cells.
   \end{center}
 \end{table}
 
+% --------------------------------------------------------------------
+
+\section{Coupled multiscale problem in 3 mesh formulation}\label{sec:coupled_3}
+The discrete formulations thus far concerned only two meshes, $\Omega_H$ and $\Gamma_h$,
+and are in this sense similar to Problem 2 of the 3$d$-1$d$ problem. Here we
+shall consider a 2$d$ ``analogue'' of Problem 1. In particular the reduced
+domain and the coupling/Lagrange multiplier domain shall be different.
+
+Let us recall that in Problem 1 (of the coupled 3$d$-1$d$ problem) the coupling surface $\Gamma$ isn't necessarily
+identical/related to the cylindrical surface whose centerline is the reduced
+domain $\Gamma$. We propose to take advantage of the fact that (to certain extent?)
+the surface may be chosen freely in the following construction which automatically
+satisfies the requirement of conformity of the triangulation of $\Omega$ to the
+multiplier surface.
+
+Let $\Omega_H$, $\Gamma_h$ be the two \emph{independent} discretizations of the
+bulk and the centerline. In particular, $\Gamma_h$ is not assumed to consist only
+of the edges of the tetrahedra in $\Omega_H$. However, we assume that the $\Gamma_h$
+is finer than $\Omega_H$ restricted to the line. Next, let $\mathcal{K}_H$ be
+the set of all tetrahedra in $\Omega_H$ intersected by elements of $\Gamma_h$.
+Finally, the coupling surface $\omega_H$ shall consist of those facets
+of elements in $\mathcal{K}_H$ which are \emph{not} intersected by the curve.
+The process in the 2$d$ setting of Figure \ref{fig:coupled_domain} is shown
+in Figure \ref{fig:mesh3}. We remark that the coupling surface changes with
+discretization.
+
+%
+\begin{figure}[h]
+  \begin{center}
+    \begin{tikzpicture}[scale=0.60]
+      % Minus
+  \draw[black, very thick] (0,0) rectangle (3, 3);
+  \draw[black, very thick] (0,0) -- (3, 3);
+  \node[left] at (0, 1.5) {$\Omega^{-}_{H}$};
+
+  \node[mark size=3pt, color=black] at (0.0, 0) {\pgfuseplotmark{*}};
+  \node[mark size=3pt, color=black] at (3.0, 0) {\pgfuseplotmark{*}};
+  \node[mark size=3pt, color=black] at (0.0, 3) {\pgfuseplotmark{*}};
+  \node[mark size=3pt, color=black] at (3.0, 3) {\pgfuseplotmark{*}};
+  
+     % Center
+  \draw[black, very thick] (4.5,0) -- (4.5, 3);
+  \node[opacity=0.9, below] at (4.5, 0) {$\Gamma_{h}$};
+
+  \node[mark size=3pt, color=black] at (4.5, 0) {\pgfuseplotmark{*}};
+  \node[mark size=3pt, color=black] at (4.5, 1) {\pgfuseplotmark{*}};
+  \node[mark size=3pt, color=black] at (4.5, 2) {\pgfuseplotmark{*}};
+  \node[mark size=3pt, color=black] at (4.5, 3) {\pgfuseplotmark{*}};
+
+  \draw[black, very thick] (3,0) -- (6, 0);
+  \draw[black, very thick] (3,0) -- (6, 3);
+  \draw[black, very thick] (3,3) -- (6, 3);  
+  % Right
+    \draw[black, very thick] (6,0) rectangle (9, 3);
+  \draw[black, very thick] (6,0) -- (9, 3);
+  \node[right] at (9, 1.5) {$\Omega^{+}_{H}$};
+
+  \node[mark size=3pt, color=black] at (6, 0) {\pgfuseplotmark{*}};
+  \node[mark size=3pt, color=black] at (9, 0) {\pgfuseplotmark{*}};
+  \node[mark size=3pt, color=black] at (6, 3) {\pgfuseplotmark{*}};
+  \node[mark size=3pt, color=black] at (9, 3) {\pgfuseplotmark{*}};
+
+  \draw[blue, very thick] (3,0) -- (3, 3);
+  \draw[blue, very thick] (6,0) -- (6, 3);
+  \node[mark size=3pt, color=blue] at (6, 0) {\pgfuseplotmark{*}};
+  \node[mark size=3pt, color=blue] at (6, 3) {\pgfuseplotmark{*}};
+  \node[mark size=3pt, color=blue] at (3, 0) {\pgfuseplotmark{*}};
+  \node[mark size=3pt, color=blue] at (3, 3) {\pgfuseplotmark{*}};
+
+  \node[below] at (3, 0) {$\omega_{H}$};
+  \node[below] at (6, 0) {$\omega_{H}$};
+
+  \end{tikzpicture}
+    \end{center}
+  \caption{Coupling surface $\omega_H$ consists of facets of elements
+  of $\Omega_H$ not intersected by $\Gamma_h$.}
+    \label{fig:mesh3}
+\end{figure}
+
+To investigate the idea we consider the multiscale problem \eqref{eq:coupled_weak}.
+Note that its left hand side defines an operator
+%
+\[
+\begin{pmatrix}
+  A & & T^{\prime}\\
+  & \hat{A} & -I\\
+  T & -I & 0\\
+\end{pmatrix},
+\]
+where $A$, $\hat{A}$ are the Laplacians on $\Omega$ and $\Gamma$ respectively
+and $T$, $I$ are the trace and identity operators. Let now $V_H=H^{1}_0(\Omega)$,
+$\hat{V}_h=H^{1}_0(\Gamma_h)$, $Q=(H^{-1/2}_{00}(\omega_H))^{\prime}$. We shall
+consider a modified problem defined by operator
+%
+\begin{equation}\label{eq:mesh3}
+\begin{pmatrix}
+  A & & T^{\prime}\\
+  & \hat{A} & -E^{\prime}_{\omega}\\
+  T_{\omega} & -E_{\omega} & 0\\
+\end{pmatrix},
+\end{equation}
+%
+with $T_{\omega}: V\rightarrow Q^{\prime}$ (trace) and $E_{\omega}: \hat{V}\rightarrow Q^{\prime}$
+(extension)
+\[
+\langle T_{\Omega} u, q\rangle = \int_{\omega_H} uq, \quad\quad
+%
+\langle E_{\Omega} \hat{u}, q\rangle = \int_{\omega_H} \hat{u} q.
+\]
+%
+
+In the following experiments we investigate stability and approximation
+properties of \eqref{eq:mesh3}. To this end we consider a Riesz map preconditioner
+based on spaces $V$, $\hat{V}$ and $Q$ and the manufactured test cased from \S \ref{sec:coupled}.
+The spaces are all discretized with P1 elements and we have $H=3h$. As before, we enforce boundary
+conditions on $Q$. The extension operator is defined as extension by constant
+from the nearest degree of freedom of $\hat{V}$.
+
+\begin{table}
+  \begin{center}
+    \scriptsize{
+  \begin{tabular}{c|ccc|c|c}
+    \hline
+    $h$ & $\norm{u-u_H}_1$ & $\norm{\hat{u}-\hat{u}_h}_1$ & $\norm{p-p_h}_0$ & $n$ & $\kappa$\\
+    \hline
+8.58E-2 & 1.49E0(--)    & 6.74E-1(--)   & 7.22E0(--)   & 31 & 13   \\
+4.35E-2 & 9.89E-1(0.60) & 3.46E-1(0.98) & 7.59E0(-0.07)& 40 & 22 \\
+2.19E-2 & 6.66E-1(0.58) & 1.74E-1(1.00) & 7.37E0(0.04) & 48 & 41 \\
+1.10E-2 & 4.57E-1(0.55) & 8.75E-2(1.00) & 7.25E0(0.02) & 58 & 79 \\
+5.51E-3 & 3.17E-1(0.53) & 4.37E-2(1.00) & 7.14E0(0.02) & 75 & 154 \\
+2.76E-3 & 2.22E-1(0.52) & 2.18E-2(1.00) & 7.09E0(0.01) & 75 & 304 \\
+1.38E-3 & 1.56E-1(0.51) & 1.09E-2(1.00) & 7.06E0(0.01) & 77 & -- \\
+    \hline
+  \end{tabular}
+    }
+    \caption{Three mesh formulation. Approximation errors, number of preconditioned MinRes iterations ($n$) and
+      condition number of the preconditioned problem \eqref{eq:coupled_weak} ($\kappa$) discretized
+      with P1-P1-P1 elements.}
+  \label{tab:mesh3}
+  \end{center}
+\end{table}
+%
+
+Table \ref{tab:mesh3} summarizes the preliminary results. With the exception of the multiplier
+convergence in all the variables can be seen. However, we recall that the
+true solution is here defined as $\jump{\nabla u\cdot n}$ on $\Gamma$ while
+the discrete one lives on $\omega_H$ so there is at the very least some
+geometrical error. Observing the condition numbers we also see that the
+formulation is unstable. 
+
+\subsection{TODO}
+\begin{itemize}
+\item Build \eqref{eq:mesh3} for just half of the domain, so $\omega_H$ is connected
+\item How is this problem related 2$d$-2$d$-2$d$ problem with ``thin'' (middle) domain
+  which becomes $\Gamma$?
+\item What are then the approximation properties?
+\item Stabilization
+\end{itemize}
 
 \bibliographystyle{siamplain}
 \bibliography{stab}

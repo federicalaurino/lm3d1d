@@ -130,11 +130,11 @@ Concerning the stability inequality, the proof is analogous to the one in \cite{
 \begin{equation*}
 b([u_h, {\ud}_h], \lambda _h) = |\DD|\left(\avrc{T u_h} - {\ud}_h, \lambda _h\right)_{\Lambda}.
 \end{equation*}
-Let us consider macro patches $\left\{ F_j \right\}_j$ of elements of the 3D mesh $\mathcal{T}_h^{\Omega}$ intersecting the 1D manifold $\Lambda$. These patches are such that $diam(F_j)\leq H$ and  $jH\leq |F_j\cap \Gamma|\leq H+h$, where $H$ is sufficiently larger than $h$. Moreover, there exist constants $c_h$ and $c_H$ such that $c_hh\leq H \leq c_H^{-1}h$. We make the following technical assumption: $\Gamma \subset \bigcup _{j} F_j$. We define the space $L_h$ as the space of functions which are $P^0$ on each intersection $F_j\cap \Lambda$. Moreover, we associate to each patch $F_j$ a shape regular macro elements $\omega_j$, which is built adding to $F_j$ a sufficient number of elements of $\mathcal{T}_h^{\Omega}$. Thanks to the shape regularity of these macro elements, again we have that the discrete trace and Poincarè inequalites hold. Moreover $\forall u_h \in X_h^\Omega$ we have the following average inequality 
+Let us consider macro patches $\left\{ F_j \right\}_j$ of elements of the 3D mesh $\mathcal{T}_h^{\Omega}$ intersecting the 1D manifold $\Lambda$. These patches are such that and  $jH\leq |F_j\cap \Lambda|\leq H+h$, where $H$ is sufficiently larger than $h$. Moreover, there exist constants $c_h$ and $c_H$ such that $c_hh\leq H \leq c_H^{-1}h$. We define the space $L_h$ as the space of functions which are $P^0$ on each intersection $F_j\cap \Lambda$. Moreover, we associate to each patch $F_j$ a shape regular macro elements $\omega_j$, which is built adding to $F_j$ a sufficient number of elements of $\mathcal{T}_h^{\Omega}$.We make the following technical assumption: $\Gamma \subset \bigcup _{j} \omega_j$. Thanks to the shape regularity of these macro elements, again we have that the discrete trace and Poincarè inequalites hold. Moreover $\forall u_h \in X_h^\Omega$ we have the following average inequality 
 \begin{equation*}
-\sum _j |\DD| \|\avrc{T u_h}\|^2_{L^2(F_j \cap \Lambda)} \leq \sum _j \|\avrc{T u_h}\|^2_{L^2(F_j\cap \Lambda)}.
+\sum _j |\DD| \|\avrc{T u_h}\|^2_{L^2(F_j \cap \Lambda)} \leq \sum _j \|T u_h\|^2_{L^2(\omega_j\cap \Gamma)}.
 \end{equation*}
-{\color{red} I think this inequality is valid but only globally. Indeed locally it is not guaranteed that the portion of $\Gamma$ corresponding to $F_j \cap \Lambda$ is contained in $F_j \cap \Gamma$}. \\
+{\color{red} I think this inequality is valid but only globally. Indeed locally it is not guaranteed that the portion of $\Gamma$ corresponding to $F_j \cap \Lambda$ is contained in $\omega _j \cap \Gamma$}. \\
 We define $\pi_L$ as the projection onto piecewise constant functions on $F_j\cap \Lambda$. This choice leads to the following stabilization 
 \begin{equation*}
 s(\lambda_h, \mu_h)= \sum _{K\in \mathcal{T}_{h'}^{\Lambda}} \int_{\partial K} h \llbracket \lambda_h \rrbracket \llbracket \mu_h \rrbracket,
@@ -188,7 +188,7 @@ Concerning the continuity of $\pi_F$, we have
 \\
 (\text{being }|F_j\cap \Lambda| \leq H+h)\lesssim   \|\nabla  v\|_{L^2(\Omega)} + \frac {1}{H^{\frac 12}} \sum_j  |\DD|\| \avrc{Tv}-\avrc{TI_hv}\|_{L^2(F_j\cap \Lambda)}
 \\
-(\text{average inequality}) \lesssim \|\nabla  v\|_{L^2(\Omega)} + \frac {1}{H^{\frac 12}} \sum_j |\DD|^{\frac 12} \| T(v-I_hv)\|_{L^2(F_j\cap \Gamma)}  
+(\text{average inequality}) \lesssim \|\nabla  v\|_{L^2(\Omega)} + \frac {1}{H^{\frac 12}} \sum_j |\DD|^{\frac 12} \| T(v-I_hv)\|_{L^2(\omega _j\cap \Gamma)}  
 \\
 \left(\text{trace inequality} \right)\lesssim   \|\nabla  v\|_{L^2(\Omega)} + \frac {1}{H} \sum_j  \| v-I_h v\|_{L^2(\omega_j)} \lesssim \|\nabla  v\|_{L^2(\Omega)} + \frac {1}{H}  \| v-I_h v\|_{L^2(\Omega)} 
 \\
@@ -229,7 +229,7 @@ For the first term we have
 \begin{multline*}
 \sum _j |\DD| \|(\pi_L - \mathcal{I})\avrc{Tu_h}\|^2_{L^2(F_j\cap \Lambda)} =\int _{F_j \cap \Lambda} |\DD| (\pi_L \avrc{Tu_h}- \avrc{Tu_h})^2
 \\
-(\text{Average inequality)} \leq \sum _j  \int_{F_j \cap \Gamma} (\pi_L \avrc{Tu_h} -Tu_h)^2 
+(\text{Average inequality)} \leq \sum _j  \int_{\omega _j \cap \Gamma} (\pi_L \avrc{Tu_h} -Tu_h)^2 
 \\
 (\text{trace inequality}) \leq \sum _j  \frac 1H \int_{\omega_j}(\pi_L \avrc{Tu_h} - u_h)^2 
 \\ 

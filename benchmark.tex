@@ -1,0 +1,106 @@
+\section{A benchmark problem with analytical solution}
+
+We consider the following 3D-1D coupled problem,
+\begin{subequations}\label{benchmark}
+\begin{align}
+\label{benchm_3d}
+-\Delta u=f \quad &\text{in $\Omega$}\\
+\label{benchm_1d}
+-d_{zz}^2 \ud =g \quad &\text{on $\Lambda$}\\
+u=0 \quad &\text{on $\partial \Omega$}\\
+\label{benchm_coupl}
+\ud -\avrc{u}=q \quad &\text{on $\Lambda$}
+\end{align}
+\end{subequations}
+
+where $\Omega=[0,1]\times [0,1]\times [0,H]$, $\Lambda=\{x=0.5\}\times \{y=0.5\} \times [0,H] $ and
+\begin{eqnarray*}
+f=8\pi ^2 \sin (2\pi x) \sin (2\pi y)\\
+%g=-\exp(-z)\\
+%q=1+\exp(-z).
+g=\frac{\pi ^2}{H^2} \sin \left(\frac{\pi z}{H}\right)\\
+q=\sin \left(\frac{\pi z}{H}\right).
+\end{eqnarray*}
+In this case the $z$ coordinate coincides with the axial coordinate along $\Lambda$. We define $\Sigma=[0.25,0.75]\times [0.25,0.75]\times [0,H]$. The average of the 3D solution $\avrc{u}$ in \eqref{benchm_coupl} is computed on the cross section $\DD$ of the virtual interface $\Gamma=\partial \Sigma$. The exact solution of \eqref{benchmark} is given by
+\begin{eqnarray}
+\label{benchm_sol3d}
+u=\sin (2\pi x) \sin (2\pi y)\\
+\label{benchm_sol1d}
+%\ud=1+\exp(-z).
+\ud=\sin \left(\frac{\pi z}{H}\right) 
+\end{eqnarray}
+Let us notice that $\ud$ satisfies homogeneous Dirichlet conditions at the boundary of $\Lambda$.
+Moreover, the solution \eqref{benchm_sol3d}-\eqref{benchm_sol1d} satisfies on $\Gamma$ the relation
+\begin{equation}\label{benchm_flux}
+\lambda=\nabla u \cdot \textbf{n}_{\oplus}=d_z \ud n_{\oplus,z}=0,
+\end{equation}
+being $n_{\oplus,z}$ the $z-$component of the normal unit vector to $\Gamma$.
+
+We prove that \eqref{benchm_sol3d}-\eqref{benchm_sol1d} is solution of \eqref{eq:problem1} and \eqref{eq:problem2} in the simplified case in which the starting 3D-3D problem is
+\begin{subequations}\label{eq:dirneu_simple}
+\begin{align}
+- \Delta \up  &= f  && \text{ in } \Omega_{\oplus},\\
+- \Delta \uf &= g  && \text{ in } \Sigma,\\
+-\nabla \uf \cdot \nn_{\ominus} &= -\nabla \up \cdot \nn_{\ominus}  && \text{ on } \Gamma,\\
+\uf - \up &= q  && \text{ on }  \Gamma,\\
+\up &= 0 && \text{ on } \partial \Omega\,.
+\end{align}
+\end{subequations}
+instead of \eqref{eq:dirneu}. Therefore the reduced problems in the two different formulations \eqref{eq:problem1} and \eqref{eq:problem2} become respectively
+ 
+\begin{subequations}\label{eq:problem1_simple}
+\begin{align}
+\label{eq:problem1_simple_eq1}
+&(\nabla u,\nabla v)_{L^2(\Omega)} + |{\cal D}|(d_s \ud,d_s \vd)_{L^2(\Lambda)} 
++ \langle \Pi_1 v  - \Pi_2 \vd, L \rangle_\Gamma
+\\
+\nonumber
+&\qquad\qquad= (f,v)_{L^2(\Omega)} + |{\cal D}| (\avrd{g},\vd)_{L^2(\Lambda)}
+\quad \forall v \in H^1_0(\Omega), \ \vd \in H^1(\Lambda)
+\\
+\label{eq:problem1_simple_eq2}
+&   \langle \Pi_1 u - \Pi_2 \ud , M \rangle_\Gamma =  \langle q , M \rangle_\Gamma
+\quad \forall M \in H^{-\frac12}(\Gamma)\,.
+\end{align}
+\end{subequations}
+
+and
+
+\begin{subequations}\label{eq:problem2_simple}
+\begin{align}
+&(\nabla u,\nabla v)_{L^2(\Omega)} + |{\cal D}|(d_s \ud,d_s \vd)_{L^2(\Lambda)} 
++ |\partial {\cal D}| \langle \Pi_1 v - \Pi_2 \vd, L \rangle_{H^{-\frac12}(\Lambda)} 
+\\
+\nonumber
+&\qquad\qquad= (f,v)_{L^2(\Omega)} + |{\cal D}| (\avrd{g},V)_{L^2(\Lambda)}
+\quad \forall v \in H^1_0(\Omega), \ \vd \in H^1_0(\Lambda)
+\\
+&  |\partial {\cal D}| \langle \Pi_1 u -  \Pi_2 \ud, M \rangle_{H^{-\frac12}(\Lambda)} =|\partial {\cal D}| \langle \avrc{q}, M \rangle_{H^{-\frac12}(\Lambda)}
+\quad \forall M \in H^{-\frac12}(\Lambda)\,.
+\end{align}
+\end{subequations}
+
+Let us prove that \eqref{benchm_sol3d}-\eqref{benchm_sol1d} is solution of \eqref{eq:problem1_simple}. Using the integration by part formula and homogeneous boundary conditions on $\Omega$ and $\Lambda$, from \eqref{eq:problem1_simple_eq1} we have
+\begin{align*}
+&-(\Delta u, v)_{L^2(\Omega)} - |{\cal D}|(d^2_{ss} \ud, \vd)_{L^2(\Lambda)} 
++ \langle \Pi_1 v  - \Pi_2 \vd, L \rangle_\Gamma
+\\
+\nonumber
+&\qquad\qquad= (f,v)_{L^2(\Omega)} + |{\cal D}| (\avrd{g},\vd)_{L^2(\Lambda)}
+\quad \forall v \in H^1_0(\Omega), \ \vd \in H^1(\Lambda).
+\\
+\end{align*}
+Clearly, since \eqref{benchm_sol3d} satisfies \eqref{benchm_3d} and \eqref{benchm_sol1d} satisfies \eqref{benchm_1d}, we have that \begin{align*}
+-(\Delta u, v)_{L^2(\Omega)} =  (f,v)_{L^2(\Omega)} \\
+-|{\cal D}|(d^2_{ss} \ud, \vd)_{L^2(\Lambda)}  = |{\cal D}| (\avrd{g},\vd)_{L^2(\Lambda)}
+\end{align*}
+and being $L=\lambda=0$, we can conclude that \eqref{benchm_sol3d}-\eqref{benchm_sol1d} satisfy \eqref{eq:problem1_simple_eq1}. The fact that the solution satisfy \eqref{eq:problem1_simple_eq2} follows from \eqref{benchm_coupl}. We can prove in the same way that \eqref{benchm_sol3d}-\eqref{benchm_sol1d} is solution of \eqref{eq:problem2_simple}, exploiting the fact that in this case $L=\avrc{\lambda}=0$. 
+
+\begin{remark}
+Let us notice that the 3D solution \eqref{benchm_sol3d} is such that $\avrc{u}=0$. Therefore in \eqref{benchmark} it is like we are solving two separated problems, one in $\Omega$ and the other on $\Lambda$.
+\end{remark}
+\begin{remark}
+It would be interesting to make a comparison between the solution of the fully coupled 3D-3D problem \eqref{eq:dirneu} (also in the simplified case of type \eqref{eq:dirneu_simple}) and the solution of the reduced problems \eqref{eq:problem1} and \eqref{eq:problem2}. 
+Therefore, we could set the values of the data of the problem such that the reduced formulation becomes non-trivial and fully coupled.
+Then, we will solve both the original and reduced problem to observe the differences in the solutions and the values of the Lagrange multiplier.
+\end{remark}

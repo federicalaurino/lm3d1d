@@ -13,7 +13,7 @@ a([u_h, {\ud}_h],[u_h, {\ud}_h] ) + b([u_h, {\ud}_h], \xi_h([u_h, {\ud}_h])) \ge
 (s(\xi_{h}, \xi_{h}))^{\frac 12} \leq c_s \vertiii{[u_h, {\ud}_h]}_{X_h(\Omega)\times X_h(\Lambda) },
 \end{equation}
 being $\vertiii{\cdot }_{X_h(\Omega)\times X_h(\Lambda) }$ a suitable discrete norm. \\
-The space $L_h$ is built as the space of $P^0$ functions defined on macro patches $\left\{ F_j \right\}_j$ of elements of $\mathcal{G}_h$. These patches are such that $diam(F_j)\leq H$ and  $jH\leq |F_j\cap \Gamma|\leq H+h$. Moreover, there exist constants $c_h$ and $c_H$ such that $c_hh\leq H \leq c_H^{-1}h$. To each patch $F_j$ we associate two shape regular macro elements $\omega_j$ and $\tilde{\omega}_j$: $\omega_j$ is built adding to $F_j \cap \Omega_{\oplus}$ a sufficient number of elements of $\mathcal{T}_h^{\Omega}$ contained in $\Omega_{\oplus}$, whereas $\tilde{\omega}_j$ is obtained adding to $F_j \cap\Sigma$ a sufficient number of elements of $\mathcal{T}_h^{\Omega}$ contained in $\Sigma$. Thanks to the shape regularity of these macro elements, we have that the following trace and Poincarè inequalites hold. For every function $v\in H^1(\omega_j)$,
+The space $L_h$ is built as the space of $P^0$ functions defined on macro patches $\left\{ F_j \right\}_j$ of elements of $\mathcal{G}_h$. These patches are such that $diam(F_j)\leq H$ and  $H\leq |F_j\cap \Gamma|\leq H+h$. Moreover, there exist constants $c_h$ and $c_H$ such that $c_hh\leq H \leq c_H^{-1}h$. To each patch $F_j$ we associate two shape regular macro elements $\omega_j$ and $\tilde{\omega}_j$: $\omega_j$ is built adding to $F_j \cap \Omega_{\oplus}$ a sufficient number of elements of $\mathcal{T}_h^{\Omega}$ contained in $\Omega_{\oplus}$, whereas $\tilde{\omega}_j$ is obtained adding to $F_j \cap\Sigma$ a sufficient number of elements of $\mathcal{T}_h^{\Omega}$ contained in $\Sigma$. Thanks to the shape regularity of these macro elements, we have that the following trace and Poincarè inequalites hold. For every function $v\in H^1(\omega_j)$,
 \begin{equation}\label{discr_trace_ineq}
 \|Tv\|_{\Gamma\cap \omega_j} \lesssim H^{-\frac 12} \|v\|_{L^2(\omega_j)}
 \end{equation}
@@ -130,7 +130,7 @@ Concerning the stability inequality, the proof is analogous to the one in \cite{
 \begin{equation*}
 b([u_h, {\ud}_h], \lambda _h) = |\DD|\left(\avrc{T u_h} - {\ud}_h, \lambda _h\right)_{\Lambda}.
 \end{equation*}
-Let us consider macro patches $\left\{ F_j \right\}_j$ of elements of the 3D mesh $\mathcal{T}_h^{\Omega}$ intersecting the 1D manifold $\Lambda$. These patches are such that and  $jH\leq |F_j\cap \Lambda|\leq H+h$, where $H$ is sufficiently larger than $h$. Moreover, there exist constants $c_h$ and $c_H$ such that $c_hh\leq H \leq c_H^{-1}h$. We define the space $L_h$ as the space of functions which are $P^0$ on each intersection $F_j\cap \Lambda$. Moreover, we associate to each patch $F_j$ a shape regular macro elements $\omega_j$, which is built adding to $F_j$ a sufficient number of elements of $\mathcal{T}_h^{\Omega}$.We make the following technical assumption: $\Gamma \subset \bigcup _{j} \omega_j$. Thanks to the shape regularity of these macro elements, again we have that the discrete trace and Poincarè inequalites hold. Moreover $\forall u_h \in X_h^\Omega$ we have the following average inequality 
+Let us consider macro patches $\left\{ F_j \right\}_j$ of elements of the 3D mesh $\mathcal{T}_h^{\Omega}$ intersecting the 1D manifold $\Lambda$. These patches are such that and  $H\leq |F_j\cap \Lambda|\leq H+h$, where $H$ is sufficiently larger than $h$. Moreover, there exist constants $c_h$ and $c_H$ such that $c_hh\leq H \leq c_H^{-1}h$. We define the space $L_h$ as the space of functions which are $P^0$ on each intersection $F_j\cap \Lambda$. Moreover, we associate to each patch $F_j$ a shape regular macro elements $\omega_j$, which is built adding to $F_j$ a sufficient number of elements of $\mathcal{T}_h^{\Omega}$.We make the following technical assumption: $\Gamma \subset \bigcup _{j} \omega_j$. Thanks to the shape regularity of these macro elements, again we have that the discrete trace and Poincarè inequalites hold. Moreover $\forall u_h \in X_h^\Omega$ we have the following average inequality 
 \begin{equation*}
 \sum _j |\DD| \|\avrc{T u_h}\|^2_{L^2(F_j \cap \Lambda)} \leq \sum _j \|T u_h\|^2_{L^2(\omega_j\cap \Gamma)}.
 \end{equation*}
@@ -177,23 +177,28 @@ Then we have
 \end{multline*}
 Concerning the continuity of $\pi_F$, we have
 \begin{multline*}
-\|\nabla \pi_F v \|_{L^2(\Omega)} \leq \|\nabla I_h v\|_{L^2(\Omega)} + \sum_j|\alpha_j|\|\nabla \varphi _j\|_{L^2(\bar{\omega}_j)}\\
-(\text{stability of }I_h)\lesssim   \|\nabla  v\|_{L^2(\Omega)} + \sum_j|\alpha_j|\|\nabla \varphi _j\|_{L^2(\bar{\omega}_j)}
-\\
-\left(\text{using }\|\nabla \varphi\|=O(1)\right) \lesssim \|\nabla  v\|_{L^2(\Omega)} + \sum_j \frac{\left|\int_{F_j\cap \Lambda} |\DD| (\avrc{Tv}-\avrc{TI_hv})\right|}{\int_{F_j\cap \Lambda}|\DD|\avrc{T\varphi_j}}
-\\
-\left(\text{since }\left|\int_{F_j\cap \Lambda}|\DD|\avrc{T\varphi_j}\right|=O(H)\right) \lesssim  \|\nabla  v\|_{L^2(\Omega)} + \frac 1H \sum_j \left|\int_{F_j\cap \Lambda} |\DD| (\avrc{Tv}-\avrc{TI_hv})\right| 
-\\
-(\text{H\"older}) \lesssim  \|\nabla  v\|_{L^2(\Omega)} + \frac 1H \sum_j |F_j\cap \Lambda|^{\frac 12} \left(\int_{F_j\cap \Lambda} |\DD|^2(\avrc{Tv}-\avrc{TI_hv})^2\right)^{\frac 12}
-\\
-(\text{being }|F_j\cap \Lambda| \leq H+h)\lesssim   \|\nabla  v\|_{L^2(\Omega)} + \frac {1}{H^{\frac 12}} \sum_j  |\DD|\| \avrc{Tv}-\avrc{TI_hv}\|_{L^2(F_j\cap \Lambda)}
-\\
-(\text{average inequality}) \lesssim \|\nabla  v\|_{L^2(\Omega)} + \frac {1}{H^{\frac 12}} \sum_j |\DD|^{\frac 12} \| T(v-I_hv)\|_{L^2(\omega _j\cap \Gamma)}  
-\\
-\left(\text{trace inequality} \right)\lesssim   \|\nabla  v\|_{L^2(\Omega)} + \frac {1}{H} \sum_j  \| v-I_h v\|_{L^2(\omega_j)} \lesssim \|\nabla  v\|_{L^2(\Omega)} + \frac {1}{H}  \| v-I_h v\|_{L^2(\Omega)} 
-\\
-(\text{approximation properties of }I_h)\lesssim \|\nabla  v\|_{L^2(\Omega)}.
+\|\nabla \pi_F v \|_{L^2(\Omega)} \leq \|\nabla I_h v\|_{L^2(\Omega)} + \left(\sum_j|\alpha_j|^2\|\nabla \varphi _j\|^2_{L^2(\bar{\omega}_j)}\right)^{\frac 12}\\
+(\text{stability of }I_h)\lesssim   \|\nabla  v\|_{L^2(\Omega)} + \left(\sum_j|\alpha_j|^2\|\nabla \varphi _j\|^2_{L^2(\bar{\omega}_j)}\right)^{\frac 12}
 \end{multline*}
+and for the second term we have
+\begin{multline*}
+\sum_j|\alpha_j|^2\|\nabla \varphi _j\|^2_{L^2(\bar{\omega}_j)}\leq
+\\
+\left(\text{using }\|\nabla \varphi _j\|=O(1)\right) \lesssim  \sum_j \frac{\left(\left|\int_{F_j\cap \Lambda} |\DD| (\avrc{Tv}-\avrc{TI_hv})\right|\right)^2}{\left(\int_{F_j\cap \Lambda}|\DD|\avrc{T\varphi_j}\right)^2}
+\\
+\left(\text{since }\left|\int_{F_j\cap \Lambda}|\DD|\avrc{T\varphi_j}\right|=O(H)\right) \lesssim \frac {1}{H^2} \sum_j \left(\left|\int_{F_j\cap \Lambda} |\DD| (\avrc{Tv}-\avrc{TI_hv})\right| \right)^2
+\\
+(\text{Jensen}) \lesssim  \frac {1}{H^2} \sum_j |F_j\cap \Lambda| \int_{F_j\cap \Lambda} |\DD|^2(\avrc{Tv}-\avrc{TI_hv})^2
+\\
+(\text{being }|F_j\cap \Lambda| \leq H+h)\lesssim  \frac {1}{H} \sum_j \| \avrc{Tv}-\avrc{TI_hv}\|^2_{L^2(F_j\cap \Lambda), |\DD|}
+\\
+(\text{average inequality}) \lesssim  \frac {1}{H} \sum_j \| T(v-I_hv)\|^2_{L^2(\omega _j\cap \Gamma)}  
+\\
+\left(\text{trace inequality} \right)\lesssim  \frac {1}{H^2} \sum_j  \| v-I_h v\|^2_{L^2(\omega_j)} \lesssim  \frac {1}{H^2}  \| v-I_h v\|^2_{L^2(\Omega)} 
+\\
+(\text{approximation properties of }I_h)\lesssim \|\nabla  v\|^2_{L^2(\Omega)}
+\end{multline*}
+and the continuity of $\pi_F$ follows.
 
 \subparagraph{Satisfaction of the assumptions of the 
 abstract analysis} 

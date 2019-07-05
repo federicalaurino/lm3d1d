@@ -1,0 +1,179 @@
+\subsection{$\mathcal{T}^{\Omega}_h$ non conforming to $\Gamma$}
+We analyze now the case in which the elements of the 3D mesh $\mathcal{T}^{\Omega}_h$ cut the interface $\Gamma$. It is easy to understand that the formulation of Problem 2 is more suitable. 
+{\color{red} Add more details, we can refer also to cutFEM (Burman, Massing etc.) explaining the limitation of that approach (network case for example).}\\
+Therefore we focus on the analysis of Problem 2.
+
+\subsubsection{Problem 2} We consider for the solutions $u_h$ and ${\ud}_h$ the spaces $X^0_{h,1}(\Omega)$ and $X^0_{h,1}(\Lambda)$, see the previous subsection for the definition. Concerning the multiplier space, we make the following choice, $Q_h(\Lambda)=\{{\ld}_h : {\ld}_h \in P^0(K) \forall K \in \mathcal{T}^{\Lambda}_{h'}\}$, namely the multiplier lives on the same mesh used for the 1D solution ${\ud}_h$. Notice that in this case we suppose that the mesh sizes of the 3D mesh $	\mathcal{T}^{\Omega}_h$ and the 1D mesh $\mathcal{T}^{\Lambda}_{h'}$ are different, in particular we suppose the 1D mesh is finer. With this choice the problem is not inf-sup stable, therefore the idea is to add a stabilization term $s({\ld}_h, {\md}_h)$ to \eqref{eq:prob2_discrete} following the approach introduce in \cite{burman2014}. In particular, we build a new multiplier space $L_h(\Lambda)$ for which the discrete inf-sup condition is fulfilled and we build a projection operator $\pi_L: Q_h(\Lambda) \rightarrow L_h(\Lambda)$. Based on this projection operator, we build the stabilization term $s({\ld}_h, {\md}_h)$ and prove that $\forall [u_h, {\ud}_h]$, there exists $\xi_h([u_h, {\ud}_h]) \in Q_h(\Lambda)$ s.t.  
+\begin{equation}\label{stab_coercivity}
+a([u_h, {\ud}_h],[u_h, {\ud}_h] ) + b([u_h, {\ud}_h], \xi_h([u_h, {\ud}_h])) \geq \alpha_\xi \vertiii{[u_h, {\ud}_h]}_{X^0_{h,1}(\Omega)\times X^0_{h,1}(\Lambda) },
+\end{equation}
+\begin{equation}\label{stab_stability}
+(s(\xi_{h}, \xi_{h}))^{\frac 12} \leq c_s \vertiii{[u_h, {\ud}_h]}_{X^0_{h,1}(\Omega)\times X^0_{h,1}(\Lambda) },
+\end{equation}
+being $\vertiii{[\cdot \, ,\, \cdot] }_{X^0_{h,1}(\Omega)\times X^0_{h,1}(\Lambda) }$ a suitable discrete norm. \\
+
+We recall that in the case of Problem 2, 
+\begin{equation*}
+b([u_h, {\ud}_h], {\ld}_h) = \left(\avrc{T u_h} - {\ud}_h, {\ld}_h\right)_{\Lambda,|\DD|}.
+\end{equation*}
+The construction of the inf-sup stable space $L_h(\Lambda)$ is based on assembling the elements of the 3D mesh $\mathcal{T}_h^{\Omega}$ intersecting the 1D manifold $\Lambda$ into macro patches $\left\{ F_j \right\}_j$. These patches are such that and  $H\leq |F_j\cap \Lambda|\leq H+h$, where $H$ is sufficiently larger than $h$. Moreover,  we assume there exist constants $c_h$ and $c_H$ such that $c_h h\leq H \leq c_H^{-1}h$. We define the space $L_h(\Lambda)$ as the space of functions which are $P^0$ on each intersection $F_j\cap \Lambda$. Moreover, we associate to each patch $F_j$ a shape regular macro elements $\omega_j$, which is built adding to $F_j$ a sufficient number of elements of $\mathcal{T}_h^{\Omega}$. We make the following technical assumption: $\Gamma \subset \bigcup _{j} \omega_j$. Thanks to the shape regularity of these macro elements,  we have that the discrete trace and Poincarè inequalites hold. More precisely, for every function $v\in H^1(\omega_j)$,
+\begin{equation}\label{discr_trace_ineq}
+\|Tv\|_{\Gamma\cap \omega_j} \lesssim H^{-\frac 12} \|v\|_{L^2(\omega_j)}
+\end{equation}
+\begin{equation}\label{disc_poincare_ineq}
+\|v- \pi_Lv\|_{L^2(\omega_j)} \leq c_P H \|\nabla v\|_{L^2(\omega_j)},
+\end{equation}
+where $\pi_L$ is defined as the projection onto piecewise constant functions on $F_j\cap \Lambda$.
+ Moreover $\forall u_h \in X_h^\Omega$ we have the following average inequality 
+\begin{equation*}
+\sum _j \|\avrc{T u_h}\|^2_{L^2(F_j \cap \Lambda),|\DD| } \leq \sum _j \|T u_h\|^2_{L^2(\omega_j\cap \Gamma)}.
+\end{equation*}
+{\color{red} I think this inequality is valid but only globally. Indeed locally it is not guaranteed that the portion of $\Gamma$ corresponding to $F_j \cap \Lambda$ is contained in $\omega _j \cap \Gamma$}. \\
+These choices lead to the following stabilization 
+\begin{equation*}
+s({\ld}_h, {\md}_h)= \sum _{K\in \mathcal{T}_{h'}^{\Lambda}} \int_{\partial K} h \llbracket {\ld}_h \rrbracket \llbracket {\md}_h \rrbracket,
+\end{equation*}
+being $\llbracket {\ld}_h \rrbracket$ the jump of ${\ld}_h$ across the internal faces of $\mathcal{T}_{h'}^{\Lambda}$.
+\begin{lemma}
+The space $L_h$ inf-sup stable, namely $\forall {\lld}_h \in L_h(\Lambda)$, $\exists \beta >0$ s.t.
+\begin{equation*}
+\sup_{\substack{v_h \in X_{h,1}^0(\Omega),\\ {\vd}_h \in X_{h',1}^0(\Lambda)}} \frac{\left(\avrc{T v_h} - {\vd}_h, {\lld} _h\right)_{\Lambda, |\DD|}}{\vertiii{[v_h, {\vd}_h]}} \geq \beta \|{\lld}_h\|_{H^{-\frac 12}(\Lambda)}.
+\end{equation*} 
+and the constant is independent of the cuts. 
+\end{lemma}
+\begin{proof}
+% We have to prove that $\exists \beta >0$ such that $\forall l_h \in L_h$,
+%\begin{equation*}
+%\sup_{\substack{v_h \in X_{h,1}^0(\Omega),\\ {\vd}_h \in X_{h',1}^0(\Lambda)}} \frac{\left(\avrc{T v_h} - {\vd}_h, l _h\right)_{\Lambda, |\DD|}}{\vertiii{[v_h, {\vd}_h]}} \geq \beta \|l_h\|_{H^{-\frac 12}(\Lambda)}.
+%\end{equation*}
+As in the continuous case, we can choose ${\vd}_h=0$ and we prove that
+\begin{equation*} 
+\sup_{v_h \in X_{h,1}^0(\Omega)} \frac{\left(\avrc{T v_h} ,{\lld}_h\right)_{\Lambda, |\DD|}}{\|v_h\|_{H^1(\Omega)}} \geq \beta \|{\lld}_h\|_{H^{-\frac 12}(\Lambda)}.
+\end{equation*} 
+Proving the last inequality it is equivalent to find the Fortin operator $\pi_F: H^1_0(\Omega) \rightarrow X_{h,1}^0(\Omega)$, such that 
+\begin{equation*}
+\left(\avrc{T v} - \avrc{T \pi _F v}  , {\lld}_h\right)_{\Lambda, |\DD|}=0, \quad \forall v\in H^1_0(\Omega), \, {\lld}_h \in L_h(\Lambda)
+\end{equation*} 
+and
+\begin{equation*}
+\|\pi_F v\|_{H^1(\Omega)}\lesssim \|v\|_{H^1(\Omega)}.
+\end{equation*} 
+
+We define
+\begin{equation*}
+\pi_F v = I_h v + \sum _j \alpha _j \varphi _j \qquad \text{with }\alpha_j =\frac{\int_{F_j \cap \Lambda}|\DD| (\avrc{Tv}-\avrc{TI_hv})}{\int_{F_j \cap \Lambda}|\DD|\avrc{T\varphi _j}}
+\end{equation*}
+and $\varphi_j \in X_{h,1}^0(\Omega)$ s.t. supp$(\varphi_j)\subset \bar{\omega}_j$, $\varphi_j =0$ on $\partial \omega _j$ and 
+\begin{equation*}
+ \int_{F_j\cap \Lambda}|\DD|\avrc{T\varphi_j}=O(H) \text{ and } \|\nabla \varphi\|_{L^2(\omega _j)}=O(1). 
+\end{equation*}
+This construction is always possible provided $H$ is sufficiently larger that $h$.
+Then we have
+\begin{multline*}
+\left(\avrc{T v} - \avrc{T \pi _F v}  , {\lld}_h\right)_{\Lambda, |\DD|} 
+= \sum _j \int_{F_j\cap \Lambda} |\DD |\left[ \avrc{Tv}-\avrc{TI_hv}-\sum _i \alpha_i \avrc{T\varphi _i} \right]{\lld}_h \\
+=(\text{supp} \varphi \subset \omega_j) \sum _j \int_{F_j\cap \Lambda}|\DD| \left[ \avrc{Tv}-\avrc{TI_hv}-\alpha_j \avrc{T\varphi _j} \right]{\lld}_h\\
+=\sum _j \int_{F_j\cap \Lambda} |\DD| (\avrc{Tv}-\avrc{T I_h v}) {\lld}_h - \frac{\int_{F_j\cap \Lambda} |\DD| (\avrc{Tv}-\avrc{TI_hv})}{\int_{F_j\cap \Lambda}|\DD|\avrc{T\varphi_j}} \int_{F_j\cap \Lambda} |\DD|\avrc{T\varphi _j}{\lld}_h\\ 
+=(\text{using $l_h$ constant on $F_j\cap \Lambda$})\,0.
+\end{multline*}
+Concerning the continuity of $\pi_F$, we have
+\begin{multline*}
+\|\nabla \pi_F v \|_{L^2(\Omega)} \leq \|\nabla I_h v\|_{L^2(\Omega)} + \left(\sum_j|\alpha_j|^2\|\nabla \varphi _j\|^2_{L^2(\bar{\omega}_j)}\right)^{\frac 12}\\
+(\text{stability of }I_h)\lesssim   \|\nabla  v\|_{L^2(\Omega)} + \left(\sum_j|\alpha_j|^2\|\nabla \varphi _j\|^2_{L^2(\bar{\omega}_j)}\right)^{\frac 12}
+\end{multline*}
+and for the second term we have
+\begin{multline*}
+\sum_j|\alpha_j|^2\|\nabla \varphi _j\|^2_{L^2(\bar{\omega}_j)}\leq
+\\
+\left(\text{using }\|\nabla \varphi _j\|=O(1)\right) \lesssim  \sum_j \frac{\left(\left|\int_{F_j\cap \Lambda} |\DD| (\avrc{Tv}-\avrc{TI_hv})\right|\right)^2}{\left(\int_{F_j\cap \Lambda}|\DD|\avrc{T\varphi_j}\right)^2}
+\\
+\left(\text{since }\left|\int_{F_j\cap \Lambda}|\DD|\avrc{T\varphi_j}\right|=O(H)\right) \lesssim \frac {1}{H^2} \sum_j \left(\left|\int_{F_j\cap \Lambda} |\DD| (\avrc{Tv}-\avrc{TI_hv})\right| \right)^2
+\\
+(\text{Jensen}) \lesssim  \frac {1}{H^2} \sum_j |F_j\cap \Lambda| \int_{F_j\cap \Lambda} |\DD|^2(\avrc{Tv}-\avrc{TI_hv})^2
+\\
+(\text{being }|F_j\cap \Lambda| \leq H+h)\lesssim  \frac {1}{H} \sum_j \| \avrc{Tv}-\avrc{TI_hv}\|^2_{L^2(F_j\cap \Lambda), |\DD|}
+\\
+(\text{average inequality}) \lesssim  \frac {1}{H} \sum_j \| T(v-I_hv)\|^2_{L^2(\omega _j\cap \Gamma)}  
+\\
+\left(\text{trace inequality} \right)\lesssim  \frac {1}{H^2} \sum_j  \| v-I_h v\|^2_{L^2(\omega_j)} \lesssim  \frac {1}{H^2}  \| v-I_h v\|^2_{L^2(\Omega)} 
+\\
+(\text{approximation properties of }I_h)\lesssim \|\nabla  v\|^2_{L^2(\Omega)}
+\end{multline*}
+and the continuity of $\pi_F$ follows.
+\end{proof}
+
+%\subparagraph{Satisfaction of the assumptions of the 
+%abstract analysis}
+We choose the following discrete norm
+\begin{equation*}
+\vertiii{[u_h, {\ud}_h]}^2_{X_h(\Omega)\times X_{h'}(\Lambda) }
+= \|u_h\|^2_{H^1(\Omega)}+\|{\ud}_h\|^2_{H^1(\Lambda),|\D|} + \|\avrc{Tu_h} - {\ud}_h\|^2_{-\frac 12, h, \Lambda, |\DD|},
+\end{equation*}
+where $\|\avrc{Tu_h} - {\ud}_h\|^2_{-\frac 12, h, \Lambda, |\DD|} = \|h^{\frac 12} (\avrc{Tu_h} - {\ud}_h)\|^2_{L^2(\Lambda), |\DD|} $. Then, we have the following lemma. 
+\begin{lemma}
+The inequalities \eqref{stab_coercivity} and \eqref{stab_stability} hold.
+\end{lemma}
+\begin{proof} 
+Concerning the coercivity property \eqref{stab_coercivity}, we have to show that $\forall [u_h, {\ud}_h]$, there esists $\xi_h \in Q_h(\Lambda)$ s.t.
+\begin{multline*}
+(u_h,u_h)_{H^1(\Omega)}+ ({\ud}_h, {\ud}_h)_{H^1(\Lambda), |\D|} +   (\avrc{Tu_h} - {\ud}_h, \xi_h)_{\Lambda,|\DD|} \\
+\geq \alpha_{\xi}(\|u_h\|^2_{H^1(\Omega)}+\|{\ud}_h\|^2_{H^1(\Lambda),|\D|}+ \|\avrc{Tu_h} - {\ud}_h\|^2_{-\frac 12, h, \Lambda, |\DD|}.
+\end{multline*}
+We choose 
+\begin{equation*}
+{\xi_h}_{|F_j\cap \Lambda}=\delta \frac 1H \pi_L(\avrc{Tu_h}-{\ud}_h) \qquad \text{with } \pi_L(\avrc{Tu_h}-{\ud}_h) =\frac{1}{|\Gamma_{F_j\cap \Lambda}|}\int_{F_j\cap \Lambda}|\DD| (\avrc{Tu_h}- {\ud}_h),
+\end{equation*}
+being $\Gamma_{F_j\cap \Lambda}$ the portion of $\Gamma$ with centerline $F_j\cap \Lambda$. 
+Actually, $\xi_h\in L_h(\Lambda) \subset Q_h(\Lambda)$. Then,
+\begin{multline*}
+\left( \avrc{Tu_h} - {\ud}_h, \xi _h \right)_{\Lambda,|\DD|} 
+= \sum_j \int_{F_j\cap \Lambda} |\DD|( \avrc{Tu_h} - {\ud}_h)\xi_h
+\\
+= \delta \frac{1}{H} \sum_j \int_{F_j\cap \Lambda}|\DD| (\pi_L( \avrc{Tu_h} - {\ud}_h) )^2
+\\
+(\text{orthogonality of $\pi_L$}) =  \delta \frac{1}{H} \|(\pi_L-\mathcal{I})(\avrc{Tu_h} - {\ud}_h)\|^2_{L^2(F_j\cap \Lambda),|\DD|} + \delta \frac{1}{H} \|\avrc{Tu_h} - {\ud}_h\|^2_{L^2(F_j\cap \Lambda),|\DD|}
+\\ 
+\geq -\delta \frac 1H \sum_j \|(\pi_L - \mathcal{I})\avrc{Tu_h}\|^2_{L^2(F_j\cap \Lambda), |\DD|}
+- \delta \frac 1H \sum_j \|(\pi_L - \mathcal{I}){\ud}_h\|^2_{L^2(F_j\cap \Lambda),|\DD|}
+\\ 
++ \delta \frac 1H \sum_j \|\avrc{Tu_h}-{\ud}_h\|^2_{L^2(F_j\cap \Lambda),|\DD|}. 
+\end{multline*}
+For the first term we have
+\begin{multline*}
+\sum _j  \|(\pi_L - \mathcal{I})\avrc{Tu_h}\|^2_{L^2(F_j\cap \Lambda),|\DD|} =\sum _j \int _{F_j \cap \Lambda} |\DD| (\pi_L \avrc{Tu_h}- \avrc{Tu_h})^2
+\\
+(\text{Average inequality)} \leq \sum _j  \int_{\omega _j \cap \Gamma} (\pi_L \avrc{Tu_h} -Tu_h)^2 
+\\
+(\text{trace inequality}) \leq \sum _j  \frac 1H \int_{\omega_j}(\pi_L \avrc{Tu_h} - u_h)^2 
+\\ 
+(\text{Poincare, see \cite[Corollary B.65]{MR2050138}})\leq \sum _j  H c_P ^2 \|\nabla u_h\|^2_{L^2(\omega _j)}.
+\end{multline*}
+For the second term we have
+\begin{multline*}
+\sum _j \|(\pi_L - \mathcal{I}){\ud}_h\|^2_{L^2(F_j\cap \Lambda),|\DD|} = \sum _j \int_{F_j\cap \Lambda} |\DD| (\pi_L {\ud}_h -{\ud}_h)^2
+\\
+(\text{Poincare, \cite[Corollary B.65]{MR2050138}})\lesssim \sum _j  H^2 c_P^2 \int_{F_j\cap \Lambda} |\DD|(\nabla {\ud}_h)^2
+\\
+(\text{since $H$ is fixed, we can find a constant s.t. } H|\DD| \lesssim |\D|) \lesssim \sum _j H c_P^2  \int_{F_j\cap \Lambda} |\D|(\nabla {\ud}_h)^2 
+\\
+\lesssim \sum _j H c_P^2  \|\nabla {\ud}_h\|^2_{L^2(F_j\cap \Lambda),|\D|}.
+\end{multline*}
+{\color{red} N.B. we are using a kind of weigthed Poincare inequality, check... I think it should work because I can do something like this
+\begin{multline*}
+\int_{F_j \cap \Lambda} |\DD| u^2 \leq 
+max |\DD| \int_{F_j \cap \Lambda} u^2 \leq
+max |\DD| \int_{F_j \cap \Lambda} (\nabla u)^2 =
+\frac{max |\DD|}{min|\DD|} min|\DD| \int_{F_j \cap \Lambda} u^2 \leq\\
+\frac{max |\DD|}{min|\DD|}  \int_{F_j \cap \Lambda} |\DD| u^2 
+\end{multline*}
+}\\
+Therefore, we obtain
+\begin{multline*}
+a([u_h, {\ud}_h],[u_h, {\ud}_h] ) + b([u_h, {\ud}_h], \xi_h([u_h, {\ud}_h]))
+\geq \\
+(1-\delta c_P^2) \|\nabla u_h\|^2_{L^2(\Omega)} + (1- \delta c_P^2) \|\nabla {\ud}_h\|^2_{L^2(\Lambda), |\D|}
++\delta c_H  \|\avrc{Tu_h}-{\ud}_h\|^2_{-\frac 12,h,\Lambda, |\DD|}
+\end{multline*}
+and choosing $\delta=\frac{1}{2c_P^2}$ we obtain the coercivity inequality.\\
+Concerning the stability inequality \eqref{stab_stability}, the proof is analogous to the one in \cite{burman2014}.
+\end{proof}

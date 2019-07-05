@@ -14,6 +14,7 @@
 \usepackage{enumitem}  
 \usepackage{epstopdf}
 \usepackage{stmaryrd}
+\usepackage{tikz, subfigure}
 
 % Title. If the supplement option is on, then "Supplementary Material"
 % is automatically inserted before the title.
@@ -77,8 +78,9 @@ n.a.
 \def\R{\mathbb{R}}
 \def\D{\mathcal{D}}
 \def\DD{\partial\mathcal{D}}
-\def\trace{\overline{\mathcal{R}}}
-\def\ext{\mathcal{E}}
+\def\trace{{\mathcal{T}_\Gamma}}
+\def\mtrace{{\overline{\mathcal{T}}_\Lambda}}
+\def\ext{\mathcal{E}_\Gamma}
 \def\ide{\mathcal{I}}
 \def\ii{\hat{\imath}}
 \newcommand{\avrd}[1]{\overline{\overline{#1}}}
@@ -101,7 +103,7 @@ We address the geometrical configuration of the problem for a 3D coupled problem
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 \section{Problem setting}\label{sec:setting}
 
-Let $\Omega \subset \mathbb{R}^3$ be a bounded, convex open set. Let $\Omega_\ominus$ be a generalized cylinder embedded into $\Omega$ and be $\Omega_\oplus = \Omega \setminus \overline{\Omega_\ominus}$ be the complementary set of the cylinder. We also introduce the set $\Lambda$, a 1D manifold that is the centerline of $\Omega_\ominus$. We define the arc-length coordinate along $\Lambda$, denoted by $s \in (0,S)$. We denote with $\mathcal{D}(s)$ and $\partial\mathcal{D}(s)$ a cross section of $\Omega_\ominus$ and its boundary, respectively. 
+Let $\Omega \subset \mathbb{R}^3$ be a bounded, convex open set. Let $\Omega_\ominus$ be a generalized cylinder embedded into $\Omega$ and be $\Omega_\oplus = \Omega \setminus \overline{\Omega}_\ominus$ be the complementary set of the cylinder. We also introduce the set $\Lambda$, a 1D manifold that is the centerline of $\Omega_\ominus$. We define the arc-length coordinate along $\Lambda$, denoted by $s \in (0,S)$. We denote with $\mathcal{D}(s)$ and $\partial\mathcal{D}(s)$ a cross section of $\Omega_\ominus$ and its boundary, respectively. 
 %In what follows, we assume for simplicity of notation that $\Sigma$ has a constant cross section, but this is not a restriction of the approach. 
 We also assume that $\Omega_\ominus$ crosses $\Omega$ from side to side and we call $\Gamma$ the lateral (cylindrical) surface of $\Omega_\ominus$, while the upper and lower side faces of $\Omega_\ominus$ belong to $\partial\Omega$. We refer to Figure \ref{fig1} for an illustration of the notation. 
 
@@ -130,7 +132,7 @@ It consists to find $\up,\uf$ s.t.:
 \end{align}
 \end{subequations}
 
-The objective of this work is to derive and alalyze a simplified version of problem \eqref{eq:dirneu}, where the domain $\Omega_\ominus$ shrinks to its centerline $\Lambda$ and the corresponding partial differential equation is averaged on the cylinder cross section, namely $\mathcal{D}$. This new problem setting will be called the \emph{reduced} problem. Form the mathematical standpoint it is more challenging than \eqref{eq:dirneu}, because it involves the coupling of 3D/1D elliptic problems.
+The objective of this work is to derive and analyze a simplified version of problem \eqref{eq:dirneu}, where the domain $\Omega_\ominus$ shrinks to its centerline $\Lambda$ and the corresponding partial differential equation is averaged on the cylinder cross section, namely $\mathcal{D}$. This new problem setting will be called the \emph{reduced} problem. Form the mathematical standpoint it is more challenging than \eqref{eq:dirneu}, because it involves the coupling of 3D/1D elliptic problems.
 For the model reduction process, we decompose integrals as follows, for any sufficiently regular function $w$,
 \begin{equation*}
 \int_{\Omega_\ominus} w d\omega 
@@ -168,18 +170,11 @@ where $\langle v, \mu \rangle_{H^{-\frac12}(\Gamma)}$ denotes the duality pairin
 $ \mu \in H^{-\frac12}(\Gamma)$ and $v \in H^{\frac12}(\Gamma)$.
 In this case, the additional variable $\lambda$ is equivalent to $\lambda  =  \nabla \uf \cdot \nn_\ominus$.
 
-Using the averaging tools for the model reduction approach, we end up with two different formulations of a reduced problem
+Using a model reduction approach based on averaging, we end up with two different formulations of a reduced problem
 for the unknown $u$ defined on the entire 3D domain $\Omega$, coupled with the unknown $\ud$, defined on the 1D manifold $\Lambda$
 and a Lagrange multiplier defined either on $\Gamma$ (problem 1) or on $\Lambda$ (problem 2). 
-%In the reduced problem the multiplier assumes the following interpretation,
-%\begin{equation*}
-%L = - \frac{1}{|\partial{\cal D}|} \int_{\partial{\cal D}} \nabla \uf \cdot \nn_\ominus
-%   = - \frac{1}{|\partial{\cal D}|} \int_{\partial{\cal D}} \lambda \,.
-%\end{equation*}
+The scope of this work is to compare them, with the aim to determine which is the most suitable to set up a computational model for 3D-1D coupled PDEs.
 
-%We consider two alternative formulations.
-The scope of this work is to compare them, 
-with the aim to determine which is the most suitable as a computational model based on 3D-1D coupled PDEs.
 
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 \subsection{Topological model reduction}
@@ -193,18 +188,7 @@ We apply the averaging technique to equation \eqref{eq:dirneu2}. In particular, 
  \int_{\mathcal{D}(s_1)} \partial_s \uf d\sigma -  \int_{\mathcal{D}(s_2)} \partial_s \uf d\sigma -  \int_{\Gamma_{\mathcal{P}}} \nabla \uf \cdot \nn_{\ominus} d\sigma +\int_{\mathcal{P}}\uf d\omega
 \end{multline*}
 By the fundamental theorem of integral calculus combined with the Reynolds transport Theorem, 
-%where $d_s |\partial\mathcal{D}(s)|$ is the rate at which the cross section changes size,
-being $\nu$ the normal component of the velocity of the boundary, 
-we have,
-%\begin{multline*}
-%-\int_{\mathcal{D}(s_1)} \partial_s \uf d\sigma +  \int_{\mathcal{D}(s_2)} \partial_s \uf d\sigma 
-%= \int_{s_1}^{s_2} d_s \int_{\mathcal{D}(s)}  \partial_s \uf d\sigma ds
-%\\
-%= \int_{s_1}^{s_2} \int_{\mathcal{D}(s)} \partial^2_{ss} \uf d\sigma ds + \int_{s_1}^{s_2} \int_{\partial\mathcal{D}(s)} \nu \partial_s \uf d\gamma ds
-%\\
-%= \int_{s_1}^{s_2} \left[ |\mathcal{D}(s)| d^2_{ss} \avrd{u}_{\ominus}  + |\partial\mathcal{D}(s)| \nu  d_s \avrc{u}_{\ominus} \right] ds.
-%\end{multline*}
-
+being $\nu$ the normal deformation of the boundary along $(0,S)$, we have,
 \begin{equation*}
 \begin{split}
 \int_{\mathcal{D}(s_1)} \partial_s \uf d\sigma -  \int_{\mathcal{D}(s_2)} \partial_s \uf d\sigma 
@@ -275,13 +259,14 @@ More precisely, we assume that:
 \end{description}
 Therefore, observing that $\ud=\avrc{u}_{\ominus}=\avrd{u}_{\ominus}$, problem \eqref{eq:averaged_f_weak} consists to find $\ud \in H^1(\Lambda)$ such that
 \begin{equation}\label{eq:1Ddirneu_weak}
- (d_s \ud, d_s \ud)_{\Lambda,|\mathcal{D}|} 
+ (d_s \ud, d_s \vd)_{\Lambda,|\mathcal{D}|} 
 +(\ud, \vd)_{\Lambda, |\D|}
 -(\avrc{\lambda},\vd)_{\Lambda, |\DD|}
 =  (\avrd{g},\vd)_{\Lambda, |\mathcal{D}|}
 \quad \forall \vd \in H^1(\Lambda)\,.
 \end{equation}
 
+% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 \subsubsection*{Topological model reduction of the problem on $\Omega_{\oplus}$}
 We focus here on the subproblem of \eqref{eq:dirneu1} related to $\Omega_{\oplus}$.
 We multiply both sides of \eqref{eq:dirneu1} by a test function $v\in H^1_0(\Omega)$ and integrate on $\Omega_\oplus$. Integrating by parts and using boundary and interface conditions, we obtain
@@ -316,33 +301,29 @@ $H^\frac12_{00}(\Gamma)$ and $H^{-\frac12}(\Gamma)$. The problem consists to fin
 \begin{subequations}\label{eq:problem1}
 \begin{align}
 &(u,v)_{H^1(\Omega)} + (\ud,\vd)_{H^1(\Lambda),|\D|} 
-+ \langle T v  - \mathcal{U}_E \vd, \lambda \rangle_\Gamma
++ \langle \trace v  - \ext \vd, \lambda \rangle_\Gamma
 \\
 \nonumber
 &\qquad\qquad= (f,v)_{L^2(\Omega)} +  (\avrd{g},\vd)_{L^2(\Lambda),|\D|}
 \quad \forall v \in H^1_0(\Omega), \ \vd \in H^1(\Lambda)
 \\
-&   \langle T u - \mathcal{U}_E \ud , \mu \rangle_\Gamma = 0
+&   \langle \trace u - \ext \ud , \mu \rangle_\Gamma = 0
 \quad \forall \mu \in H^{-\frac12}(\Gamma)\,.
 \end{align}
 \end{subequations}
-Here, $T:H^1_0(\Omega) \rightarrow H^{\frac 12}_{00}(\Gamma)$ denotes the trace operator on $\Gamma$ and $\mathcal{U}_E: H^1_0(\Lambda) \rightarrow H^1_{0}(\Gamma)$ denotes the uniform extension from $\Lambda$ to $\Gamma$. The idea is then to couple a 3D PDE with a 1D one, using a Lagrange multiplier space defined on a 2D surface that surrounds the 1D manifold.\\
-
-%Here, $\Pi_1: H^1_0(\Omega) \rightarrow H^{\frac12}_{00}(\Gamma)$
-%and $\Pi_2: H^1_0(\Lambda) \rightarrow H^{\frac12}_{00}(\Gamma)$
-%and we remark that $\Sigma$ may be considered as a virtual surface
-%not necessarily of the same size as the underlying physical structure that is modeled.  
-%The $\Pi_1$ and $\Pi_2$ operators may be defined in terms of the averaging operators above, but may also be realized in terms of e.g. Green functions (I don't know if this is a good idea). Furthermore,  $\Gamma$ may be discretized in terms of facets neighboring $\Lambda$ and may as such not be represented as a separate structure in the implementation. 
+Here, $\trace:H^1_0(\Omega) \rightarrow H^{\frac 12}_{00}(\Gamma)$ denotes the trace operator from $\Omega$ to $\Gamma$ and $\ext: H^1_0(\Lambda) \rightarrow H^1_{0}(\Gamma)$ denotes the uniform extension from $\Lambda$ to $\Gamma$.  
 
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-Now, we apply a topological model reduction of the interface conditions, namely we go from a 3D-1D-3D to a 3D-1D-1D formulation. 
-To this purpose, let us write the lagrange multiplier and the test functions on every cross section $\partial\mathcal{D}(s)$ as their average plus some fluctuation,
+Now, we apply a topological model reduction of the interface conditions, namely we go from a 3D-1D-2D formulation
+involving sub-problems on $\Omega$ and $\Lambda$ and coupling operators defined on $\Gamma$
+to a 3D-1D-1D formulation where the coupling terms are set on $\Lambda$. 
+To this purpose, let us write the Lagrange multiplier and the test functions on every cross section $\partial\mathcal{D}(s)$ as their average plus some fluctuation,
 \begin{equation*}
 \lambda=\avrc{\lambda}+\tilde{\lambda}, \qquad v=\avrc{v}+\tilde{v},
 \quad \text{on} \ \partial\mathcal{D}(s)\,,
 \end{equation*}
 where $\avrc{\tilde{\lambda}}=\avrc{\tilde{v}}=0$. 
-Therefore, using the coordinates system $(r,s,t)$ on $\Gamma$, we have
+Therefore, the coupling term on $\Gamma$ can be decomposed as,
 \begin{equation*}
 \int_{\Gamma}\lambda v\, d\sigma
 =\int _{\Lambda}  \int_{\partial\mathcal{D}(s)} (\avrc{\lambda}+\tilde{\lambda})(\avrc{v}+\tilde{v})d\gamma ds
@@ -369,97 +350,171 @@ The problem requires to find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ \l
 \begin{subequations}\label{eq:problem2}
 \begin{align}
 &(u,v)_{H^1(\Omega)} + (\ud,\vd)_{H^1(\Lambda),|\D|} 
-+  \langle \avrc{T v} - \vd, \ld \rangle_{H^{-\frac12}(\Lambda), |\DD|} 
++  \langle \mtrace v - \vd, \ld \rangle_{H^{-\frac12}(\Lambda), |\DD|} 
 \\
 \nonumber
 &\qquad\qquad= (f,v)_{L^2(\Omega)} +  (\avrd{g},V)_{L^2(\Lambda),|\D|}
-\quad \forall v \in H^1_0(\Omega), \ \vd \in H^1_0(\Lambda)
+\quad \forall v \in H^1_0(\Omega), \ \vd \in H^1_0(\Lambda)\,,
 \\
-&   \langle \avrc{T u} -   \ud, \md \rangle_{H^{-\frac12}(\Lambda),|\DD|} = 0
-\quad \forall \md \in H^{-\frac12}(\Lambda)\,.
+&   \langle \mtrace u -   \ud, \md \rangle_{H^{-\frac12}(\Lambda),|\DD|} = 0
+\quad \forall \md \in H^{-\frac12}(\Lambda)\,,
 \end{align}
 \end{subequations}
-We notice that all the integrals of the reduced problem are well defined because $u,v \in H^1_0(\Omega)$, 
-$Tu, \ Tv \in H^\frac12_{00}(\Gamma)$ and thus $\avrc{Tu},\avrc{Tv} \in H^\frac12_{00}(\Lambda)$, as shown in the following lemma.
-%More precisely, $\Pi_1 : H^1_0(\Omega) \rightarrow H^\frac12_{00}(\Lambda$ such that
-%$\Pi_1 u = \avrc{(u|_\Gamma)}$ is the combination between the trace on $\Gamma$ and the average on $\partial{\cal D}$.
-%The operator $\Pi_2: H^1_0(\Lambda) \rightarrow H^\frac12_{00}(\Lambda)$ is the injection form $H^1_0(\Lambda)$ and $H^\frac12_{00}(\Lambda)$.
+where $\mtrace$ denotes the composition of operators $\trace \circ \avrc{(\cdot)}$.
+We notice that all the integrals of the reduced problem are well defined because 
+$\mtrace: H^1_0(\Omega) \rightarrow H^\frac12_{00}(\Lambda)$ as shown in the following lemma.
+
+%\begin{lemma}\label{lemma:H12norm}
+%{\color{red}TO DO: generalize to not uniform $\DD$} 
+%When $\Gamma$ is a cylinder, if $u\in H_{00}^{\frac 12}(\Gamma)$, then $\avrc{u}\in H_{00}^{\frac 12}(\Lambda)$. Moreover, if $u\in H^{\frac 12}_{00}(\Gamma)$ is constant on each cross section, namely $u(s,\theta)=u(s)$, then 
+%\begin{equation*}
+%\|u\|_{H^{\frac 12}_{00}(\Gamma)}=2\pi R \|u\|_{H^{\frac 12}_{00}(\Lambda)}.
+%\end{equation*}
+%\end{lemma}
+%\begin{proof}
+%Let us denote as $\phi _{ij}$ and $\rho _{ij}$, for $i=1,2,\dots$, $j=0,1,\dots$, the eigenfunctions and the eigenvalues of the laplacian on $\Gamma$, and with $\phi _i$ and $\rho _i$ the eigenfunctions and the eigenvalues of the laplacian on $\Lambda$. In particular,
+%\begin{align*}
+%\phi _{ij}(s,\theta)=sin (i\pi s)\left( cos(j\theta)+ sin(j\theta) \right),\\
+%\rho_{ij}=i\pi ^2+\frac{j^2}{R^2},\\
+%\phi _{i}(s)=sin (i\pi s),\\
+%\rho _i = i\pi ^2.
+%\end{align*}
+%It is easy to verify that 
+%\begin{eqnarray}
+%\label{null_int_eigenf}
+%\int_0^{2\pi} \phi _{ij}(s,\theta)=0 \quad \forall j>0, \forall i \\
+%\label{nonull_int_eigenf}
+%\int_0^{2\pi} \phi _{ij}(s,\theta)= 2\pi R \, \sin(i \pi s) \quad \mbox{if } j=0, \forall i  .\\
+%\end{eqnarray}
+%Moreover we recall that $\phi_{i,j}(s,\theta)$ and $\phi _i(s)$ are orthogonal basis of $L^2(\Gamma)$ and $L^2(\Lambda)$ respectively. Therefore,
+%\begin{multline*}
+%\avrc{u}(s)=\frac{1}{2\pi R}\int_0^{2\pi} u(s,\theta)R\, d\theta
+%= \frac{1}{2\pi R}\int_0^{2\pi} \sum_{i,j} a_{i,j} \phi_{i,j}(s,\theta) R\, d\theta
+%\\= \frac{1}{2\pi R}\sum_{i,j} a_{i,j}\int_0^{2\pi}  \phi_{i,j}(s,\theta) R\, d\theta
+%=  \sum_{i} a_{i,0} \phi_{i}(s).
+%\end{multline*}
+%From \cite[Lemma 4.11]{chandler2015interpolation} we have
+%\begin{equation}\label{H12norm_Gamma}
+%\|u\|^2_{H^{\frac 12}(\Gamma)}=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left( 1+ \rho_{ij}\right)^{\frac 12}|a_{ij}|^2,
+%\text{ with }
+%a_{ij}=\int _0^1\int _0^{2\pi} u(s,\theta )\phi_{ij}\, R d\theta ds.
+%\end{equation}
+%and 
+%\begin{equation*}
+%\|\avrc{u}\|^2_{H^{\frac 12}(\Lambda)}=\sum_{i=1}^{\infty} \left( 1+ \rho_{i}\right)^{\frac 12}|\avrc{a}_i|^2,
+%\text{ with }
+%\avrc{a}_i=\int _0^1 \avrc{u}(s )\phi_{i}(s) ds.
+%\end{equation*}
+%
+%Therefore, we have
+%\begin{multline*}
+%\|\avrc{u}\|^2_{H^{\frac 12}(\Lambda)}=
+%\sum_{i=1}^{\infty}\left( 1+ i^2\pi^2\right)^{\frac 12}\left( \int_0^1 \avrc{u}(s) sin(i\pi s)\, ds \right)^2\\
+%= \sum_{i=1}^{\infty} \left( 1+ i^2\pi^2\right)^{\frac 12}\left( \sum_{j=1}^\infty a_{j,0}\int_0^1 \sin(j\pi s) \sin(i\pi s) \, ds  \right)^2\\
+%= \sum_{i=1}^{\infty} \frac 14 \left( 1+ i^2\pi^2\right)^{\frac 12}a_{i,0}^2\\
+%\leq \sum_{i=1}^{\infty} \sum_{j=1}^{\infty}  \left( 1+ i^2\pi^2 + \frac{j^2}{R^2}\right)^{\frac 12} |a_{i,j}|^2 =\|u\|^2_{H^{\frac 12}(\Gamma)},
+%\end{multline*}
+%
+%where we have used the fact that
+%\begin{eqnarray*}
+%&\int_0^1 \sin(i\pi s) \sin(j\pi s)\, ds=0 \quad \text{if $i\neq j$}\\
+%&\int_0^1 \sin(i\pi s) \sin(j\pi s)\, ds=\frac 12 \quad \text{if $i =j$}.
+%\end{eqnarray*}
+%Moreover, in the case in which $u$ is constant on each cross section, from \eqref{H12norm_Gamma} we have
+%\begin{multline*}
+%\|u\|^2_{H^{\frac 12}(\Gamma)}=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left( 1+ \rho_{ij}\right)^{\frac 12}|a_{ij}|^2
+%=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left(  1+ i\pi ^2+\frac{j^2}{R^2}\right)^{\frac 12}\left( \int _0^1\int _0^{2\pi} u(s,\theta )\phi_{ij}\, R d\theta ds \right)^2\\
+%=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left(  1+ i\pi ^2+\frac{j^2}{R^2}\right)^{\frac 12}\left( \int _0^1 u(s) \int _0^{2\pi} \phi_{ij}\, R d\theta ds \right)^2,
+%\end{multline*}
+%and using \eqref{null_int_eigenf} and \eqref{nonull_int_eigenf}, we obtain
+%\begin{multline*}
+%\|u\|^2_{H^{\frac 12}(\Gamma)}=
+%\sum_{i=1}^{\infty}\left( 1+ i\pi ^2\right)^{\frac 12}\left(\int _0^1 u(s )sin (i\pi s) 2\pi R ds\right)^2\\
+%=4\pi ^2 R^2 \sum_{i=1}^{\infty}\left( 1+ \rho _i\right)^{\frac 12}|a_i|^2 = 4\pi ^2 R^2  \|u\|^2_{H^{\frac 12}(\Lambda)}.
+%\end{multline*}
+%\hspace*{0.9\textwidth} c.v.d.
+%\end{proof}
+%\begin{remark}
+%The results of \eqref{lemma:H12norm}  can be generalized to the case of a  different geometry of $\Gamma$, for example a parallelepiped.  
+%\end{remark}
 
 \begin{lemma}\label{lemma:H12norm}
-{\color{red}TO DO: generalize to not uniform $\DD$} 
-When $\Gamma$ is a cylinder, if $u\in H_{00}^{\frac 12}(\Gamma)$, then $\avrc{u}\in H_{00}^{\frac 12}(\Lambda)$. Moreover, if $u\in H^{\frac 12}_{00}(\Gamma)$ is constant on each cross section, namely $u(s,\theta)=u(s)$, then 
+Let $\Gamma$ be a tensor product domain, $\Gamma= (0,X) \times (0,Y)$. For any regular $u(x,y)$ in $\Gamma$, let $\avrc{u}(x)=\frac 1Y \int _0^Y u(x,y)\, dy$. Then, for any $u\in H_{00}^{\frac 12}(\Gamma)$, then $\avrc{u}(x)\in H_{00}^{\frac 12}((0,X))$. 
+Moreover, if $u(x,y)\in H^{\frac 12}_{00}(\Gamma)$ is constant with respect to $y$, namely $u(x,y)=u(x)$, then 
 \begin{equation*}
-\|u\|_{H^{\frac 12}_{00}(\Gamma)}=2\pi R \|u\|_{H^{\frac 12}_{00}(\Lambda)}.
+\|u\|_{H^{\frac 12}_{00}(\Gamma)}=Y \|u\|_{H^{\frac 12}_{00}(0,X)}.
 \end{equation*}
 \end{lemma}
 \begin{proof}
-Let us denote as $\phi _{ij}$ and $\rho _{ij}$, for $i=1,2,\dots$, $j=0,1,\dots$, the eigenfunctions and the eigenvalues of the laplacian on $\Gamma$, and with $\phi _i$ and $\rho _i$ the eigenfunctions and the eigenvalues of the laplacian on $\Lambda$. In particular,
+Let us consider the eigenvalue problems for the Laplace operator on $\Gamma$ with homogeneous Dirichlet conditions at $x=0,\, X$ and periodic boundary conditions at $y=0,\, Y$ and on $(0,X)$ with homogeneous Dirichlet conditions. Let us denote as $\phi _{ij}$ and $\rho _{ij}$, for $i=1,2,\dots$, $j=0,1,\dots$, the eigenfunctions and the eigenvalues of the laplacian on $\Gamma$, and with $\phi _i$ and $\rho _i$ the eigenfunctions and the eigenvalues of the laplacian on $(0,X)$. In particular,
 \begin{align*}
-\phi _{ij}(s,\theta)=sin (i\pi s)\left( cos(j\theta)+ sin(j\theta) \right),\\
-\rho_{ij}=i\pi ^2+\frac{j^2}{R^2},\\
-\phi _{i}(s)=sin (i\pi s),\\
-\rho _i = i\pi ^2.
+\phi _{ij}(x,y)=\sin \left(\frac{i\pi x}{X}\right)\left( cos\left(\frac{j2\pi y}{Y}\right)+ sin	\left(\frac{j2\pi y}{Y}\right) \right),\\
+\rho_{ij}=\left(\frac{i\pi}{X}\right) ^2+\left(\frac{j2\pi}{Y}\right)^2,\\
+\phi _{i}(x)=\sin \left(\frac{i\pi x}{X}\right),\\
+\rho _i = \left(\frac{i\pi}{X}\right) ^2.
 \end{align*}
 It is easy to verify that 
 \begin{eqnarray}
 \label{null_int_eigenf}
-\int_0^{2\pi} \phi _{ij}(s,\theta)=0 \quad \forall j>0, \forall i \\
+\int_0^{Y} \phi _{ij}(x,y)=0 \quad \forall j>0, \forall i \\
 \label{nonull_int_eigenf}
-\int_0^{2\pi} \phi _{ij}(s,\theta)= 2\pi R \, \sin(i \pi s) \quad \mbox{if } j=0, \forall i  .\\
+\int_0^{Y} \phi _{ij}(x,y)= Y \, \sin\left(\frac{i\pi x}{X}\right) \quad \mbox{if } j=0, \forall i  .\\
 \end{eqnarray}
-Moreover we recall that $\phi_{i,j}(s,\theta)$ and $\phi _i(s)$ are orthogonal basis of $L^2(\Gamma)$ and $L^2(\Lambda)$ respectively. Therefore,
+Moreover we recall that $\phi_{i,j}(x,y)$ and $\phi _i(x)$ are orthogonal basis of $L^2(\Gamma)$ and $L^2(0,X)$ respectively. Therefore,
 \begin{multline*}
-\avrc{u}(s)=\frac{1}{2\pi R}\int_0^{2\pi} u(s,\theta)R\, d\theta
-= \frac{1}{2\pi R}\int_0^{2\pi} \sum_{i,j} a_{i,j} \phi_{i,j}(s,\theta) R\, d\theta
-\\= \frac{1}{2\pi R}\sum_{i,j} a_{i,j}\int_0^{2\pi}  \phi_{i,j}(s,\theta) R\, d\theta
-=  \sum_{i} a_{i,0} \phi_{i}(s).
+\avrc{u}(x)=\frac{1}{Y}\int_0^{Y} u(x,y)\, dy
+= \frac{1}{Y}\int_0^{Y} \sum_{i,j} a_{i,j} \phi_{i,j}(x,y) \, dy
+\\= \frac{1}{Y}\sum_{i,j} a_{i,j}\int_0^{Y}  \phi_{i,j}(x,y) \, dy
+=  \sum_{i} a_{i,0} \phi_{i}(x).
 \end{multline*}
 From \cite[Lemma 4.11]{chandler2015interpolation} we have
 \begin{equation}\label{H12norm_Gamma}
 \|u\|^2_{H^{\frac 12}(\Gamma)}=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left( 1+ \rho_{ij}\right)^{\frac 12}|a_{ij}|^2,
 \text{ with }
-a_{ij}=\int _0^1\int _0^{2\pi} u(s,\theta )\phi_{ij}\, R d\theta ds.
+a_{ij}=\int _0^X\int _0^{Y} u(x,y )\phi_{ij} (x,y)dy dx.
 \end{equation}
 and 
 \begin{equation*}
-\|\avrc{u}\|^2_{H^{\frac 12}(\Lambda)}=\sum_{i=1}^{\infty} \left( 1+ \rho_{i}\right)^{\frac 12}|\avrc{a}_i|^2,
+\|\avrc{u}\|^2_{H^{\frac 12}(0,X)}=\sum_{i=1}^{\infty} \left( 1+ \rho_{i}\right)^{\frac 12}|\avrc{a}_i|^2,
 \text{ with }
-\avrc{a}_i=\int _0^1 \avrc{u}(s )\phi_{i}(s) ds.
+\avrc{a}_i=\int _0^X \avrc{u}(x )\phi_{i}(x) dx.
 \end{equation*}
 
 Therefore, we have
 \begin{multline*}
-\|\avrc{u}\|^2_{H^{\frac 12}(\Lambda)}=
-\sum_{i=1}^{\infty}\left( 1+ i^2\pi^2\right)^{\frac 12}\left( \int_0^1 \avrc{u}(s) sin(i\pi s)\, ds \right)^2\\
-= \sum_{i=1}^{\infty} \left( 1+ i^2\pi^2\right)^{\frac 12}\left( \sum_{j=1}^\infty a_{j,0}\int_0^1 \sin(j\pi s) \sin(i\pi s) \, ds  \right)^2\\
-= \sum_{i=1}^{\infty} \frac 14 \left( 1+ i^2\pi^2\right)^{\frac 12}a_{i,0}^2\\
-\leq \sum_{i=1}^{\infty} \sum_{j=1}^{\infty}  \left( 1+ i^2\pi^2 + \frac{j^2}{R^2}\right)^{\frac 12} |a_{i,j}|^2 =\|u\|^2_{H^{\frac 12}(\Gamma)},
+\|\avrc{u}\|^2_{H^{\frac 12}(0,X)}=
+\sum_{i=1}^{\infty}\left( 1+ \left(\frac{i\pi}{X}\right)^2\right)^{\frac 12}\left( \int_0^X \avrc{u}(x) \sin\left(\frac{i\pi x}{X}\right)\, dx \right)^2\\
+= \sum_{i=1}^{\infty} \left( 1+ \left(\frac{i\pi}{X}\right)^2\right)^{\frac 12}\left( \sum_{j=1}^\infty a_{j,0}\int_0^1 \sin\left(\frac{j\pi x}{X}\right) \sin\left(\frac{i\pi x}{X}\right) \, dx  \right)^2\\
+= \sum_{i=1}^{\infty} \frac{X^2}{4} \left( 1+ \left(\frac{i\pi}{X}\right)^2\right)^{\frac 12}a_{i,0}^2\\
+\leq \frac{X^2}{4}\sum_{i=1}^{\infty} \sum_{j=1}^{\infty}  \left( 1+ \left(\frac{i\pi}{X}\right)^2 + \left(\frac{j2\pi}{Y}\right)^2\right)^{\frac 12} |a_{i,j}|^2 =\frac{X^2}{4}\|u\|^2_{H^{\frac 12}(\Gamma)},
 \end{multline*}
 
 where we have used the fact that
 \begin{eqnarray*}
-&\int_0^1 \sin(i\pi s) \sin(j\pi s)\, ds=0 \quad \text{if $i\neq j$}\\
-&\int_0^1 \sin(i\pi s) \sin(j\pi s)\, ds=\frac 12 \quad \text{if $i =j$}.
+&\int_0^X \sin\left(\frac{i\pi x}{X}\right) \sin\left(\frac{j\pi x}{X}\right)\, dx=0 \quad \text{if $i\neq j$}\\
+&\int_0^X \sin\left(\frac{i\pi x}{X}\right) \sin\left(\frac{j\pi x}{X}\right)\, dx=\frac X2 \quad \text{if $i =j$}.
 \end{eqnarray*}
-Moreover, in the case in which $u$ is constant on each cross section, from \eqref{H12norm_Gamma} we have
+Moreover, in the case in which $u$ is constant with respect to $y$, from \eqref{H12norm_Gamma} we have
 \begin{multline*}
-\|u\|^2_{H^{\frac 12}(\Gamma)}=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left( 1+ \rho_{ij}\right)^{\frac 12}|a_{ij}|^2
-=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left(  1+ i\pi ^2+\frac{j^2}{R^2}\right)^{\frac 12}\left( \int _0^1\int _0^{2\pi} u(s,\theta )\phi_{ij}\, R d\theta ds \right)^2\\
-=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left(  1+ i\pi ^2+\frac{j^2}{R^2}\right)^{\frac 12}\left( \int _0^1 u(s) \int _0^{2\pi} \phi_{ij}\, R d\theta ds \right)^2,
+\|u\|^2_{H^{\frac 12}(\Gamma)}=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left( 1+ \rho_{ij}\right)^{\frac 12}|a_{ij}|^2\\
+=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left(  1+ \left(\frac{i\pi}{X}\right)^2 + \left(\frac{j2\pi}{Y}\right)^2\right)^{\frac 12}\left( \int _0^X\int _0^Y u(x,y )\phi_{ij}(x,y) \,dy\,dx \right)^2\\
+=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left(  1+ \left(\frac{i\pi}{X}\right)^2 + \left(\frac{j2\pi}{Y}\right)^2\right)^{\frac 12}\left( \int _0^X u(x) \int _0^Y \phi_{ij}(x,y)\,  dy dx \right)^2,
 \end{multline*}
 and using \eqref{null_int_eigenf} and \eqref{nonull_int_eigenf}, we obtain
 \begin{multline*}
 \|u\|^2_{H^{\frac 12}(\Gamma)}=
-\sum_{i=1}^{\infty}\left( 1+ i\pi ^2\right)^{\frac 12}\left(\int _0^1 u(s )sin (i\pi s) 2\pi R ds\right)^2\\
-=4\pi ^2 R^2 \sum_{i=1}^{\infty}\left( 1+ \rho _i\right)^{\frac 12}|a_i|^2 = 4\pi ^2 R^2  \|u\|^2_{H^{\frac 12}(\Lambda)}.
+\sum_{i=1}^{\infty}\left( 1+ \left(\frac{i\pi}{X}\right)^2\right)^{\frac 12}\left(\int _0^X Yu(x)\, \sin\left(\frac{i\pi x}{X}\right) dx\right)^2\\
+=Y^2 \sum_{i=1}^{\infty}\left( 1+ \rho _i\right)^{\frac 12}|a_i|^2 = Y^2  \|u\|^2_{H^{\frac 12}(0,X)}.
 \end{multline*}
-\hspace*{0.9\textwidth} c.v.d.
 \end{proof}
 
+\begin{corollary}
+Let $\Gamma$ be the lateral surface of a prism with $N$ faces $\Gamma_i$, $i=1, \dots, N$, with $\Gamma_i=(0,X_i)\times(0,S)$. For any $u\in H^{\frac 12}_{00}(\Gamma)$, let $\avrc{u}(s)= \frac{1}{\sum_i{|X_i|}}\sum_{i=1}^N \int_0^{X_i} u(x,s)\, dx$. Then $\avrc{u}\in H^{\frac 12}_{00}(0,S)$.
+\end{corollary}
 
-\begin{remark}
-The results of \eqref{lemma:H12norm}  can be generalized to the case of a  different geometry of $\Gamma$, for example a parallelepiped.  
-\end{remark}
+\begin{corollary}
+Let $\Gamma$ be the lateral surface of a cylinder of radius $R$. Let $u\in H^{\frac 12}_{00}(\Gamma)$ and let $\avrc{u}(s)= \frac{1}{2\pi R} \int_0^{2\pi} u(s,\theta)R\, d\theta$. Then $\avrc{u}\in H^{\frac 12}_{00}(0,S)$.
+\end{corollary}
 
 It is apparent that problems \eqref{eq:weak_dirneu} and \eqref{eq:red_dirneu} share the same mathematical structure.
 For this reason, the well-posedness of \eqref{eq:red_dirneu} can be studied in the framework of the classical theory of saddle point problems.

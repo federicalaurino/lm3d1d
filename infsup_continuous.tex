@@ -8,7 +8,7 @@ b(u,\mu)=d(\mu) \quad &\forall \mu\in Q.
 \end{eqnarray}
 We denote with $A$ and $B$ the operators associated to the bilinear forms $a$ and $b$, 
 namely $A: X \longrightarrow X'$ with $\langle Au,v\rangle _{X',X} = a(u,v)$ and $\langle Bv,\mu\rangle_{X',Q} = b(v,\mu)$. Problem \eqref{eq:saddle-point} embraces problems 1 and 2 described before. For the analysis of such problems we apply the following general abstract theorem.
-\begin{theorem}[theorem 2.34 Ern-Guermond]\label{th:bnb}
+\begin{theorem}{\cite[Theorem 2.34]{MR2050138}}\label{th:bnb}
 Problem \eqref{eq:saddle-point} is well posed iff 
 \begin{eqnarray}\label{BNB1}
 \begin{cases}
@@ -45,7 +45,7 @@ solutions of \eqref{eq:saddle-point}, where
 a([u, \ud], [v, \vd])= (u,v)_{H^1(\Omega)} + (\ud,\vd)_{H^1(\Lambda),|\D|}
 \end{equation*} 
 \begin{equation*}
-b([v, \vd], \mu)= \langle T v - \mathcal{U}_E \vd , \mu \rangle_\Gamma
+b([v, \vd], \mu)= \langle \trace v - \ext \vd , \mu \rangle_\Gamma
 \end{equation*} 
 \begin{equation*}
 c([v,\vd])= (f,v)_{L^2(\Omega)} + (\avrd{g},\vd)_{L^2(\Lambda),|\D|}
@@ -59,7 +59,7 @@ d(\mu)=0
 We prove that the hypothesis of \ref{th:bnb} are fullfilled choosing 
 $X=H^1_0(\Omega) \times H^1_0(\Lambda)$, $Q=H^{-\frac 12}(\Gamma)$, where $X$  is equipped with the norm $\vertiii{[u,\ud ]}^2=\|u\|^2_{H^1(\Omega)} + \|\ud\|^2_{H^1(\Lambda),|\D|}$ and $Q$ equipped with the norm
 \begin{equation*}
-\|\md \|_{H^{-\frac 12}} := \sup_{q\in H^{\frac 12}(\Lambda)}\frac{\langle q, \md\rangle}{\|q\|_{H^{\frac 12}(\Lambda)}}
+\|\mu \|_{H^{-\frac 12}(\Gamma)} := \sup_{q\in H^{\frac 12}(\Gamma)}\frac{\langle q, \mu\rangle_\Gamma}{\|q\|_{H^{\frac 12}(\Gamma)}}
 \end{equation*}. 
 \begin{lemma}\label{lemma:prob1_boundedness} 
 The bilinear forms $a(\cdot \ , \ \cdot)$ and $b(\cdot \ , \ \cdot)$ are bounded.
@@ -71,10 +71,10 @@ a([u, \ud], [v, \vd])\leq \|u\|_{H^1(\Omega)}\|v\|_{H^1(\Omega)} + \|\ud\|_{H^1(
 \end{equation*}
 Concerning the bilinear form $b(\cdot \ , \ \cdot)$ we have
 \begin{multline*}
-b([v, \vd], \mu)= \langle T v - \mathcal{U}_E \vd , \mu \rangle_\Gamma 
-\leq \|T v - \mathcal{U}_E \vd\|_{H^{\frac 12}(\Gamma)}\|\mu\|_{H^{-\frac 12}(\Gamma)}\\
-\leq \left(\|T v\|_{H^{\frac 12}(\Gamma)} + \|\mathcal{U}_E \vd\|_{H^{\frac 12}(\Gamma)}\right)\|\mu\|_{H^{-\frac 12}(\Gamma)}
-\leq \left(C_T \|v\|_{H^1(\Omega)} + \|\mathcal{U}_E \vd\|_{H^1(\Gamma)}\right)\|\mu\|_{H^{-\frac 12}(\Gamma)}\\
+b([v, \vd], \mu)= \langle \trace v - \mathcal{U}_E \vd , \mu \rangle_\Gamma 
+\leq \|\trace v - \ext \vd\|_{H^{\frac 12}(\Gamma)}\|\mu\|_{H^{-\frac 12}(\Gamma)}\\
+\leq \left(\|\trace v\|_{H^{\frac 12}(\Gamma)} + \|\ext \vd\|_{H^{\frac 12}(\Gamma)}\right)\|\mu\|_{H^{-\frac 12}(\Gamma)}
+\leq \left(C_T \|v\|_{H^1(\Omega)} + \|\ext \vd\|_{H^1(\Gamma)}\right)\|\mu\|_{H^{-\frac 12}(\Gamma)}\\
 \leq \left(C_T \|v\|_{H^1(\Omega)} + \left(\frac{\max |\DD|}{\min |\D|}\right)^{\frac 12} \|\vd\|_{H^1(\Lambda),|\D|}\right)\|\mu\|_{H^{-\frac 12}(\Gamma)}
 \lesssim \vertiii{[v,\vd]}\|\mu\|_{H^{-\frac 12}(\Gamma)}
 \end{multline*}
@@ -92,15 +92,15 @@ a([u,\ud], [u,\ud])= (u,u)_{H^1(\Omega)} + |{\cal D}|(\ud,\ud)_{H^1(\Lambda)} = 
 \begin{lemma}
 The inf-sup inequality \eqref{eq:infsup} is fulfilled, namely $\exists \beta_1 >0$ such that $\forall \mu \in H^{-\frac 12}(\Gamma)$:
 \begin{equation*}
-\sup _{\substack{v\in H^1_0(\Omega),\\ \vd \in H^1_0(\Lambda)}} \frac{ \langle T v  - \mathcal{U}_E \vd, \mu \rangle_\Gamma}{\vertiii{[v, \vd]}}
-\geq \beta_1 \sup_{q\in H^{\frac 12}(\Gamma)}\frac{\langle q, \mu\rangle}{\|q\|_{H^{\frac 12}(\Gamma)}}.
+\sup _{\substack{v\in H^1_0(\Omega),\\ \vd \in H^1_0(\Lambda)}} \frac{ \langle \trace v  - \ext \vd, \mu \rangle_\Gamma}{\vertiii{[v, \vd]}}
+\geq \beta_1 \sup_{q\in H^{\frac 12}(\Gamma)}\frac{\langle q, \mu\rangle_{\Gamma}}{\|q\|_{H^{\frac 12}(\Gamma)}}.
 \end{equation*}
 \end{lemma} 
 \begin{proof}
-We choose $\vd \in H^1_0(\Lambda)$ such that $\mathcal{U}_E\vd =0$. Therefore,
+We choose $\vd \in H^1_0(\Lambda)$ such that $\ext\vd =0$. Therefore,
 \begin{equation*}
-\sup _{\substack{v\in H^1_0(\Omega),\\ \vd \in H^1_0(\Lambda)}} \frac{ \langle T v  - \mathcal{U}_E \vd, \mu\rangle_\Gamma}{\vertiii{[v, \vd]}} 
-\geq \sup _{v\in H^1_0(\Omega)} \frac{ \langle T v, \mu \rangle_\Gamma}{\|v\|_{H^1(\Omega)}}.
+\sup _{\substack{v\in H^1_0(\Omega),\\ \vd \in H^1_0(\Lambda)}} \frac{ \langle \trace v  - \ext \vd, \mu\rangle_\Gamma}{\vertiii{[v, \vd]}} 
+\geq \sup _{v\in H^1_0(\Omega)} \frac{ \langle \trace v, \mu \rangle_\Gamma}{\|v\|_{H^1(\Omega)}}.
 \end{equation*}
 
 We notice that the trace operator is surjective from $H^1_0(\Omega)$ to $H^{\frac12}_{00}(\Gamma)$. Indeed, $\forall \xi \in H^{\frac 12}_{00}(\Gamma)$, we  can find $v$ solution of
@@ -109,14 +109,14 @@ We notice that the trace operator is surjective from $H^1_0(\Omega)$ to $H^{\fra
 v&=0 &\text{on }\partial \Omega\\
 v&=\xi &\text{on } \Gamma. 
 \end{eqnarray*}
-We denote with $\mathcal{E}$ the harmonic extension operator defined above.
-The boundedness/stability of this operator ensures that there exists $\| \mathcal{E} \| \in \mathbb{R}$ such that
-$v=\mathcal{E}(\xi) $ and $\|v \|_{H^1(\Omega)}\leq \|\mathcal{E}\| \|\xi \|_{H^{\frac 12}(\Gamma)}$. 
+We denote with $\mathcal{E}_\Omega$ the harmonic extension operator defined above.
+The boundedness/stability of this operator ensures that there exists $\| \mathcal{E}_\Omega \| \in \mathbb{R}$ such that
+$v=\mathcal{E}_\Omega(\xi) $ and $\|v \|_{H^1(\Omega)}\leq \|\mathcal{E}_\Omega\| \|\xi \|_{H^{\frac 12}(\Gamma)}$. 
 Substituting in the previous inequalities we obtain
 \begin{equation}\label{infsup_traceop}
-\sup _{v\in H^1_0(\Omega)} \frac{ \langle T v, \mu \rangle_\Gamma}{\|v\|_{H^1(\Omega)}}
-\geq  \sup _{\xi \in H^{\frac 12}_{00}(\Gamma )} \frac{ \langle \xi , \mu \rangle_\Gamma}{\|\mathcal{E}\| \|\xi\|_{H^{\frac 12}(\Gamma)}}
-= \|\mathcal{E}\|^{-1} \|\mu\|_{H^{-\frac 12}(\Gamma)},
+\sup _{v\in H^1_0(\Omega)} \frac{ \langle \trace v, \mu \rangle_\Gamma}{\|v\|_{H^1(\Omega)}}
+\geq  \sup _{\xi \in H^{\frac 12}_{00}(\Gamma )} \frac{ \langle \xi , \mu \rangle_\Gamma}{\|\mathcal{E}_\Omega\| \|\xi\|_{H^{\frac 12}(\Gamma)}}
+= \|\mathcal{E}_\Omega\|^{-1} \|\mu\|_{H^{-\frac 12}(\Gamma)},
 \end{equation}
 where in the last inequality we exploited the fact that $H^{-\frac 12}(\Gamma)=(H^{\frac 12 }_{00}(\Gamma))^*$. 
 \end{proof}
@@ -144,7 +144,7 @@ solution of \eqref{eq:saddle-point} with
 a([u, \ud], [v, \vd])= (u,v)_{H^1(\Omega)} + (\ud,\vd)_{H^1(\Lambda),|\D|}
 \end{equation*} 
 \begin{equation*}
-b([v, \vd], \md)=  \langle  \avrc{Tv} - \vd, \md \rangle_{\Lambda, |\DD|} 
+b([v, \vd], \md)=  \langle  \mtrace v - \vd, \md \rangle_{\Lambda, |\DD|} 
 \end{equation*} 
 \begin{equation*}
 c([v,\vd])= (f,v)_{L^2(\Omega)} + (\avrd{g},\vd)_{L^2(\Lambda),|\D|}
@@ -157,10 +157,69 @@ d(\md)=0
 %First of all we prove that if $u\in H^1_0(\Omega)$, than $\avrc{T u} \in H^{\frac 12}_{00}(\Lambda)$. In particular, from standard trace theory, we have that $T u\in H^{\frac 12}_{00}(\Gamma)$, therefore we have to prove that if $u \in H^{\frac 12 }_{00}(\Gamma)$ then $\avrc{u}\in H^{\frac 12}_{00}(\Lambda)$. 
 
 
+%%%%%Analysis with a non-weighted norm for the multiplier: the constants depend on the min and max \DD
+%We prove that the hypotesis of  Theorem \ref{th:bnb} are fulfilled with the following spaces $X=H^1_0(\Omega) \times H^1_0(\Lambda)$, $Q=H^{-\frac 12}(\Lambda)$.
+%Let us consider $X$ equipped again with the norm $\vertiii{[\cdot,\cdot ]}$ and  
+%$Q$ equipped with the norm $\|\cdot \|_{H^{-\frac 12}}$.
+%Then, we have the following lemmas.
+%\begin{lemma}
+%The bilinear forms $a(\cdot \ , \ \cdot)$ and $b(\cdot \ , \ \cdot)$ are bounded.
+%\end{lemma}
+%\begin{proof}
+%The boundedness of $a(\cdot \ , \ \cdot)$ can be proved as in Lemma \ref{lemma:prob1_boundedness}. Concerning $b(\cdot \ , \ \cdot)$, we have
+%\begin{multline*}
+%b([v, \vd], \md)=  \langle  \avrc{Tv} - \vd, \md \rangle_{\Lambda, |\DD|} 
+%\leq \|\avrc{Tv} - \vd\|_{H^{\frac 12 }(\Lambda), |\DD|}\|\md\|_{H^{-\frac 12}(\Lambda)}\\
+%\leq \left(\|\avrc{Tv}\|_{H^{\frac 12 }(\Lambda), |\DD|}+\|\vd\|_{H^{\frac 12 }(\Lambda), |\DD|}\right)\|\md\|_{H^{-\frac 12}(\Lambda)} \\
+%\leq \left(\|Tv\|_{H^{\frac 12 }(\Gamma)}+ \|\vd\|_{H^1(\Lambda), |\DD|}\right)\|\md\|_{H^{-\frac 12}(\Lambda)} \\
+%\leq \left(C_T\|v\|_{H^1(\Omega)}+ \left(\frac{\max |\D|}{\min |\D|}\right)^{\frac 12} \|\vd\|_{H^1(\Lambda), |\D|}\right) \|\md\|_{H^{-\frac 12}(\Lambda)} \\
+%\lesssim \vertiii{[v,\vd]}\|\md\|_{H^{-\frac 12}(\Lambda)} 
+%\end{multline*}
+%{\color{red} check $\||\DD| \avrc{Tv}\|_{H^{\frac 12}(\Lambda)}\leq \|Tv\|_{H^{\frac 12}(\Gamma)}$} 
+%\end{proof}
+%
+%\begin{lemma}\label{lemma:prob2_coercivity}
+%The bilinear form $a(\cdot \ , \ \cdot)$ is coercive.
+%\end{lemma}
+%
+%\begin{lemma}
+%The inf-sup inequality \eqref{eq:infsup} holds, namely $ \exists \beta_2 >0$ such that $\forall \md \in H^{-\frac 12}(\Lambda),\,$:
+%\begin{equation*}
+%\sup _{\substack{v\in H^1_0(\Omega),\\ \vd \in H^1_0(\Lambda)}} \frac{ \langle \avrc{T v} - \vd, \md \rangle_{\Lambda,|\DD|}}{\vertiii{[v,\vd]}}
+%\geq \beta_2 \|\md\|_{H^{\frac 12}(\Lambda)}.
+%\end{equation*}
+%\end{lemma} 
+%We choose $\vd=0$ and we obtain
+%\begin{equation*}
+%\sup _{\substack{v\in H^1_0(\Omega),\\ \vd \in H^1_0(\Lambda)}} \frac{ \langle \avrc{T v} - \vd, \md \rangle_{\Lambda,|\DD|}}{\vertiii{[v,\vd]}}
+%\geq \sup _{v\in H^1_0(\Omega)} \frac{ \langle \avrc{T v}, \md \rangle_{\Lambda,|\DD|}}{\|v\|_{H^1(\Omega)}}. 
+%\end{equation*}
+%
+%For any $q \in H^{\frac 12}_{00}(\Lambda)$, we consider its uniform extension to $\Gamma$ $\ext q$
+%and then we consider the harmonic extension $v=\mathcal{E}(\ext q)\in H^1_0(\Omega)$. It follows that $\avrc{T v}=q$. Therefore, 
+%\begin{equation*}
+%\sup _{v\in H^1_0(\Omega)}  \langle \avrc{T v}, \md \rangle_{\Lambda,|\DD|} \gtrsim \sup_{q \in H^{\frac 12}_{00}(\Lambda)} \langle q, \md  \rangle_\Lambda\,.
+%\end{equation*}
+%Moreover, using Lemma \ref{lemma:H12norm} we obtain
+%\begin{equation*}
+%\|v\|_{H^1_0(\Omega)}\leq \|\mathcal{E}\| \|\ext q\|_{H^{\frac 12}(\Gamma)}  \lesssim \|\mathcal{E}\| \|q\|_{H^{\frac 12}(\Lambda)}.
+%\end{equation*}
+% Therefore,
+%\begin{multline*}
+%\sup _{v\in H^1_0(\Omega)} \frac{ \langle \avrc{T v}, \md \rangle_{\Lambda,|\DD|}}{\|v\|_{H^1(\Omega)}}
+%\gtrsim \sup _{q\in H^{\frac 12}_{00}(\Lambda)} \frac{ \langle q, \md \rangle_\Lambda}{\|v\|_{H^1(\Omega)}}
+%\gtrsim \|\mathcal{E}\|^{-1} \sup _{q\in H^{\frac 12}_{00}(\Lambda)} \frac{ \langle q, \md \rangle_\Lambda}{\|q\|_{H^{\frac 12}(\Lambda)}} 
+%\\= \|\mathcal{E}\|^{-1} \|\md\|_{H^{-\frac 12}(\Lambda)}
+%\end{multline*}
+%and the constants in the inequalities depend on $\min _{s \in (0,S)} |\DD(s)|$ and $\max _{s \in (0,S)} |\DD(s)|$ which we suppose to be strictly positive.\\
 
+%%%%Analysis with a weighted norm for the multiplier
 We prove that the hypotesis of  Theorem \ref{th:bnb} are fulfilled with the following spaces $X=H^1_0(\Omega) \times H^1_0(\Lambda)$, $Q=H^{-\frac 12}(\Lambda)$.
 Let us consider $X$ equipped again with the norm $\vertiii{[\cdot,\cdot ]}$ and  
-$Q$ equipped with the norm $\|\cdot \|_{H^{-\frac 12}}$.
+$Q$ equipped with the norm $\|\cdot \|_{H^{-\frac 12}(\Lambda),|\DD|}$, defined as
+\begin{equation*}
+\|\md \|_{H^{-\frac 12}(\Lambda),|\DD|}:= \sup_{q\in H^{\frac 12}(\Lambda)}\frac{\langle q, \md\rangle_{\Lambda, |\DD|}}{\|q\|_{H^{\frac 12}(\Lambda),|\DD|}}
+\end{equation*}
 Then, we have the following lemmas.
 \begin{lemma}
 The bilinear forms $a(\cdot \ , \ \cdot)$ and $b(\cdot \ , \ \cdot)$ are bounded.
@@ -168,14 +227,13 @@ The bilinear forms $a(\cdot \ , \ \cdot)$ and $b(\cdot \ , \ \cdot)$ are bounded
 \begin{proof}
 The boundedness of $a(\cdot \ , \ \cdot)$ can be proved as in Lemma \ref{lemma:prob1_boundedness}. Concerning $b(\cdot \ , \ \cdot)$, we have
 \begin{multline*}
-b([v, \vd], \md)=  \langle  \avrc{Tv} - \vd, \md \rangle_{\Lambda, |\DD|} 
-\leq \|\avrc{Tv} - \vd\|_{H^{\frac 12 }(\Lambda), |\DD|}\|\md\|_{H^{-\frac 12}(\Lambda)}\\
-\leq \left(\|\avrc{Tv}\|_{H^{\frac 12 }(\Lambda), |\DD|}+\|\vd\|_{H^{\frac 12 }(\Lambda), |\DD|}\right)\|\md\|_{H^{-\frac 12}(\Lambda)} \\
-\leq \left(\|Tv\|_{H^{\frac 12 }(\Gamma)}+ \|\vd\|_{H^1(\Lambda), |\DD|}\right)\|\md\|_{H^{-\frac 12}(\Lambda)} \\
-\leq \left(C_T\|v\|_{H^1(\Omega)}+ \left(\frac{\max |\D|}{\min |\D|}\right)^{\frac 12} \|\vd\|_{H^1(\Lambda), |\D|}\right) \|\md\|_{H^{-\frac 12}(\Lambda)} \\
-\lesssim \vertiii{[v,\vd]}\|\md\|_{H^{-\frac 12}(\Lambda)} 
-\end{multline*}
-{\color{red} check $\||\DD| \avrc{Tv}\|_{H^{\frac 12}(\Lambda)}\leq \|Tv\|_{H^{\frac 12}(\Gamma)}$} 
+b([v, \vd], \md)=  \langle  \mtrace v - \vd, \md \rangle_{\Lambda, |\DD|} 
+\leq \|\mtrace v - \vd\|_{H^{\frac 12 }(\Lambda), |\DD|}\|\md\|_{H^{-\frac 12}(\Lambda),|\DD|}\\
+\leq \left(\|\mtrace v\|_{H^{\frac 12 }(\Lambda), |\DD|}+\|\vd\|_{H^{\frac 12 }(\Lambda), |\DD|}\right)\|\md\|_{H^{-\frac 12}(\Lambda),|\DD|} \\
+\leq \left(\|\trace v\|_{H^{\frac 12 }(\Gamma)}+ \|\vd\|_{H^1(\Lambda), |\DD|}\right)\|\md\|_{H^{-\frac 12}(\Lambda),|\DD|} \\
+\leq \left(C_T\|v\|_{H^1(\Omega)}+ \left(\frac{\max |\D|}{\min |\D|}\right)^{\frac 12} \|\vd\|_{H^1(\Lambda), |\D|}\right) \|\md\|_{H^{-\frac 12}(\Lambda),|\DD|} \\
+\lesssim \vertiii{[v,\vd]}\|\md\|_{H^{-\frac 12}(\Lambda),|\DD|}.
+\end{multline*} 
 \end{proof}
 
 \begin{lemma}\label{lemma:prob2_coercivity}
@@ -185,33 +243,32 @@ The bilinear form $a(\cdot \ , \ \cdot)$ is coercive.
 \begin{lemma}
 The inf-sup inequality \eqref{eq:infsup} holds, namely $ \exists \beta_2 >0$ such that $\forall \md \in H^{-\frac 12}(\Lambda),\,$:
 \begin{equation*}
-\sup _{\substack{v\in H^1_0(\Omega),\\ \vd \in H^1_0(\Lambda)}} \frac{ \langle \avrc{T v} - \vd, \md \rangle_{\Lambda,|\DD|}}{\vertiii{[v,\vd]}}
+\sup _{\substack{v\in H^1_0(\Omega),\\ \vd \in H^1_0(\Lambda)}} \frac{ \langle \mtrace v - \vd, \md \rangle_{\Lambda,|\DD|}}{\vertiii{[v,\vd]}}
 \geq \beta_2 \|\md\|_{H^{\frac 12}(\Lambda)}.
 \end{equation*}
 \end{lemma} 
 We choose $\vd=0$ and we obtain
 \begin{equation*}
-\sup _{\substack{v\in H^1_0(\Omega),\\ \vd \in H^1_0(\Lambda)}} \frac{ \langle \avrc{T v} - \vd, \md \rangle_{\Lambda,|\DD|}}{\vertiii{[v,\vd]}}
-\geq \sup _{v\in H^1_0(\Omega)} \frac{ \langle \avrc{T v}, \md \rangle_{\Lambda,|\DD|}}{\|v\|_{H^1(\Omega)}}. 
+\sup _{\substack{v\in H^1_0(\Omega),\\ \vd \in H^1_0(\Lambda)}} \frac{ \langle \mtrace v - \vd, \md \rangle_{\Lambda,|\DD|}}{\vertiii{[v,\vd]}}
+\geq \sup _{v\in H^1_0(\Omega)} \frac{ \langle \mtrace v, \md \rangle_{\Lambda,|\DD|}}{\|v\|_{H^1(\Omega)}}. 
 \end{equation*}
 
-For any $q \in H^{\frac 12}_{00}(\Lambda)$, we consider its uniform extension to $\Gamma$ $\mathcal{U}_E q$
-and then we consider the harmonic extension $v=\mathcal{E}(\mathcal{U}_E q)\in H^1_0(\Omega)$. It follows that $\avrc{T v}=q$. Therefore, 
+For any $q \in H^{\frac 12}_{00}(\Lambda)$, we consider its uniform extension to $\Gamma$ $\ext q$
+and then we consider the harmonic extension $v=\mathcal{E}_\Omega \ext q\in H^1_0(\Omega)$. It follows that $\mtrace v=q$. Therefore, 
 \begin{equation*}
-\sup _{v\in H^1_0(\Omega)}  \langle \avrc{T v}, \md \rangle_{\Lambda,|\DD|} \gtrsim \sup_{q \in H^{\frac 12}_{00}(\Lambda)} \langle q, \md  \rangle_\Lambda\,.
+\sup _{v\in H^1_0(\Omega)}  \langle \mtrace v, \md \rangle_{\Lambda,|\DD|} \geq\sup_{q \in H^{\frac 12}_{00}(\Lambda)} \langle q, \md  \rangle_{\Lambda,|\DD|}\,.
 \end{equation*}
 Moreover, using Lemma \ref{lemma:H12norm} we obtain
 \begin{equation*}
-\|v\|_{H^1_0(\Omega)}\leq \|\mathcal{E}\| \|\mathcal{U}_E q\|_{H^{\frac 12}(\Gamma)}  \lesssim \|\mathcal{E}\| \|q\|_{H^{\frac 12}(\Lambda)}.
+\|v\|_{H^1_0(\Omega)}\leq \|\mathcal{E}_\Omega\| \|\ext q\|_{H^{\frac 12}(\Gamma)}  = \|\mathcal{E}_\Omega\| \|q\|_{H^{\frac 12}(\Lambda),|\DD|}.
 \end{equation*}
  Therefore,
 \begin{multline*}
-\sup _{v\in H^1_0(\Omega)} \frac{ \langle \avrc{T v}, \md \rangle_{\Lambda,|\DD|}}{\|v\|_{H^1(\Omega)}}
-\gtrsim \sup _{q\in H^{\frac 12}_{00}(\Lambda)} \frac{ \langle q, \md \rangle_\Lambda}{\|v\|_{H^1(\Omega)}}
-\gtrsim \|\mathcal{E}\|^{-1} \sup _{q\in H^{\frac 12}_{00}(\Lambda)} \frac{ \langle q, \md \rangle_\Lambda}{\|q\|_{H^{\frac 12}(\Lambda)}} 
-\\= \|\mathcal{E}\|^{-1} \|\md\|_{H^{-\frac 12}(\Lambda)}
+\sup _{v\in H^1_0(\Omega)} \frac{ \langle \mtrace v, \md \rangle_{\Lambda,|\DD|}}{\|v\|_{H^1(\Omega)}}
+\geq \sup _{q\in H^{\frac 12}_{00}(\Lambda)} \frac{ \langle q, \md \rangle_{\Lambda,|\DD|}}{\|v\|_{H^1(\Omega)}}
+\geq \|\mathcal{E}_\Omega\|^{-1} \sup _{q\in H^{\frac 12}_{00}(\Lambda)} \frac{ \langle q, \md \rangle_{\Lambda,|\DD|}}{\|q\|_{H^{\frac 12}(\Lambda),|\DD|}} 
+\\= \|\mathcal{E}_\Omega\|^{-1} \|\md\|_{H^{-\frac 12}(\Lambda),|\DD|}.
 \end{multline*}
-and the constants in the inequalities depend on $\min _{s \in (0,S)} |\DD(s)|$ and $\max _{s \in (0,S)} |\DD(s)|$ which we suppose to be strictly positive.\\
-{\color{red} What if we use also for the multiplier a weighted norm?}
+
 
 

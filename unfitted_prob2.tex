@@ -1,12 +1,12 @@
 \def\patch{\omega _j}
 \subsection{$\mathcal{T}^{\Omega}_h$ non conforming to $\Gamma$}
 We analyze now the case in which the elements of the 3D mesh $\mathcal{T}^{\Omega}_h$ cut the interface $\Gamma$. It is easy to understand that the formulation of Problem 2 is more suitable. 
-{\color{red} Add more details, we can refer also to cutFEM (Burman, Massing etc.) explaining the limitation of that approach (network case for example).}\\
+%{\color{red} Add more details, we can refer also to cutFEM (Burman, Massing etc.) explaining the limitation of that approach (network case for example).}\\
 Therefore we focus on the analysis of Problem 2.
 
 \subsubsection{Problem 2} We consider for the solutions $u_h$ and ${\ud}_h$ the spaces $X_{h,0}^1(\Omega)$ and $X_{h,0}^1(\Lambda)$, see the previous subsection for the definition. Notice that in this case we suppose that the mesh sizes of the 3D mesh $\mathcal{T}^{\Omega}_h$ and the 1D mesh $\mathcal{T}^{\Lambda}_{h'}$ are different, in particular we suppose the 1D mesh is finer. Concerning the multiplier space, let $\mathcal{G}_h = \{K \in \mathcal{T}^{\Omega}_h: \, K\cap \Lambda \neq \emptyset\}$, namely the set of the 3D elements which intersect $\Lambda$, and let us define $Q_h=\{{\ld}_h : {\ld}_h \in P^0(K) \, \forall K \in \mathcal{G}_h\}$. We notice that we are extending the multiplier to the 3D elements: equivalenty we could have defined $\lambda_h$ as a piecewise constant function on $K\cap \Lambda$ for any $K \in \mathcal{G}_h$, but we use this trick so that we do not need to consider the 1D mesh given by the intersection of the elements of $\mathcal{G}_h$ with $\Lambda$. With this choice the problem is not inf-sup stable, therefore the idea is to add a stabilization term $s({\ld}_h, {\md}_h)$ to \eqref{eq:prob2_discrete} following the approach introduced in \cite{burman2014}. In particular, we build a new multiplier space $L_h$ for which the discrete inf-sup condition is fulfilled and we build a projection operator $\pi_L: Q_h \rightarrow L_h$ such that for any $[v, \vd] \in X $
 \begin{equation}\label{condition_pi_L}
-b([v, \vd], \lambda_h - \pi_L \lambda_h) \lesssim \vertiii{[v,\vd]}\|\lambda_h - \pi_L \lambda_h\|_{L_h},
+b([v, \vd], {\ld}_h - \pi_L {\ld}_h) \lesssim \vertiii{[v,\vd]}\|{\ld}_h - \pi_L {\ld}_h\|_{L_h},
 \end{equation}
 where for $X$ and $\vertiii{[\cdot, \cdot]}$ we use the definitions of section $3.2$ and $\|\cdot \|_{L_h}$ denotes a suitable discrete norm on $L_h$. Then, the following lemma holds
 \begin{lemma}\cite[Lemma2.1]{burman2014}
@@ -25,13 +25,24 @@ a([u_h, {\ud}_h],[u_h, {\ud}_h] ) + b([u_h, {\ud}_h], \xi_h([u_h, {\ud}_h])) \ge
 \begin{equation}\label{stab_stability}
 (s(\xi_{h}, \xi_{h}))^{\frac 12} \leq c_s \vertiii{[u_h, {\ud}_h]}_{X_{h,0}^1(\Omega)\times X_{h,0}^1(\Lambda) },
 \end{equation}
-being $\vertiii{[\cdot \, ,\, \cdot] }_{X_{h,0}^1(\Omega)\times X_{h,0}^1(\Lambda) }$ a suitable discrete norm (see \cite[section II]{burman2014}). \\
+being $\vertiii{[\cdot \, ,\, \cdot] }_{X_{h,0}^1(\Omega)\times X_{h,0}^1(\Lambda) }$ a suitable discrete norm. Then, the stabilized problem 
+\begin{multline}\label{eq:prob2_stabilized}
+a([u_h, {\ud}_h], [v_h, {\vd}_h]) +
+b([v_h, {\vd}_h], {\ld}_h) +\\
+b([u_h, {\ud}_h], {\md}_h) 
+- s({\ld}_h, {\md}_h) = c(v_h) + d({\md}_h)\\
+  \qquad \forall [v_h, {\vd}_h] \in {X_{h,0}^1(\Omega)\times X_{h,0}^1(\Lambda), \, \forall \md}_h \in Q_h
+\end{multline}
+is well posed thanks to the following lemma.
+\begin{lemma}\cite[Lemma2.3]{burman2014}
+Under the previous assumptions, system \eqref{eq:prob2_stabilized} admits a unique solution $\{[u_h, {\ud}_h], {\ld}_h \}$.
+\end{lemma}
 
 We recall that in the case of Problem 2, 
 \begin{equation*}
 b([u_h, {\ud}_h], {\ld}_h) = \left(\mtrace u_h - {\ud}_h, {\ld}_h\right)_{\Lambda,|\DD|}.
 \end{equation*}
-The construction of the inf-sup stable space $L_h$ is based on macro elements of diameter $H$, where $H$ is sufficiently larger than $h$. In particular, we assume that there exists positive constants $c_h$ and $c_H$ such that $c_h h\leq H \leq c_H^{-1}h$, with $c_h$ is sufficiently large. The space is constructed assembling the 3D elements of $\mathcal{G}_h$ into macro patches $ \patch $ such that {\color{red}$H \leq |\patch\cap \Lambda|\leq cH$}. Namely, $\patch=\cup _{i=0}^{M_j} K_i$, where $K_i \in \mathcal{G}_h$ and $M_j$ is uniformly bounded in $j$ by some $M\in \mathbb{N}$ and $H=\min_{j}|\patch\cap \Lambda|$. We assume that the interiors of the patches $\patch$ are  disjoint. We define 
+The construction of the inf-sup stable space $L_h$ is based on macro elements of diameter $H$, where $H$ is sufficiently larger than $h$. In particular, we assume that there exists positive constants $c_h$ and $c_H$ such that $c_h h\leq H \leq c_H^{-1}h$, with $c_h$ is sufficiently large. The space is constructed assembling the 3D elements of $\mathcal{G}_h$ into macro patches $ \patch $ such that $H \leq |\patch\cap \Lambda|\leq cH$. Namely, $\patch=\cup _{i=0}^{M_j} K_i$, where $K_i \in \mathcal{G}_h$ and $M_j$ is uniformly bounded in $j$ by some $M\in \mathbb{N}$ and $H=\min_{j}|\patch\cap \Lambda|$. We assume that the interiors of the patches $\patch$ are  disjoint. We define 
 \begin{equation*}
 L_h=\left\{{\lld }_h: \, {\lld }_h\in P^0(\patch)\, \forall j \right\}.
 \end{equation*}
@@ -43,7 +54,7 @@ L_h=\left\{{\lld }_h: \, {\lld }_h\in P^0(\patch)\, \forall j \right\}.
 \caption{Extended patches $\omega_j$.}
 \end{figure}
 
-Moreover, we associate to each patch $\patch$ a shape-regular extended patch, still denoted by $\omega_j$ for notational simplicity, which is built adding to $\patch$ a sufficient number of elements of $\mathcal{T}_h^{\Omega}$ and we assume that the interiors of the new extended patches $\omega _j$ are still disjoint (see Figure \ref{fig:patch}). Here we are using the classical definition of shape-regularity, see for example \cite{MR2050138}, namely there exist a constant $C>0$ such that for any $\omega_j$, $\frac{\tilde{\rho}_j}{\bar{\rho}_j}\leq C$, being $\tilde{\rho}_j$ the diameter of $\omega_j$ and $\bar{\rho}_j$ the diameter of the largest ball that can be inscribed in $\omega_j$. The extended patches $\omega _j$ are built such that they fulfill the conditions meas$(\patch)=\mathcal{O}(H^3)$ and {\color{red}diam$(\Gamma_{\patch\cap \Lambda}\cap \omega_j)=O(H)$}, where $\Gamma_{\patch\cap \Lambda}$ is the portion of $\Gamma$ with centerline $\patch\cap \Lambda$. See Figure \ref{fig:gamma_generated} for a representation in the simple case in which $\omega _j$ is composed just by one tetrahedron. The latter assumption is required to ensure that the intersection of $\Gamma_{\patch\cap \Lambda}$ and $\omega_j$ is not too small and it will be needed later on to prove the inf-sup stability of the space $L_h$ in Lemma \ref{lemma:Lh_infsup}. We equipe the space $L_h$ with the discrete norm 
+Moreover, we associate to each patch $\patch$ a shape-regular extended patch, still denoted by $\omega_j$ for notational simplicity, which is built adding to $\patch$ a sufficient number of elements of $\mathcal{T}_h^{\Omega}$ and we assume that the interiors of the new extended patches $\omega _j$ are still disjoint (see Figure \ref{fig:patch}). Here we are using the classical definition of shape-regularity, see for example \cite{MR2050138}, namely there exist a constant $C>0$ such that for any $\omega_j$, $\frac{\tilde{\rho}_j}{\bar{\rho}_j}\leq C$, being $\tilde{\rho}_j$ the diameter of $\omega_j$ and $\bar{\rho}_j$ the diameter of the largest ball that can be inscribed in $\omega_j$. The extended patches $\omega _j$ are built such that they fulfill the conditions meas$(\patch)=\mathcal{O}(H^3)$ and diam$(\Gamma_{\patch\cap \Lambda}\cap \omega_j)=O(H)$, where $\Gamma_{\patch\cap \Lambda}$ is the portion of $\Gamma$ with centerline $\patch\cap \Lambda$. See Figure \ref{fig:gamma_generated} for a representation in the simple case in which $\omega _j$ is composed just by one tetrahedron. The latter assumption is required to ensure that the intersection of $\Gamma_{\patch\cap \Lambda}$ and $\omega_j$ is not too small and it will be needed later on to prove the inf-sup stability of the space $L_h$ in Lemma \ref{lemma:Lh_infsup}. We equipe the space $L_h$ with the discrete norm 
 \begin{equation*}
 \|\lld \|_{L_h} = \|\lld \|_{-\frac 12, h, \Lambda} = \|h^{\frac 12} \  \lld \|_{L^2(\Lambda)}.
 \end{equation*}
@@ -132,7 +143,7 @@ We define
 where $I_h: H^1(\Omega) \rightarrow X_{h,0}^1$ denotes an $H^1(\Omega)$-stable interpolant
 and $\varphi_j \in X_{h,0}^1(\Omega)$ is such that supp$(\varphi_j)\subset \omega_j$, supp$(\trace \varphi _j) \subset \Gamma_{\patch\cap \Lambda}\cap \omega_j$, $\varphi_j =0$ on $\partial \omega _j$ and 
 \begin{equation}\label{phi_properties}
- {\color{red}\int_{\patch\cap \Lambda}|\DD|\mtrace \varphi_j=O(H)} \text{ and } \|\nabla \varphi _j\|_{L^2(\omega _j)}=O(1). 
+\int_{\patch\cap \Lambda}|\DD|\mtrace \varphi_j=O(H) \text{ and } \|\nabla \varphi _j\|_{L^2(\omega _j)}=O(1). 
 \end{equation}
 We notice that supp$(\trace \varphi_j) \subset \Gamma_{\patch\cap \Lambda}\cap \omega_j$ ensures that $\mtrace \varphi_j \subset \omega_j\cap \Lambda$. Therefore, since for construction the interiors of $\omega_j\cap \Lambda$  are disjoint and $\varphi _j = 0 $ on $\partial \omega_j$,  the functions $\mtrace \varphi_j\, \forall j$ have all disjoint supports. This construction is always possible since meas$(\patch) = \mathcal{O}(H^3)$ and diam$(\Gamma_{\patch\cap \Lambda} \cap \omega_j)=\mathcal{O}(H)$, provided $H$ is sufficiently larger that $h$. Indeed, this guarantees that the functions $\varphi _j$ and their traces $\trace \varphi _j$ have a sufficiently large support so that they can be built in order to satisfy \eqref{phi_properties}.
 Then we have

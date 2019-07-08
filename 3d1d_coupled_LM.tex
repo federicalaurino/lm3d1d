@@ -103,7 +103,7 @@ We address the geometrical configuration of the problem for a 3D coupled problem
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 \section{Problem setting}\label{sec:setting}
 
-Let $\Omega \subset \mathbb{R}^3$ be a bounded, convex open set. Let $\Omega_\ominus$ be a generalized cylinder embedded into $\Omega$ and be $\Omega_\oplus = \Omega \setminus \overline{\Omega}_\ominus$ be the complementary set of the cylinder. We also introduce the set $\Lambda$, a 1D manifold that is the centerline of $\Omega_\ominus$. We define the arc-length coordinate along $\Lambda$, denoted by $s \in (0,S)$. We denote with $\mathcal{D}(s)$ and $\partial\mathcal{D}(s)$ a cross section of $\Omega_\ominus$ and its boundary, respectively. 
+Let $\Omega \subset \mathbb{R}^3$ be a bounded, convex open set. Let $\Omega_\ominus$ be a generalized cylinder embedded into $\Omega$ and be $\Omega_\oplus = \Omega \setminus \overline{\Omega}_\ominus$ be the complementary set of the cylinder. We also introduce the set $\Lambda$, a 1D manifold that is the centerline of $\Omega_\ominus$. We define the arc-length coordinate along $\Lambda$, denoted by $s \in (0,S)$. We denote with $\mathcal{D}(s)$ and $\partial\mathcal{D}(s)$ a cross section of $\Omega_\ominus$ and its boundary, respectively, and we assume that $\min |\D (s)| >0$, where $|\D (s)|$ is the measure of $\D (s)$. 
 %In what follows, we assume for simplicity of notation that $\Sigma$ has a constant cross section, but this is not a restriction of the approach. 
 We also assume that $\Omega_\ominus$ crosses $\Omega$ from side to side and we call $\Gamma$ the lateral (cylindrical) surface of $\Omega_\ominus$, while the upper and lower side faces of $\Omega_\ominus$ belong to $\partial\Omega$. We refer to Figure \ref{fig1} for an illustration of the notation. 
 
@@ -516,8 +516,10 @@ Let $\Gamma$ be the lateral surface of a prism with $N$ faces $\Gamma_i$, $i=1, 
 Let $\Gamma$ be the lateral surface of a cylinder of radius $R$. Let $u\in H^{\frac 12}_{00}(\Gamma)$ and let $\avrc{u}(s)= \frac{1}{2\pi R} \int_0^{2\pi} u(s,\theta)R\, d\theta$. Then $\avrc{u}\in H^{\frac 12}_{00}(0,S)$.
 \end{corollary}
 
-It is apparent that problems \eqref{eq:weak_dirneu} and \eqref{eq:red_dirneu} share the same mathematical structure.
-For this reason, the well-posedness of \eqref{eq:red_dirneu} can be studied in the framework of the classical theory of saddle point problems.
+The well-posedness of $\eqref{eq:problem1}$ and $\eqref{eq:problem2}$ can be studied in the framework of the classical theory of saddle point problems as shown in the following.
+
+%It is apparent that problems \eqref{eq:weak_dirneu} and \eqref{eq:red_dirneu} share the same mathematical structure.
+%For this reason, the well-posedness of \eqref{eq:red_dirneu} can be studied in the framework of the classical theory of saddle point problems.
 
 %Assuming now that 
 %$\Pi_1: H^1(\Omega) \rightarrow H^{\frac12}(\Gamma)$ or $\Pi_2: H^1(\Gamma) \rightarrow H^{\frac12}(\Gamma)$ are isomorphisms in the sense that 

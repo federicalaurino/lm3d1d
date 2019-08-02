@@ -2,7 +2,7 @@
 
 all: pdf
 
-pdf: solver.tex problem_omega.tex problem_gamma.tex coupled.tex
+pdf: solver.tex problem_omega.tex problem_gamma.tex coupled2d.tex coupled3d.tex
 	latexmk -pdf -pdflatex="pdflatex --shell-escape %O %S" $<
 
 view: 

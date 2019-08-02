@@ -1,7 +1,7 @@
 Let $V=H^1{(\Gamma)}$ We consider the minimization problem
 \[
 \min_{u\in V}\quad\norm{u}^2_1 - \int_{\Gamma}f u\,\mathrm{d}x\quad\mbox{subject to}\quad
-u-g\mbox{ in }\Gamma.
+u=g\mbox{ in }\Gamma.
 \]
 Denoting $p$ the Lagrange multiplier for the constraint the extremal points
 of the related Lagrangian are found as a solution to
@@ -167,5 +167,69 @@ $10^{-6}$ & 32 & 38 & 44 & 47 & 49\\
 
 Example \ref{ex:stokes} motivates the need to find a stabilizing term
 for the P1-P0 discretization of $\mathcal{A}_1$. In addition, the stabilization
-should be consisten so that to not ruin the approximation properties of the
+should be consistent so as to not ruin the approximation properties of the
 formulation.
+
+\subsection{Stabilized $\mathcal{A}_1$} We construct the stabilizing term
+based on two observations. (i) In \S\ref{sec:problem_omega} the stabilization
+for $p\in Q_h\subset H^{-1/2}$ in takes the form the facet integral with integrand $h^{2}\jump{p}\jump{q}$.
+(ii) For P0 element $-\Delta_h$ is spectrally equivalent to operator involving
+facet integrals with integrand $h^{-1}\jump{p}\jump{q}$. In turn we assume
+that the stabilization for $H^s$ norms takes the form $h^{p}\jump{p}\jump{q}$
+and by interpolation from (i) and (ii) $p=-2s+1$. Thus the stabilizing term for $H^{-1}$ shall
+involve the cube of the mesh size and we consider a discrete formulation of \eqref{eq:A1}
+in terms of the operator
+%
+\[
+\langle\mathcal{A}_{1, h}\begin{pmatrix}u\\p\end{pmatrix},
+  \begin{pmatrix}v\\q\end{pmatrix}
+    \rangle
+    =
+    \int_{\Gamma}\nabla u\cdot\nabla v+uv\,\mathrm{d}x+\int_{\Gamma}uq + vp\,\mathrm{d}x-
+    \sum_{F\in\mathcal{F}}h^3\jump{p}\jump{q}\,\mathrm{d}s.
+\]
+The preconditioner for $\mathcal{A}_{1, h}$ is then the Riesz mapping which
+includes the negative stabilized term
+\[
+\langle\mathcal{B}^{-1}_{1, h}\begin{pmatrix}u\\p\end{pmatrix},
+  \begin{pmatrix}v\\q\end{pmatrix}
+    \rangle
+    =
+    \int_{\Gamma}\nabla u\cdot\nabla v+uv\,\mathrm{d}x+
+    \langle(-\Delta+I)^{-1}p, q\rangle+
+    \sum_{F\in\mathcal{F}}h^3\jump{p}\jump{q}\,\mathrm{d}s.
+\]
+
+Table \ref{tab:A1} shows error convergence of the proposed formulation
+together with the condition number of the preconditioner problem. We remark
+that the manufactured solution on the unit interval has $g=0$ so that $p=f=\cos(\pi x)$
+and $u=0$ is the solution. It can be seen that the formulation is stable and
+yields converging solutions.
+
+\begin{table}
+  \footnotesize{
+    \begin{center}
+      \begin{tabular}{c|cc|c}
+        \hline
+        $h$ & $\norm{u-u_h}_1$ & $\norm{p-p_h}_0$ & $\kappa$ \\
+        \hline
+% 2.50E-01& 6.4083E-02(--)  & 2.4243E-01(--)  & 2.65607  \\
+% 1.25E-01& 5.5055E-03(3.54)& 8.0279E-02(1.59)& 2.66149  \\
+% 6.25E-02& 3.5103E-04(3.97)& 4.0044E-02(1.00)& 2.66364  \\
+% 3.12E-02& 2.1949E-05(4.00)& 2.0040E-02(1.00)& 2.66582  \\
+ 1.56E-02& 1.3715E-06(4.00)& 1.0020E-02(1.00)& 2.66592  \\
+ 7.81E-03& 8.5716E-08(4.00)& 5.0100E-03(1.00)& 2.66596  \\
+ 3.91E-03& 5.3572E-09(4.00)& 2.5050E-03(1.00)& 2.66599  \\
+ 1.95E-03& 3.3482E-10(4.00)& 1.2525E-03(1.00)& 2.66599  \\
+ 9.77E-04& 2.0926E-11(4.00)& 6.2625E-04(1.00)& 2.66599  \\
+ 4.88E-04& 1.3079E-12(4.00)& 3.1312E-04(1.00)& 2.66575  \\
+        \hline
+      \end{tabular}
+    \end{center}
+  }
+  \caption{Conditioning and approximation properties of stabilized
+    formulation of \eqref{eq:A1} using P1-P0 elements.
+  }
+  \label{tab:A1}
+\end{table}
+

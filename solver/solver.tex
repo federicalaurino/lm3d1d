@@ -69,11 +69,14 @@ n.a.
 \end{AMS}
 
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
- 
+
+\newcommand{\MK}[1]{\textcolor{cyan}{#1}}
+
 \newcommand{\semi}[1]{\lvert{#1}\rvert}
 \newcommand{\norm}[1]{\lVert{#1}\rVert}
 \newcommand{\jump}[1]{\ensuremath{[\![#1]\!]} }
 \newcommand{\avg}[1]{\ensuremath{\left\{\!\left\{#1\right\}\!\right\}} }
+
 \def\ud{u_{\odot}}
 \def\vd{v_{\odot}}
 \def\ld{\lambda_{\odot}}
@@ -182,12 +185,12 @@ As a stepping stone to \eqref{eq:problem2} we shall consider a related
   \node[black, fill=white, opacity=0.9] at (3, 2) {$\Omega^{+}$};
 
   % Boundaries
-  \draw[red!60!white] (0, 0) -- (0, 4);
-  \draw[red!60!white] (4, 0) -- (4, 4);
+  \draw[very thick, red!60!white] (0, 0) -- (0, 4);
+  \draw[very thick,red!60!white] (4, 0) -- (4, 4);
   \node[red!60!white, opacity=0.9, right] at (4, 1) {$\Gamma_D$};
 
-  \draw[blue!60!white] (0, 0) -- (4, 0);
-  \draw[blue!60!white] (0, 4) -- (4, 4);
+  \draw[very thick, blue!60!white] (0, 0) -- (4, 0);
+  \draw[very thick, blue!60!white] (0, 4) -- (4, 4);
   \node[blue!60!white, opacity=0.9, below] at (3, 0) {$\Gamma_N$};
 
   \draw[black, very thick] (2, 0) -- (2, 4);
@@ -215,9 +218,9 @@ $\hat{v}\in\hat{V}=H^1(\Gamma)$, $p\in Q$ such that
 %
 \begin{equation}\label{eq:coupled_weak}
   \begin{aligned}
-    &\int_{\Omega}\nabla u\cdot \nabla v &\phantom{+\int_{\Gamma}\nabla \hat{u}\cdot \nabla \hat{v}} &+\epsilon\int_{\Gamma} p v &= \int_{\Omega}f v \quad &\forall v\in V,\\
-    &\phantom{\int_{\Omega}\nabla u\cdot \nabla v} &+{\int_{\Gamma}\nabla \hat{u}\cdot \nabla \hat{v} + \hat{u}\hat{v}} &-\int_{\Gamma} p\hat{v} &= \int_{\Gamma}\hat{f}\hat{v} \quad &\forall \hat{v}\in \hat{V},\\
-    &\epsilon\int_{\Gamma}u q &-\int_{\Gamma}\hat{u}q &\phantom{-\int{\Gamma}q\hat{v}} &= \int_{\Gamma}h q \quad &\forall q\in Q.
+    &\int_{\Omega}\nabla u\cdot \nabla v\,\mathrm{d}x &\phantom{+\int_{\Gamma}\nabla \hat{u}\cdot \nabla \hat{v}} &+\epsilon\int_{\Gamma} p v\,\mathrm{d}s &= \int_{\Omega}f v\,\mathrm{d}x \quad &\forall v\in V,\\
+    &\phantom{\int_{\Omega}\nabla u\cdot \nabla v} &+{\int_{\Gamma}\nabla \hat{u}\cdot \nabla \hat{v} + \hat{u}\hat{v}\,\mathrm{d}x} &-\int_{\Gamma} p\hat{v}\,\mathrm{d}s &= \int_{\Gamma}\hat{f}\hat{v}\,\mathrm{d}s \quad &\forall \hat{v}\in \hat{V},\\
+    &\epsilon\int_{\Gamma}u q\,\mathrm{d}s &-\int_{\Gamma}\hat{u}q\,\mathrm{d}s &\phantom{-\int{\Gamma}q\hat{v}} &= \int_{\Gamma}h q\,\mathrm{d}s \quad &\forall q\in Q.
   \end{aligned}
 \end{equation}
 
@@ -227,8 +230,8 @@ In the following it will be convenient to work with the operator form of
 \begin{equation}\label{eq:operator2d}
   \mathcal{A} = \begin{pmatrix}
     -\Delta_{\Omega} & & -\epsilon T^{\prime}\\
-    & -\Delta_{\Gamma} + I & I\\
-    -\epsilon T & I & \\
+    & -\Delta_{\Gamma} + I & -I\\
+    -\epsilon T & -I & \\
   \end{pmatrix} =
   \begin{pmatrix}
     A_2 &  & B_2'\\
@@ -248,8 +251,14 @@ elements (P1) for all the unknowns is inf-sup stable and in turn the diagonal op
 \end{equation}
 is a robust preconditioner for $\mathcal{A}$. For the sake of completness
 (and verifying the implementation) Table \ref{tab:P1} shows the number of
-MinRes iterations and condition numbers of the preconditioned problem for
-different levels of refinements and values of the parameter $\epsilon$. The
+MinRes iterations and condition numbers\footnote{
+  Unless specified otherwise all the experiments are done on $\Omega$ a unit square
+  triangulated in $2N^2$ isosceles triangles. MinRes iterations are always started
+  from a random initial vector and terminate one the relative preconditioned residual
+  norm is reduced by factor $10^{8}$. Condition numbers of the preconditioned problem
+  are computed by direct solvers, i.e. from the full spectrum.
+} of the preconditioned problem for
+different levels of refinement and values of the parameter $\epsilon$. The
 stability is evident.
 %
 \begin{table}
@@ -322,7 +331,7 @@ on $\Gamma_h$ but rather on cells of $\Omega_h$ intersected by the curve, cf. Fi
   \includegraphics[width=0.4\textwidth]{./img/nocut_lm2d.tex}\hfill
     \includegraphics[width=0.4\textwidth]{./img/cut_lm2d.tex}
   \end{center}
-  \caption{Schematic geometric setting and discretization of mutliscale problems.
+  \caption{Schematic geometric setting and discretization of multiscale problems.
     Position of interface $\Gamma$ is denoted by \figlegend{green!50!black}. Meshes
     underlying discrete approximation spaces $\hat{V}_h$ and $Q_h$ of $\hat{V}$ and $Q$ are denoted respectively
     by \figlegend{white!50!blue} and \figlegend{white!50!red}. Geometric correspondence
@@ -337,7 +346,7 @@ on $\Gamma_h$ but rather on cells of $\Omega_h$ intersected by the curve, cf. Fi
 The rest of the report is structured as follows. Considering \eqref{eq:operator2d}
 we first treat the problems related to domains $\Omega$, i.e. $\mathcal{A}_2=\left[A_2, B_2'; B_2, 0\right]$,
 and $\Gamma$, i.e. $\mathcal{A}_1=\left[A_1, B_1'; B_1, 0\right]$, individually\footnote{This is done for
-clarity of exposition, to better fix the ideas and debugging}. More precisely, in
+clarity of exposition, to better fix the ideas and debugging.}. More precisely, in
 \S\ref{sec:problem_omega} a set of preconditioners for different formulations of the Babu{\v s}ka
 problem is presented culminating in a formulation having the discrete Lagrange multiplier on the
 cut cells. In \S\ref{sec:problem_gamma} we deal with instabities in $\mathcal{A}_1$ which arise
@@ -345,13 +354,13 @@ due to choices of discretization of the Lagrange multiplier space in $\mathcal{A
 \S\ref{sec:coupled} the insights from individual problems are combined to yield robust solvers
 for the coupled problem.
 
-\section{Coupling 2$d$-1$d$}\label{sec:problem_omega}
+\section{Preconditioning $\mathcal{A}_2$}\label{sec:problem_omega}
 \input{problem_omega}
 
-\section{Coupling 1$d$-1$d$}\label{sec:problem_gamma}
+\section{Preconditioning $\mathcal{A}_1$}\label{sec:problem_gamma}
 \input{problem_gamma}
 
-\section{Coupling 2$d$-1$d$-1$d$}\label{sec:coupled}
+\section{Preconditioning coupled problem}\label{sec:coupled}
 \input{coupled}
 
 

@@ -1,18 +1,156 @@
+With Figure \ref{fig:coupled_domain} in mind we wish to solve the 2$d$-1$d$
+coupled problem: Find $u\in V=H^1_{0, \Gamma_{D}}(\Omega)$,
+$p\in Q=H^{-1/2}(\Gamma)$ such that
+ %
+\begin{equation}\label{eq:A2}
+\begin{aligned}
+  &\int_{\Omega}\nabla u\cdot\nabla v\,\mathrm{d}x + &{\int_{\Gamma}p v} &= \int_{\Omega}f v\,\mathrm{d}x\quad\forall v\in V,\\
+  &{\int_{\Gamma}q u\,\mathrm{d}s} + &\phantom{\int{\Gamma}p v} &= \int_{\Gamma}g q\,\mathrm{d}s\quad\forall q\in Q.\\
+\end{aligned},
+\quad\mbox{or equivalently}\quad
+\mathcal{A}_2\begin{pmatrix}
+u\\
+p\\
+\end{pmatrix} = L.
+\end{equation}
+%
+It can be seen that $\mathcal{A}_2$ is an isomorphism from $W=V\times Q$
+to $W^{'}$ and in turn by \cite{mardal2011preconditioning} operator
+\[
+\mathcal{B}_2=\text{diag}(-\Delta_{\Omega}, (-\Delta_{\Gamma}+I)^{-1/2})^{-1}
+\]
+is a cannonical preconditioner for $\mathcal{A}_2$. Considering first the
+case (i) from Figure \ref{fig:domains}, i.e. trace mesh of $\Omega_h$ is
+$\Gamma_h$ and using (stable) P1-P1 discretization Table \ref{tab:A2} shows
+the both the condition number and the number of MinRes iterations of $\mathcal{B}_2\mathcal{A}_2$
+are bounded.
+
+In order to arrive at the formulation where the discrete multiplier space
+$Q_h$ is setup on the $\Gamma$-intersected cells of $\Omega_h$ let us first
+consider an intermediate formulation with a piecewise constant (P0) multiplier defined
+on $\Gamma_h$, cf. Figure \ref{fig:domains} (ii) and (iii). It is well known, e.g.
+\cite[Ch 11.3]{steinbach2007numerical}, that if trace mesh of $\Omega_h$ is $\Gamma_h$ then P1-P0 discretization is
+unstable. However the pair is stable if $\Gamma_h$ is coarser than the trace
+mesh or a stabilization is employed. In the application we have in mind
+the mesh of $\Omega$ is in general coarser than that of $\Gamma$ and thus
+stabilized formulation are of interest. To highlight the difference in resolution
+between the meshes we shall use different subscripts, i.e. $\Omega_H$ and
+$\Gamma_h$. We remark that stabilization for piecewise linear Lagrange multipliers
+(on $\Gamma$) is discussed in \cite{burman2009interior}.
+
+Let $V_H=V_H(\Omega_H)$, $Q_h=Q_h(\Gamma_h)$ be the finite element approximations
+of $V$ and $Q$ in terms of P1 and P0 elements respectively. Following \cite{burman2014projection}
+the stabilized formulation of \eqref{eq:A2} reads: Find $u \in V_H$ and
+$p \in Q_h$ such that
+%
+\[
+\begin{aligned}
+  &\int_{\Omega}\nabla u\cdot\nabla v\,\mathrm{d}x + &{\int_{\Gamma}p v\,\mathrm{d}s} &= \int_{\Omega}f v\,\mathrm{d}x\quad\forall v\in V_H,\\
+  &{\int_{\Gamma}q u\,\mathrm{d}s} + &-\sum_{F\in\mathcal{F}}\int_{F}h^2\jump{p}\jump{q} \mathrm{d}s &= \int_{\Gamma}g q\,\mathrm{d}s\quad\forall q\in Q_h,\\
+\end{aligned},
+\quad\mbox{or equivalently}\quad
+\mathcal{A}_{2, \Gamma_h}\begin{pmatrix}u\\p\\\end{pmatrix} = L.
+\]
+%
+Here $\mathcal{F}$ is the union of internal and $\Gamma_N$-intersecting
+facets of $\Gamma_h$. A possible preconditioner for $\mathcal{A}_{2,\Gamma_h}$,
+which is based on the mapping properties of the continuous problem is a Riesz
+map with respect to the inner product in induced by $\mathcal{B}^{-1}_{2, \Gamma_h}$
+\[
+\langle
+\mathcal{B}^{-1}_{2, \Gamma_h}\begin{pmatrix}u\\p\end{pmatrix},
+  \begin{pmatrix}v\\q\end{pmatrix}
+\rangle
+    =
+    \int_{\Omega}\nabla u\cdot\nabla v\,\mathrm{d}x + \langle(-\Delta_{\Gamma}+I)^{-1/2}p, q\rangle
+    + \sum_{F\in\mathcal{F}}\int_{F}h^2\jump{p}\jump{q} \mathrm{d}s.
+\]
+Robustness of the preconditioner can be seen in Table \ref{tab:A2} in both
+the case where $\Gamma_h$ does not and does intersect the cell interior of $\Omega_h$ (cases
+(iii) and (iv) in Figure \ref{fig:domains}). A potential difficulty with
+$\mathcal{B}_{2, \Gamma_h}$ is, however, its generalization of the call of $Q_h$ defined
+on intersected cells (interiors). In particular, the fractional norm can be
+an problematic. To avoid the issue, we therefore consider an alternative
+preconditioner based on \cite[\S 4.A]{burman2014projection}
+\[
+\langle
+\tilde{\mathcal{B}}^{-1}_{2, \Gamma_h}\begin{pmatrix}u\\p\end{pmatrix},
+  \begin{pmatrix}v\\q\end{pmatrix}
+\rangle
+    =
+    \int_{\Omega}\nabla u\cdot\nabla v\,\mathrm{d}x + \int_{\Gamma}h^{-1}u v\,\mathrm{d}s + \int_{\Gamma} h p q\,\mathrm{d}s
+    + \sum_{F\in\mathcal{F}}\int_{F}h^2\jump{p}\jump{q} \mathrm{d}s.
+\]
+Note that the fractional norm on the multiplier has been replaced by the $h$-weighted
+$L^2$ norm. Furthermore, there is an additional control of the trace of $u$ on
+the curve by $h^{-1}$-weighted $L^2$ norm. We remark that \cite{burman2014projection} proves
+the inf-sup condition for $\mathcal{A}_{2, \Gamma_h}$ using the norms on $V_H$ and
+$Q_h$ as follows
+\[
+\norm{u}^2_{V_H} = \norm{\semi{\nabla u}}^2_0 + \int_{\Gamma}h^{-1} u v\,\mathrm{d}s
+\quad\mbox{and}\quad
+\norm{p}_{Q_h} = \norm{h^{1/2} p}_0.
+\]
+
+Robustness of the preconditioner is
+shown in Table \ref{tab:A2}; in the cut case (iii) the preconditioner is more
+efficinet than $\mathcal{B}_{2, \Gamma_h}$. We remark that the error convergence
+of $\norm{u-u_H}_1$ is reduced in this case due to the fact that the kink
+of the solution cannot be captured within the element.
+
+Finally, we extend $\mathcal{A}_{2, \Gamma_h}$ to the formulation with Lagrange
+mutliplier on the intersected elements. To this end, let $\mathcal{S}_H$ denote
+elements of $\Omega_H$ intersected by $\Gamma_h$. The space $Q_H$ now consists
+of piecewise constants on $\mathcal{S}_H$. Following \cite[\S 4.B]{burman2014projection}
+we consider problem: Find $u\in V_H$, $p\in  Q_H$ such that
+%
+\[
+\begin{aligned}
+  &\int_{\Omega}\nabla u\cdot\nabla v\,\mathrm{d}x + &{\int_{\Gamma}p v\,\mathrm{d}s} &= \int_{\Omega}f v\,\mathrm{d}x\quad\forall v\in V_H,\\
+  &{\int_{\Gamma}q u\,\mathrm{d}s} + &-\sum_{F\in\partial\mathcal{S}}\int_{F}H\jump{p}\jump{q} \mathrm{d}s &= \int_{\Gamma}g q\,\mathrm{d}s\quad\forall q\in Q_H,\\
+\end{aligned},
+\quad\mbox{or equivalently}\quad
+\mathcal{A}_{2, \Omega_H}\begin{pmatrix}u\\p\\\end{pmatrix} = L.
+\]
+%
+Here $\partial\mathcal{S}$ denotes interior and Neumann boundary intersecting
+facets of $\mathcal{S}$. We remark that the norms for the inf-sup condition (shown
+in \cite{burman2014projection} of $\mathcal{A}_{2, \Omega_H}$ are identical to $\mathcal{A}_{2, \Gamma_g}$.
+
+Note that the stabilization is newly applied on edges
+(points previously in $\mathcal{A}_{2, \Gamma_h}$) and relative to $\mathcal{A}_{2, \Gamma_h}$
+we componsate for the increased dimensionality of the facets by decreasing
+the exponent of the $H$-weight. In a similar manner
+the preconditioner $\tilde{\mathcal{B}}_{2, \Gamma_h}$ can be generalized
+yielding $\tilde{\mathcal{B}}_{2, \Omega_H}$
+\[
+\langle
+\tilde{\mathcal{B}}^{-1}_{2, \Omega_H}\begin{pmatrix}u\\p\end{pmatrix},
+  \begin{pmatrix}v\\q\end{pmatrix}
+\rangle
+    =
+    \int_{\Omega}\nabla u\cdot\nabla v\,\mathrm{d}x + \int_{\Gamma}h^{-1}u v\,\mathrm{d}s + \int_{\Gamma} h p q\,\mathrm{d}s
+    + \sum_{F\in\partial\mathcal{S}}\int_{F}H\jump{p}\jump{q} \mathrm{d}s.
+\]
+In Table \ref{tab:A2} we observe that MinRes iterations with
+$\tilde{\mathcal{B}}_{2, \Omega_H}\mathcal{A}_{2, \Omega_H}$ are bounded. The decreasing
+increments of the condition numbers suggest that $\kappa$ is bounded as well.
+
 \begin{table}
     \scriptsize{% (i)
   \begin{center}
-    \begin{tabular}{c|cccc||cc}
+    \begin{tabular}{c|cccc}%||cc}
       \hline
-      \multirow{2}{*}{$h/H$} & \multicolumn{4}{c||}{$\mathcal{B}$} & \multicolumn{2}{c}{$\mathcal{B}_{h}$}\\
-      \cline{2-7}
-      & $\norm{u-u_h}_1$ & $\norm{\lambda-\lambda_h}_0$ & \# & $\kappa$ & \# & $\kappa$\\
+      \multirow{2}{*}{$\frac{H}{H_0}$} & \multicolumn{4}{c}{$\mathcal{B}_2$}\\ %& \multicolumn{2}{c}{$\mathcal{B}_{h}$}\\
+      \cline{2-5}
+      & $\norm{u-u_H}_1$ & $\norm{\lambda-\lambda_H}_0$ & \#\\% & $\kappa$ & \# & $\kappa$\\
       \hline
-1        & 8.62E-1(--)  & 1.04E0(--)    &   21 & 7.8  & 24 & 20.9 \\
-$2^{-1}$ & 4.4E-1(0.99) & 3.8E-1(1.46)  & 24   & 7.9  & 41 & 21.1 \\
-$2^{-2}$ & 2.2E-1(1.00) & 1.4E-1(1.49)  & 22   & 7.9  & 46 & 21.2 \\
-$2^{-3}$ & 1.1E-1(1.00) & 4.8E-2(1.50)  & 22   & --   & 47 & --   \\
-$2^{-4}$ & 5.5E-2(1.00) & 1.7E-2(1.50)  & 21   & --   & 48 & --   \\
-$2^{-5}$ & 2.7E-2(1.00) & 6.0E-3(1.50)  & 21   & --   & 45 & --   \\
+1        & 8.62E-1(--)  & 1.04E0(--)    &   21 & 7.8\\ % & 24 & 20.9 \\
+$2^{-1}$ & 4.4E-1(0.99) & 3.8E-1(1.46)  & 24   & 7.9\\ % & 41 & 21.1 \\
+$2^{-2}$ & 2.2E-1(1.00) & 1.4E-1(1.49)  & 22   & 7.9\\ % & 46 & 21.2 \\
+$2^{-3}$ & 1.1E-1(1.00) & 4.8E-2(1.50)  & 22   & -- \\ % & 47 & --   \\
+$2^{-4}$ & 5.5E-2(1.00) & 1.7E-2(1.50)  & 21   & -- \\ % & 48 & --   \\
+$2^{-5}$ & 2.7E-2(1.00) & 6.0E-3(1.50)  & 21   & -- \\ % & 45 & --   \\
 \hline
   \end{tabular}
   \end{center}
@@ -23,9 +161,9 @@ $2^{-5}$ & 2.7E-2(1.00) & 6.0E-3(1.50)  & 21   & --   & 45 & --   \\
   \begin{center}
     \begin{tabular}{c|cccc||cc}
       \hline
-      \multirow{2}{*}{$h/H$} & \multicolumn{4}{c||}{$\mathcal{B}$} & \multicolumn{2}{c}{$\mathcal{B}_{h}$}\\
+      \multirow{2}{*}{$\frac{H}{H_0}$} & \multicolumn{4}{c||}{$\mathcal{B}_{2, \Gamma_h}$} & \multicolumn{2}{c}{$\tilde{\mathcal{B}}_{2, \Gamma_h}$}\\
       \cline{2-7}
-      & $\norm{u-u_h}_1$ & $\norm{\lambda-\lambda_h}_0$ & \# & $\kappa$ & \# & $\kappa$\\
+      & $\norm{u-u_H}_1$ & $\norm{\lambda-\lambda_h}_0$ & \# & $\kappa$ & \# & $\kappa$\\
       \hline
 1       & 8.6E-1(--) & 5.4E-1(--)    & 29 & 6.5 & 25 & 16.9\\
 $2^{-1}$ & 4.3E-1(0.98) & 2.3E-1(1.20)& 29 & 6.6 & 31 & 17.7\\
@@ -43,16 +181,16 @@ $2^{-5}$ & 2.7E-2(1.00) & 1.1E-2(1.04)& 27 & --   & 37 & --   \\
   \begin{center}
     \begin{tabular}{c|cccc||cc}
       \hline
-      \multirow{2}{*}{$h/H$} & \multicolumn{4}{c||}{$\mathcal{B}$} & \multicolumn{2}{c}{$\mathcal{B}_{h}$}\\
+      \multirow{2}{*}{$\frac{H}{H_0}$} & \multicolumn{4}{c||}{$\mathcal{B}_{2, \Gamma_h}$} & \multicolumn{2}{c}{$\tilde{\mathcal{B}}_{2, \Gamma_h}$}\\
       \cline{2-7}
-      & $\norm{u-u_h}_1$ & $\norm{\lambda-\lambda_h}_0$ & \# & $\kappa$ & \# & $\kappa$\\
+      & $\norm{u-u_H}_1$ & $\norm{\lambda-\lambda_h}_0$ & \# & $\kappa$ & \# & $\kappa$\\
       \hline
-1       & 8.6E-1(--) & 5.4E-1(--)  & 31 & 6.7 & 21 & 2.5\\
-$2^{-1}$ & 4.3E-1(0.98) & 2.3E-1(1.20)& 32 & 6.6 & 21 & 2.5\\
-$2^{-2}$ & 2.2E-1(1.00) & 1.0E-1(1.19)& 31 & 6.6 & 21 & 2.5\\
-$2^{-3}$ & 1.1E-1(1.00) & 4.7E-2(1.13)& 30 & --  & 20 & --  \\
-$2^{-4}$ & 5.5E-2(1.00) & 2.2E-2(1.08)& 28 & --  & 20 & --  \\
-$2^{-5}$ & 2.7E-2(1.00) & 1.1E-2(1.04)& 28 & --  & 18 & --  \\
+1       & 1.3E0(--)   & 1.7E0(--)    & 31 & 6.7 & 21 & 2.5\\
+$2^{-1}$ &8.2E-1(0.68) & 9.2E-1(0.92)  & 32 & 6.6 & 21 & 2.5\\
+$2^{-2}$ &5.4E-1(0.63) & 4.6E-1(1.00)  & 31 & 6.6 & 21 & 2.5\\
+$2^{-3}$ &3.6E-1(0.58) & 2.3E-1(1.01)  & 30 & --  & 20 & --  \\
+$2^{-4}$ &2.5E-1(0.54) & 1.1E-1(1.01)  & 28 & --  & 20 & --  \\
+$2^{-5}$ &1.7E-1(0.52) & 5.7E-2(1.01)  & 28 & --  & 18 & --  \\
       \hline
   \end{tabular}
   \end{center}
@@ -65,7 +203,7 @@ $2^{-5}$ & 2.7E-2(1.00) & 1.1E-2(1.04)& 28 & --  & 18 & --  \\
   \begin{center}
     \begin{tabular}{c|cccc}
       \hline
-      \multirow{2}{*}{$h/H$} & \multicolumn{4}{c|}{$\mathcal{B}$}\\
+      \multirow{2}{*}{$\frac{H}{H_0}$} & \multicolumn{4}{c}{$\mathcal{B}$}\\
       \cline{2-5}
       & $\norm{u-u_h}_1$ & $\norm{\lambda-\lambda_h}_0$ & \# & $\kappa$\\
       \hline
@@ -85,7 +223,7 @@ $2^{-5}$ & 9.1E-2(0.95) & 2.2E-1(0.55) & 26 &-- \\
   \begin{center}
     \begin{tabular}{c|cccc}
       \hline
-      \multirow{2}{*}{$h/H$} & \multicolumn{4}{c|}{$\mathcal{B}$}\\
+      \multirow{2}{*}{$\frac{H}{H_0}$} & \multicolumn{4}{c}{$\mathcal{B}$}\\
       \cline{2-5}
       & $\norm{u-u_h}_1$ & $\norm{\lambda-\lambda_h}_0$ & \# & $\kappa$\\
       \hline
@@ -101,6 +239,11 @@ $2^{-5}$ & 2.2E-1(0.69) & 4.3E-2(0.89)  & 34 & -- \\
   \end{minipage}
   }
 %%%%%%%%%%%%%
-  \caption{}
-  \label{}
+  \caption{Iteration counts (\#) and condition numbers ($\kappa$) of different
+    formulations of \eqref{eq:A2}, $H_0=2^{-4}$ and $h=H/3$.
+    The cases correspond to setups (i)-(v) from Figure \ref{fig:domains}.
+    First row (i) with $\mathcal{A}_2$. Second row (ii) and (iii) with
+    $\mathcal{A}_{2, \Gamma_h}$. Third row (iv) and (v) with $\mathcal{A}_{2, \Omega_H}$.
+  }
+  \label{tab:A2}
 \end{table}

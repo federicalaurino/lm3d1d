@@ -203,7 +203,7 @@ $2^{-5}$ &1.7E-1(0.52) & 5.7E-2(1.01)  & 28 & --  & 18 & --  \\
   \begin{center}
     \begin{tabular}{c|cccc}
       \hline
-      \multirow{2}{*}{$\frac{H}{H_0}$} & \multicolumn{4}{c}{$\mathcal{B}$}\\
+      \multirow{2}{*}{$\frac{H}{H_0}$} & \multicolumn{4}{c}{$\mathcal{B}_{2, \Omega_H}$}\\
       \cline{2-5}
       & $\norm{u-u_h}_1$ & $\norm{\lambda-\lambda_h}_0$ & \# & $\kappa$\\
       \hline
@@ -223,7 +223,7 @@ $2^{-5}$ & 9.1E-2(0.95) & 2.2E-1(0.55) & 26 &-- \\
   \begin{center}
     \begin{tabular}{c|cccc}
       \hline
-      \multirow{2}{*}{$\frac{H}{H_0}$} & \multicolumn{4}{c}{$\mathcal{B}$}\\
+      \multirow{2}{*}{$\frac{H}{H_0}$} & \multicolumn{4}{c}{$\mathcal{B}_{2, \Omega_H}$}\\
       \cline{2-5}
       & $\norm{u-u_h}_1$ & $\norm{\lambda-\lambda_h}_0$ & \# & $\kappa$\\
       \hline
@@ -247,3 +247,9 @@ $2^{-5}$ & 2.2E-1(0.69) & 4.3E-2(0.89)  & 34 & -- \\
   }
   \label{tab:A2}
 \end{table}
+
+At this point we have at our disposal an efficient solver for $\mathcal{A}_2$,
+that is a 2$d$-1$d$ subcomponent of the coupled problem \eqref{eq:coupled_weak}.
+We now turn attention to the 1$d$-1$d$ component; the idea being that the solver
+for the coupled problem in some sense consists of solvers for $\mathcal{A}_2$ and
+$\mathcal{A}_1$.

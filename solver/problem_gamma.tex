@@ -1,1 +1,171 @@
-1
+Let $V=H^1{(\Gamma)}$ We consider the minimization problem
+\[
+\min_{u\in V}\quad\norm{u}^2_1 - \int_{\Gamma}f u\,\mathrm{d}x\quad\mbox{subject to}\quad
+u-g\mbox{ in }\Gamma.
+\]
+Denoting $p$ the Lagrange multiplier for the constraint the extremal points
+of the related Lagrangian are found as a solution to
+%
+\begin{equation}\label{eq:A1}
+\begin{pmatrix}f\\g\end{pmatrix}=
+\mathcal{A}_1\begin{pmatrix}u\\p\end{pmatrix}=
+%
+\begin{pmatrix}
+  -\Delta + I & I\\
+  I           &  \\
+\end{pmatrix}
+\begin{pmatrix}u\\p\end{pmatrix}.
+\end{equation}
+%
+Setting $Q=H^{-1}(\Gamma)$, the operator $\mathcal{A}_1:W\rightarrow W^{\prime}$
+can be seen to be an isomorphism with $W=V\times Q$. In particular the inf-sup
+condition holds with constant 1 (by definition of the $H^{-1}$ norm).
+
+While it can be easily seen that P1-P1 discretization is inf-sup stable for
+the problem the pair which we are interested in is P1-P0 as piece-wise constant
+elements were used in the previous section. We recall that stable P1-P1 discretization
+for $\mathcal{A}_2$ (using different meshes for $\Omega$, $\Gamma$ is also possible,
+cf. \cite{burman2009interior}, however, it is not clear how to extend this result
+to 3$d$-1$d$ problem \eqref{eq:problem2}.
+
+To illustrate that P1-P0 is not inf-sup stable for $\mathcal{A}_1$ consider
+a uniform mesh $\Gamma_h$ and for simplicity assume homogeneous Dirichlet
+boundary conditions on $V$. Let $\text{mid}_{K}$ be the midpoint of $K\in\Gamma_h$.
+Then 
+\[
+\int_{\Gamma} p v = \sum_{K\in{\Gamma}_h}p(\text{mid}_{K})v(\text{mid}_{K})
+\]
+and it can be seen that a ``checker-board'' function $p$ renders the integral
+zero, that is, the inf-sup condition does not hold.
+
+Let $C$ be the constant from the inf-sup condition of $\mathcal{A}_2$. 
+Since $\mathcal{A}_1$ is only a sub-problem of \eqref{eq:operator2d} the
+inf-sup condition for the operator of the coupled problem can be obtained as
+\[
+\sup_{(v,\hat{v})\in V\times \hat{V}}\frac{\int_{\Gamma}(v-\hat{v}) p}{\norm{(v,\hat{v})}_{V\times \hat{V}}}
+\geq
+\sup_{v\in V}\frac{\int_{\Gamma}v p}{\norm{v}_{V}}
+\geq
+C\norm{p}_Q.
+\]
+If we apply similar argument to the discrete inf-sup condition it seems
+that the unstable discretization of $\mathcal{A}_1$ does not present issue.
+We shall now give an example which demonstrates that for \emph{robust} preconditioning
+the inf-sup condition should be established in the (intersection) space in which \emph{both}
+subproblems are inf-sup stable.
+
+\begin{example}[Stokes problem]\label{ex:stokes}
+  Consider the problem of finding $u_1$, $u_2$, $p$ satisfying
+  \[
+  \begin{aligned}
+  -\Delta u_1 -\epsilon\nabla p &= f_1\mbox{ in }\Omega,\\
+  -\Delta u_2 + \nabla p &= f_2\mbox{ in }\Omega,\\
+  \nabla\cdot(\epsilon u_1 - u_2) &= g\mbox{ in }\Omega.
+  \end{aligned}
+  \]
+  We shall assume that the $u_1=0$, $u_2=0$ on $\Gamma_D\subset\partial\Omega$
+  and $\semi{\Gamma_D}\neq\semi{\partial\Omega}$. Let now $V_1=H^{1}_{0, \Gamma_D}(\Omega)$,
+  $V_2=H^{1}_{0, \Gamma_D}(\Omega)$ and $Q=L^2(\Omega)$. Then the operator defined 
+  by the weak form of the problem
+  \[
+  \mathcal{A}=\begin{pmatrix}
+  -\Delta & & -\epsilon\nabla\\
+  & -\Delta & \nabla\\
+  \epsilon\nabla\cdot & -\nabla\cdot & \\
+  \end{pmatrix}: V_1\times V_2\times Q \rightarrow (V_1\times V_2\times Q)^{\prime}
+  \]
+  is an isomorphism. However, with these spaces the Riesz map preconditioner
+  is not parameter robust. Instead $Q=\epsilon L^2(\Omega)\cap L^2{(\Omega)}$
+  shall be used.
+
+  To illustrate the issue with unstable discretization
+  let $V_1$ be discretized by P2 elements while $V_2$ uses P1 elements. As
+  P1 elements are used for $Q$ the first Stokes problem is stable while the
+  latter one is not. We shall first consider
+  \[
+  \mathcal{B}=\text{diag}(-\Delta, -\Delta, (\epsilon^2+1)I)^{-1}
+  \]
+  as a preconditioner for $\mathcal{A}$.
+
+  Table \ref{tab:stokes} shows that
+  iterations are stable when $\epsilon\gg 1$ while they are unbounded for
+  $\epsilon<1$. A heuristic explanation for
+  the observation can based on Schur complement reasoning. Indeed the
+  Schur complement of $\mathcal{A}_h$ consists of two parts corresponding
+  to the two Stokes problems
+  \[
+  S = \epsilon^2\nabla_h\cdot(-\Delta_h)^{-1}\nabla_h + \nabla_h\cdot(-\Delta_h)^{-1}\nabla_h.
+  \]
+  Owing the discrete inf-sup condition the spectrum of the first part is
+  bounded by $\epsilon^2 I_h$ for all $h$. However, for the second component
+  a similar bound does not hold (as the corresponding discretization is unstable)
+  and this part can become dominant for small $\epsilon$.
+
+  To obtain parameter robustness we consider a stabilized formulation
+  of the Stokes problem in which $\gamma \Delta p = 0$ is added to the
+  divergence constraint (with Dirichlet boundary conditions for $p$ on
+  $\partial\Omega\setminus \Gamma_D$) and $\gamma$ depends on the square
+  of the mesh size, see also \cite[\S 7]{mardal2011preconditioning}. As
+  a preconditioner for the stabilized operator we then consider
+  \[
+  \mathcal{B}_s=\text{diag}(-\Delta, -\Delta, (\epsilon^2+1)I-\beta\Delta)^{-1}.
+  \]
+  Table \ref{tab:stokes} confirms robustness of the preconditioner. We remark
+  that the stabilizing term has little effect on approximation properties
+  of the formulation.
+
+  \begin{table}
+      \scriptsize{
+    \begin{minipage}{0.49\textwidth}
+  \begin{center}
+    \begin{tabular}{c|ccccc}
+      \hline
+      \multirow{2}{*}{$\epsilon$} & \multicolumn{5}{c}{$h$}\\
+      \cline{2-6}
+ &   $2^{-3}$  & $2^{-4}$ & $2^{-5}$ & $2^{-6}$ & $2^{-7}$  \\  
+\hline
+$10^{6}$ & 54 & 57 & 59 & 59 & 96\\
+$10^{4}$ & 121 & 116 & 113 & 107 & 109\\
+$10^{2}$ & 100 & 86 & 69 & 121 & 172\\
+1 & 177 & 244 & 287 & 311 & 329\\
+$2^{-1}$ & 231 & 303 & 372 & 415 & 500\\
+$2^{-2}$ & 350 & 453 & 500 & 500 & 500\\
+$10^{-1}$ & 500 & 500 & 500 & 500 & 500\\
+\hline
+  \end{tabular}
+  \end{center}
+  \end{minipage}
+      }
+            \scriptsize{
+    \begin{minipage}{0.49\textwidth}
+  \begin{center}
+    \begin{tabular}{c|cccccc}
+      \hline
+      \multirow{2}{*}{$\epsilon$} & \multicolumn{5}{c}{$h$}\\
+      \cline{2-6}
+ &   $2^{-3}$  & $2^{-4}$ & $2^{-5}$ & $2^{-6}$ & $2^{-7}$  \\  
+\hline
+$10^{6}$ & 51 & 54 & 55 & 57 & 58\\
+$10^{4}$ & 51 & 54 & 55 & 57 & 58\\
+$10^{2}$ & 51 & 54 & 56 & 57 & 58\\
+1 & 36 & 42 & 47 & 49 & 50\\
+$10^{-2}$ & 32 & 38 & 44 & 47 & 49\\
+$10^{-4}$ & 32 & 38 & 44 & 47 & 49\\
+$10^{-6}$ & 32 & 38 & 44 & 47 & 49\\
+\hline
+  \end{tabular}
+  \end{center}
+  \end{minipage}
+  }
+    \caption{Iteration counts for the Stokes problem. (left) Formulation without
+      stabilization using preconditioner $\mathcal{B}$. (right) Stabilized
+      formulation with preconditioner $\mathcal{B}_s$. Maximum number of
+    iterations allowed is 500.}
+  \label{tab:stokes}
+  \end{table}
+\end{example}
+
+Example \ref{ex:stokes} motivates the need to find a stabilizing term
+for the P1-P0 discretization of $\mathcal{A}_1$. In addition, the stabilization
+should be consisten so that to not ruin the approximation properties of the
+formulation.

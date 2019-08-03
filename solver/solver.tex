@@ -221,7 +221,7 @@ $\hat{v}\in\hat{V}=H^1(\Gamma)$, $p\in Q$ such that
 \begin{equation}\label{eq:coupled_weak}
   \begin{aligned}
     &\int_{\Omega}\nabla u\cdot \nabla v\,\mathrm{d}x &\phantom{+\int_{\Gamma}\nabla \hat{u}\cdot \nabla \hat{v}} &+\epsilon\int_{\Gamma} p v\,\mathrm{d}s &= \int_{\Omega}f v\,\mathrm{d}x \quad &\forall v\in V,\\
-    &\phantom{\int_{\Omega}\nabla u\cdot \nabla v} &+{\int_{\Gamma}\nabla \hat{u}\cdot \nabla \hat{v} + \hat{u}\hat{v}\,\mathrm{d}x} &-\int_{\Gamma} p\hat{v}\,\mathrm{d}s &= \int_{\Gamma}\hat{f}\hat{v}\,\mathrm{d}s \quad &\forall \hat{v}\in \hat{V},\\
+    &\phantom{\int_{\Omega}\nabla u\cdot \nabla v} &+{\int_{\Gamma}\nabla \hat{u}\cdot \nabla \hat{v} + \hat{u}\hat{v}\,\mathrm{d}s} &-\int_{\Gamma} p\hat{v}\,\mathrm{d}s &= \int_{\Gamma}\hat{f}\hat{v}\,\mathrm{d}s \quad &\forall \hat{v}\in \hat{V},\\
     &\epsilon\int_{\Gamma}u q\,\mathrm{d}s &-\int_{\Gamma}\hat{u}q\,\mathrm{d}s &\phantom{-\int{\Gamma}q\hat{v}} &= \int_{\Gamma}h q\,\mathrm{d}s \quad &\forall q\in Q.
   \end{aligned}
 \end{equation}
@@ -231,9 +231,9 @@ In the following it will be convenient to work with the operator form of
 %
 \begin{equation}\label{eq:operator2d}
   \mathcal{A} = \begin{pmatrix}
-    -\Delta_{\Omega} & & -\epsilon T^{\prime}\\
+    -\Delta_{\Omega} & & \epsilon T^{\prime}\\
     & -\Delta_{\Gamma} + I & -I\\
-    -\epsilon T & -I & \\
+    \epsilon T & -I & \\
   \end{pmatrix} =
   \begin{pmatrix}
     A_2 &  & B_2'\\
@@ -255,10 +255,10 @@ is a robust preconditioner for $\mathcal{A}$. For the sake of completness
 (and verifying the implementation) Table \ref{tab:P1} shows the number of
 MinRes iterations and condition numbers\footnote{
   Unless specified otherwise all the experiments are done on $\Omega$ a unit square
-  triangulated in $2N^2$ isosceles triangles. MinRes iterations are always started
-  from a random initial vector and terminate one the relative preconditioned residual
+  triangulated into $2N^2$ isosceles triangles. MinRes iterations are always started
+  from a random initial vector and terminate once the relative preconditioned residual
   norm is reduced by factor $10^{8}$. Condition numbers of the preconditioned problem
-  are computed by direct solvers, i.e. from the full spectrum.
+  are computed by direct solver, i.e. from the full spectrum.
 } of the preconditioned problem for
 different levels of refinement and values of the parameter $\epsilon$. The
 stability is evident.

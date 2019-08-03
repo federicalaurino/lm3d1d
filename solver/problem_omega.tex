@@ -22,7 +22,7 @@ to $W^{'}$ and in turn by \cite{mardal2011preconditioning} operator
 is a cannonical preconditioner for $\mathcal{A}_2$. Considering first the
 case (i) from Figure \ref{fig:domains}, i.e. trace mesh of $\Omega_h$ is
 $\Gamma_h$ and using (stable) P1-P1 discretization Table \ref{tab:A2} shows
-the both the condition number and the number of MinRes iterations of $\mathcal{B}_2\mathcal{A}_2$
+that both the condition number and the number of MinRes iterations of $\mathcal{B}_2\mathcal{A}_2$
 are bounded.
 
 In order to arrive at the formulation where the discrete multiplier space
@@ -33,7 +33,7 @@ on $\Gamma_h$, cf. Figure \ref{fig:domains} (ii) and (iii). It is well known, e.
 unstable. However the pair is stable if $\Gamma_h$ is coarser than the trace
 mesh or a stabilization is employed. In the application we have in mind
 the mesh of $\Omega$ is in general coarser than that of $\Gamma$ and thus
-stabilized formulation are of interest. To highlight the difference in resolution
+stabilized formulation is of interest. To highlight the difference in resolution
 between the meshes we shall use different subscripts, i.e. $\Omega_H$ and
 $\Gamma_h$. We remark that stabilization for piecewise linear Lagrange multipliers
 (on $\Gamma$) is discussed in \cite{burman2009interior}.
@@ -68,9 +68,9 @@ map with respect to the inner product in induced by $\mathcal{B}^{-1}_{2, \Gamma
 Robustness of the preconditioner can be seen in Table \ref{tab:A2} in both
 the case where $\Gamma_h$ does not and does intersect the cell interior of $\Omega_h$ (cases
 (iii) and (iv) in Figure \ref{fig:domains}). A potential difficulty with
-$\mathcal{B}_{2, \Gamma_h}$ is, however, its generalization of the call of $Q_h$ defined
+$\mathcal{B}_{2, \Gamma_h}$ is, however, its generalization to the case of $Q_h$ defined
 on intersected cells (interiors). In particular, the fractional norm can be
-an problematic. To avoid the issue, we therefore consider an alternative
+problematic. To avoid the issue, we therefore consider an alternative
 preconditioner based on \cite[\S 4.A]{burman2014projection}
 \[
 \langle
@@ -87,14 +87,14 @@ the curve by $h^{-1}$-weighted $L^2$ norm. We remark that \cite{burman2014projec
 the inf-sup condition for $\mathcal{A}_{2, \Gamma_h}$ using the norms on $V_H$ and
 $Q_h$ as follows
 \[
-\norm{u}^2_{V_H} = \norm{\semi{\nabla u}}^2_0 + \int_{\Gamma}h^{-1} u v\,\mathrm{d}s
+\norm{u}^2_{V_H} = \norm{\nabla u}^2_0 + \int_{\Gamma}h^{-1} u v\,\mathrm{d}s
 \quad\mbox{and}\quad
 \norm{p}_{Q_h} = \norm{h^{1/2} p}_0.
 \]
 
 Robustness of the preconditioner is
 shown in Table \ref{tab:A2}; in the cut case (iii) the preconditioner is more
-efficinet than $\mathcal{B}_{2, \Gamma_h}$. We remark that the error convergence
+efficient than $\mathcal{B}_{2, \Gamma_h}$. We remark that the error convergence
 of $\norm{u-u_H}_1$ is reduced in this case due to the fact that the kink
 of the solution cannot be captured within the element.
 
@@ -115,7 +115,7 @@ we consider problem: Find $u\in V_H$, $p\in  Q_H$ such that
 %
 Here $\partial\mathcal{S}$ denotes interior and Neumann boundary intersecting
 facets of $\mathcal{S}$. We remark that the norms for the inf-sup condition (shown
-in \cite{burman2014projection} of $\mathcal{A}_{2, \Omega_H}$ are identical to $\mathcal{A}_{2, \Gamma_g}$.
+in \cite{burman2014projection} of $\mathcal{A}_{2, \Omega_H}$) are identical to $\mathcal{A}_{2, \Gamma_g}$.
 
 Note that the stabilization is newly applied on edges
 (points previously in $\mathcal{A}_{2, \Gamma_h}$) and relative to $\mathcal{A}_{2, \Gamma_h}$
@@ -240,7 +240,7 @@ $2^{-5}$ & 2.2E-1(0.69) & 4.3E-2(0.89)  & 34 & -- \\
   }
 %%%%%%%%%%%%%
   \caption{Iteration counts (\#) and condition numbers ($\kappa$) of different
-    formulations of \eqref{eq:A2}, $H_0=2^{-4}$ and $h=H/3$.
+    preconditioned formulations of \eqref{eq:A2}, $H_0=2^{-4}$ and $h=H/3$.
     The cases correspond to setups (i)-(v) from Figure \ref{fig:domains}.
     First row (i) with $\mathcal{A}_2$. Second row (ii) and (iii) with
     $\mathcal{A}_{2, \Gamma_h}$. Third row (iv) and (v) with $\mathcal{A}_{2, \Omega_H}$.

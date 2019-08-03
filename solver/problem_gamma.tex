@@ -25,7 +25,7 @@ While it can be easily seen that P1-P1 discretization is inf-sup stable for
 the problem the pair which we are interested in is P1-P0 as piece-wise constant
 elements were used in the previous section. We recall that stable P1-P1 discretization
 for $\mathcal{A}_2$ (using different meshes for $\Omega$, $\Gamma$ is also possible,
-cf. \cite{burman2009interior}, however, it is not clear how to extend this result
+cf. \cite{burman2009interior}), however, it is not clear how to extend this result
 to 3$d$-1$d$ problem \eqref{eq:problem2}.
 
 To illustrate that P1-P0 is not inf-sup stable for $\mathcal{A}_1$ consider
@@ -90,13 +90,13 @@ subproblems are inf-sup stable.
   Table \ref{tab:stokes} shows that
   iterations are stable when $\epsilon\gg 1$ while they are unbounded for
   $\epsilon<1$. A heuristic explanation for
-  the observation can based on Schur complement reasoning. Indeed the
+  the observation can be based on Schur complement reasoning. Indeed the
   Schur complement of $\mathcal{A}_h$ consists of two parts corresponding
   to the two Stokes problems
   \[
   S = \epsilon^2\nabla_h\cdot(-\Delta_h)^{-1}\nabla_h + \nabla_h\cdot(-\Delta_h)^{-1}\nabla_h.
   \]
-  Owing the discrete inf-sup condition the spectrum of the first part is
+  Owing to the discrete inf-sup condition the spectrum of the first part is
   bounded by $\epsilon^2 I_h$ for all $h$. However, for the second component
   a similar bound does not hold (as the corresponding discretization is unstable)
   and this part can become dominant for small $\epsilon$.
@@ -172,8 +172,8 @@ formulation.
 
 \subsection{Stabilized $\mathcal{A}_1$} We construct the stabilizing term
 based on two observations. (i) In \S\ref{sec:problem_omega} the stabilization
-for $p\in Q_h\subset H^{-1/2}$ in takes the form the facet integral with integrand $h^{2}\jump{p}\jump{q}$.
-(ii) For P0 element $-\Delta_h$ is spectrally equivalent to operator involving
+for $p\in Q_h\subset H^{-1/2}$ takes the form of the facet integral with integrand $h^{2}\jump{p}\jump{q}$.
+(ii) For P0 elements $-\Delta_h$ is spectrally equivalent to operator involving
 facet integrals with integrand $h^{-1}\jump{p}\jump{q}$. In turn we assume
 that the stabilization for $H^s$ norms takes the form $h^{p}\jump{p}\jump{q}$
 and by interpolation from (i) and (ii) $p=-2s+1$. Thus the stabilizing term for $H^{-1}$ shall
@@ -201,7 +201,7 @@ includes the negative stabilized term
 \]
 
 Table \ref{tab:A1} shows error convergence of the proposed formulation
-together with the condition number of the preconditioner problem. We remark
+together with the condition number of the preconditioned problem. We remark
 that the manufactured solution on the unit interval has $g=0$ so that $p=f=\cos(\pi x)$
 and $u=0$ is the solution. It can be seen that the formulation is stable and
 yields converging solutions.

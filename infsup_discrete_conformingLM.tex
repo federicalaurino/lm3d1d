@@ -1,5 +1,6 @@
 \section{Finite element approximation}
-The discrete equivalent of \eqref{eq:saddle-point} reads as finding $u_h\in X_h\subset X$, $\lambda_h\in Q_h\subset Q$ s.t.
+In this section we consider the discretization of Problem 1 and 2 by means of the finite element method. We address two main challenges; first we aim to identify a suitable approximation space for the Lagrange multiplier and to analyze the stability of the discrete saddle point problem; second we aim to derive a stable discretization method that uses indepent and conforming computational meshes for $\Omega$, $\Gamma$ and $\Lambda$. Let us introduce a shape-regular triangulation $\mathcal{T}^{\Omega}_h$ of $\Omega$ and an admissible partition $\mathcal{T}^{\Lambda}_{h}$ of $\Lambda$.
+We analyze two different cases: the one in which the 3D mesh is conforming to the interface $\Gamma$, namely the set of the intersections of the 3D elements of $\mathcal{T}^{\Omega}_h$ with $\Gamma$ is constituted by facets of such elements, and the non conforming case, namely the interface $\Gamma$ cuts the mesh arbitrarly. The discrete equivalent of \eqref{eq:saddle-point} reads as finding $u_h\in X_h\subset X$, $\lambda_h\in Q_h\subset Q$ s.t.
 \begin{eqnarray}\label{eq:saddle-point_discrete}
 \begin{cases}
 a(u_h,v_h)+b(v_h,\lambda_h)=c(v_h)\quad &\forall v_h\in X_h\\
@@ -9,7 +10,7 @@ b(u_h,\mu_h)=d(\mu_h) \quad &\forall \mu_h\in Q_h.
 Let $B_h: Q'_h \longrightarrow Q_h$ be the operator induced by $b$ such that $\langle B_h v_h,\mu _h\rangle_{Q'_h,Q_h} = b(v_h,\mu _h)$.
 The well posedness of such problem is governed by the classical inf-sup theory in Banach spaces. The main result is reported below.
 
-\begin{corollary}{\cite[Theorem 2.42]{MR2050138}}
+\begin{corollary}{\cite[Theorem 2.42]{MR2050138}}Let $a(\cdot, \cdot)$ and $b(\cdot, \cdot)$ be continuous bilinear forms. 
 Problem \eqref{eq:saddle-point_discrete} is well-posed if and only if 
 \begin{equation}\label{BNB1_discrete}
 \exists \alpha_h >0 :\, \inf_{u_h\in ker(B_h)}\sup_{v_h\in ker(B_h)} \frac{a(u_h,v_h)}{\|u_h\|_{X}\|v_h\|_{X}}\geq \alpha_h
@@ -22,11 +23,8 @@ and
 This corollary is the discrete counterpart of Theorem \ref{th:bnb} where at the discrete level condition \eqref{BNB1_discrete} implies both of \eqref{BNB1}. Conversely, \eqref{eq:infsup_discrete} does not follow from the conformity of the finte element spaces and it must be analysed independetly of \eqref{eq:infsup}.  
 Let us notice that for both problem 1 and problem 2 the bilinear form $a(\cdot, \cdot)$ is coercive as stated in Lemmas \eqref{lemma:prob1_coercivity} and \eqref{lemma:prob2_coercivity}. Consequently, \eqref{BNB1_discrete} is automatically satisfied, being $\alpha_h$ the coercivity constant.\\
 
-Let us introduce a shape-regular triangulation $\mathcal{T}^{\Omega}_h$ of $\Omega$ and an admissible partition $\mathcal{T}^{\Lambda}_{h}$ of $\Lambda$. 
-We analyze two different cases: the one in which the 3D mesh is conforming to the interface $\Gamma$, namely the set of the intersections of the 3D elements of $\mathcal{T}^{\Omega}_h$ with $\Gamma$ is constituted by facets of such elements, and the non conforming case, namely the interface $\Gamma$ cuts the mesh arbitrarly.
-
 \subsection{$\mathcal{T}^{\Omega}_h$ conforming to $\Gamma$}
- We first analyze the case in which the 3D mesh is conforming to the interface $\Gamma$. With this aim, we define conformity conditions between $\mathcal{T}^{\Omega}_h$ and $\mathcal{T}^{\Lambda}_h$ with $\Gamma$. More precisely we require that the intersection of $\mathcal{T}^{\Omega}_h$ and $\Gamma$ is made of entire faces of elemets $K \in \mathcal{T}^{\Omega}_h$. Furthermore we also set a restriction between $\mathcal{T}^{\Omega}_h$ and $\mathcal{T}^{\Lambda}_h$. We want that the intersection of $\Gamma$ with any orthogonal plane to $\Lambda$ that crosses $\Lambda$ at the nodes of $\mathcal{T}^{\Lambda}_h$, consists of entire edges of $\mathcal{T}^{\Omega}_h$. Namely the intersection of $\Gamma$ with orthogonal planes to $\Lambda$ is conformal with $\mathcal{T}^{\Lambda}_h$.
+ We first analyze the case in which the 3D mesh is conforming to the interface $\Gamma$. With this aim, we define conformity conditions between $\mathcal{T}^{\Omega}_h$ and $\mathcal{T}^{\Lambda}_h$ with $\Gamma$. More precisely we require that the intersection of $\mathcal{T}^{\Omega}_h$ and $\Gamma$ is made of entire faces of elemets $K \in \mathcal{T}^{\Omega}_h$. Furthermore, we also set a restriction between $\mathcal{T}^{\Omega}_h$ and $\mathcal{T}^{\Lambda}_h$. We assume that $\Lambda$ is a piecewise linear manifold. We want that the intersection of $\Gamma$ with any orthogonal plane to $\Lambda$ that crosses $\Lambda$ at the internal nodes of $\mathcal{T}^{\Lambda}_h$, consists of entire edges of $\mathcal{T}^{\Omega}_h$. Namely the intersection of $\Gamma$ with orthogonal planes to $\Lambda$ is conformal with $\mathcal{T}^{\Lambda}_h$.
 \subsubsection{Problem 1}
 We denote by $X_{h,0}^k(\Omega)\subset H^1_0(\Omega)$, with $k>0$, the conforming finite element space of continuous piecewise polynomials of degree $k$ defined on $\Omega$ satisfying homogeneous Dirichlet conditions on the boundary and by $X_{h,0}^k(\Lambda)\subset H^1_0(\Lambda)$ the space of continuous piecewise polynomials of degree $k$ defined on $\Lambda$, satisfying homogeneous Dirichlet conditions on $\Lambda \cap \partial \Omega$. 
 %Moreover, $Q_{h}$ denotes a suitable trial space for the lagrange multiplier $\lambda_h$. In particular, $Q_h \subset H^{-\frac12}(\Gamma )$ in the case of Problem 1 and $Q_h \subset H^{-\frac12}(\Lambda)$ in the case of Problem 2.
@@ -44,7 +42,7 @@ Problem 1 consists to find $u_h \in X_{h,0}^k (\Omega) ,\, {\ud}_h \in X_{h,0}^k
 \quad \forall \mu_h \in Q_h\,,
 \end{align}
 \end{subequations}
-The space $Q_h$ must be suitably chosen such that \eqref{eq:infsup_discrete} holds. Let us denote with $W_{h,0}^k(\Gamma) \subset H^{\frac 12}_{00}(\Gamma)$ the trace space of functions running in $X_{h,0}^k(\Omega)$, namely the space of continuous piecewise polynomials of degree $k$ defined on $\Gamma$ which satisfy homogeneous Dirichlet conditions on $\partial \Omega$. We choose $Q_h=W_{h,0}^k(\Gamma)$, therefore we impose homogeneous Dirichlet boundary condition on $\partial \Omega$ also for the Lagrange multiplier. For this choice of $Q_h$ we can prove the well-posedness of the discrete problem, as shown in the following. 
+The space $Q_h$ must be suitably chosen such that \eqref{eq:infsup_discrete} holds. Let $Q_h$ be the trace space of functions running in $X_{h,0}^k(\Omega)$, namely the space of continuous piecewise polynomials of degree $k$ defined on $\Gamma$ which satisfy homogeneous Dirichlet conditions on $\partial \Omega$.As a result, $Q_h=X_{h,0}^k(\Gamma)$. Therefore we impose homogeneous Dirichlet boundary condition on $\partial \Omega$ also for the Lagrange multiplier. For this choice of $Q_h$ we can prove the well-posedness of the discrete problem, as shown in the following. 
 
 \begin{lemma}
 Let $P_h: H^{\frac 12}_{00}(\Gamma) \longrightarrow Q_h$ be the orthogonal projection operator defined  for any $v \in H^{\frac 12}_{00}(\Gamma)$ by
@@ -147,7 +145,7 @@ Using Lemma \ref{lemma:trspace_infsup} and the boundedness of the armonic extens
 \leq 
 \|\mathcal{E}_{\Omega}\| \sup_{q_h \in Q_h} \frac{ \langle q_h, \mu_h \rangle _{\Gamma} } {\|\mathcal{E}_\Omega q_h\|_{H^1(\Omega)}} .
 \end{equation*}
-Let $R_h: H^1_0(\Omega) \rightarrow X_{h,0}^k(\Omega)$ be a quasi interpolation operator satisfying 
+Let $R_h: H^1_0(\Omega) \rightarrow X_{h,0}^k(\Omega)$ be a quasi interpolation operator (such as the Scott-Zhang operator) satisfying 
 \begin{equation*}
 \|R_h v\|_{H^1(\Omega)} \leq C_R \|v\|_{H^1(\Omega)} \qquad \forall v \in H^1_0(\Omega).
 \end{equation*}
@@ -158,7 +156,7 @@ Therefore, we obtain
 \|\mathcal{E}_{\Omega}\| C_R \sup_{q_h \in Q_h} \frac{ \langle q_h, \mu_h \rangle _{\Gamma} } {\|R_h \mathcal{E}_{\Omega} q_h\|_{H^1(\Omega)}}
 \end{equation*}
 and we have
-\begin{multline}
+\begin{multline}\label{eq_conformity}
 \gamma \|\mu_h\|_{H^{-\frac 12}(\Gamma)} 
 \leq 
 \sup_{q_h \in Q_h} \frac{ \langle q_h, \mu_h \rangle_{\Gamma} } {\|q_h\|_{H^{\frac 12}(\Gamma)}} 
@@ -169,11 +167,11 @@ and we have
 \|\mathcal{E}_{\Omega}\| C_R \sup_{q_h \in Q_h} \frac{ \langle \trace R_h  \mathcal{E}_{\Omega}q_h, \mu_h \rangle_{\Gamma} } {\|R_h \mathcal{E}_{\Omega} q_h\|_{H^1(\Omega)}} 
 \leq \|\mathcal{E}_{\Omega}\| C_R \sup_{v_h \in X_{h,k}(\Omega)} \frac{ \langle \trace v_h, \mu_h \rangle_{\Gamma} } {\|v_h\|_{H^1(\Omega)}}. 
 \end{multline}
-Therefore the inf-sup condition $\eqref{inf_sup_discrete_prob1}$ holds with $\beta_{h,1} = \gamma \|\mathcal{E}_{\Omega}\|^{-1} C_R^{-1} $.
+Therefore the inf-sup condition $\eqref{inf_sup_discrete_prob1}$ holds with $\beta_{h,1} = \gamma \|\mathcal{E}_{\Omega}\|^{-1} C_R^{-1} $. We notice that in \eqref{eq_conformity} we exploit the fact that the operator $\trace R_h  \mathcal{E}_{\Omega}$ coincides with the identity on the space $Q_h$, thanks to the conformity of $\mathcal{T}^{\Omega}_h$ to the interface $\Gamma$.
 \end{proof}
 
-\begin{remark} We notice that to prove the result in Lemma \ref{lemma:trspace_infsup} (and then the discrete inf-sup condition)  basically we need a projection operator $P_h: H^{\frac 12}_{00} \longrightarrow W_{h,0}^k(\Gamma)$ orthogonal in the multiplier space $Q_h$, namely such that $\langle P_h v, \mu_h \rangle = \langle v, \mu_h \rangle, \, \forall \mu_h \in Q_h$, and continuous in $H^{\frac 12}(\Gamma)$. Therefore, in principle different choices than $Q_h=W_{h,0}^k(\Gamma)$ could be considered if we can build an operator $P_h$ satisfying these properties. In \cite{belgacem1999mortar} such operator $P_h$  is built for a particular choice of $Q_h$ but it is not clear how to prove the $H^1$-stability inequality (and consequently the $H^{\frac 12 }$-stability) with a constant independent of the mesh size $h$.
-\end{remark}  
+%\begin{remark} We notice that to prove the result in Lemma \ref{lemma:trspace_infsup} (and then the discrete inf-sup condition)  basically we need a projection operator $P_h: H^{\frac 12}_{00} \longrightarrow W_{h,0}^k(\Gamma)$ orthogonal in the multiplier space $Q_h$, namely such that $\langle P_h v, \mu_h \rangle = \langle v, \mu_h \rangle, \, \forall \mu_h \in Q_h$, and continuous in $H^{\frac 12}(\Gamma)$. Therefore, in principle different choices than $Q_h=W_{h,0}^k(\Gamma)$ could be considered if we can build an operator $P_h$ satisfying these properties. In \cite{belgacem1999mortar} such operator $P_h$  is built for a particular choice of $Q_h$ but it is not clear how to prove the $H^1$-stability inequality (and consequently the $H^{\frac 12 }$-stability) with a constant independent of the mesh size $h$.
+%\end{remark}  
 
 \subsubsection{Problem 2}
 This problem requires to find  $u_h \in X_{h,0}^k(\Omega) ,\ {\ud}_h \in X_{h,0}^k(\Lambda), \ {\ld}_h \in Q_h \subset H^{-\frac12}(\Lambda)$, such that
@@ -191,9 +189,9 @@ This problem requires to find  $u_h \in X_{h,0}^k(\Omega) ,\ {\ud}_h \in X_{h,0}
 \end{align}
 \end{subequations}
 
-We introduce the space
-$W_{h,0}^k(\Lambda) \subset H^{\frac 12} _{00} (\Lambda)$, which is the averaged trace space of functions running in $H^1_0(\Omega)$. It coincides with the space of continuous piecewise polynomials of degree $k$ defined on $\Lambda$ and satisfying homogeneous Dirichlet boundary condition. 
-We choose $Q_h=W_{h,0}^k(\Lambda)$, therefore we impose homogeneous Dirichlet boundary condition on $\Lambda \cap \partial \Omega$ also for the Lagrange multiplier. With this choice for $Q_h$, we can prove the well-posedness of the discrete problem. In particular, following the same steps as for Problem 1, we can prove the following results.
+%We introduce the space
+%$W_{h,0}^k(\Lambda) \subset H^{\frac 12} _{00} (\Lambda)$, which is the averaged trace space of functions running in $X_{h,0}^k(\Omega)$. It coincides with the space of continuous piecewise polynomials of degree $k$ defined on $\Lambda$ and satisfying homogeneous Dirichlet boundary condition, namely $X_{h,0}^k(\Lambda)$. 
+We choose $Q_h=X_{h,0}^k(\Lambda)$, therefore we impose homogeneous Dirichlet boundary condition on $\Lambda \cap \partial \Omega$ also for the Lagrange multiplier. With this choice for $Q_h$, we can prove the well-posedness of the discrete problem. In particular, following the same steps as for Problem 1, we can prove the following results.
 
 %**** uniform \DD
 %\begin{lemma}
@@ -272,7 +270,7 @@ We choose $Q_h=W_{h,0}^k(\Lambda)$, therefore we impose homogeneous Dirichlet bo
 
 %*******************extension to non uniform $|\DD|$
 
-\begin{lemma}
+\begin{lemma}\label{lemma:prob1_orthproj}
 Let $P_h: H^{\frac 12}_{00}(\Lambda) \longrightarrow Q_h$ be the orthogonal projection operator defined  for any $v \in H^{\frac 12}_{00}(\Lambda)$ by
 \begin{equation*}
 (P_h v , \psi)_{\Lambda,|\DD|}= (v, \psi)_{\Lambda , |\DD|} \qquad \forall \psi \in Q_h.  
@@ -290,7 +288,7 @@ There exist a constant $\gamma >0$ such that
 \sup_{\substack{q_h \in Q_h}} \frac{\langle q_h , {\md}_h \rangle_{\Lambda, |\DD|}}{ \|q_h\|_{H^{\frac 12}(\Lambda),|\DD|}} \geq \gamma \|{\md}_h\|_{H^{-\frac 12}(\Lambda)} \qquad \forall {\md}_h \in Q_h.
 \end{equation*} 
 \end{lemma}
-
+The proofs are equivalent ot the ones of Lemmas \ref{lemma:prob1_orthproj} and \ref{lemma:trspace_infsup}.
 \begin{theorem}[Discrete inf-sup] The inequality \eqref{eq:infsup_discrete} holds, namely 
 $\exists \beta_{h,2} >0$ s.t.
 \begin{equation}
@@ -311,17 +309,17 @@ From Lemma \ref{lemma:H12norm} and its corollaries, for any $w \in H^{\frac 12}(
 
 Consequently, from Lemma \ref{infsup_avr_trspace}, using again the extension operator $\mathcal{E}_{\Omega}$ from $H^{\frac 12}(\Gamma)$ to $H^1_0(\Omega)$ and the quasi interpolation operator $R_h$ from $H^1_0(\Omega)$ to $X_{h,0}^k(\Omega)$, we obtain
 \begin{multline}
-\gamma \|\mu_h\|_{H^{-\frac 12}(\Lambda)} \leq 
-\sup_{q_h \in Q_h} \frac{ \langle q_h, \mu_h \rangle_{\Lambda,|\DD|} } {\|q_h\|_{H^{\frac 12}(\Lambda),|\DD|}} 
+\gamma \|{\md}_h\|_{H^{-\frac 12}(\Lambda)} \leq 
+\sup_{q_h \in Q_h} \frac{ \langle q_h, {\md}_h \rangle_{\Lambda,|\DD|} } {\|q_h\|_{H^{\frac 12}(\Lambda),|\DD|}} 
 \\
-=  \sup_{q_h \in Q_h} \frac{ \langle q_h, \mu_h \rangle _{\Lambda,|\DD|}} {\|\ext q_h\|_{H^{\frac 12}(\Gamma)}} 
-\leq \|\mathcal{E}_{\Omega}\| \sup_{q_h \in Q_h} \frac{ \langle q_h, \mu_h \rangle _{\Lambda,|\DD|} } {\|\mathcal{E}_{\Omega} \ext q_h\|_{H^1(\Omega)}} 
+=  \sup_{q_h \in Q_h} \frac{ \langle q_h, {\md}_h \rangle _{\Lambda,|\DD|}} {\|\ext q_h\|_{H^{\frac 12}(\Gamma)}} 
+\leq \|\mathcal{E}_{\Omega}\| \sup_{q_h \in Q_h} \frac{ \langle q_h, {\md}_h \rangle _{\Lambda,|\DD|} } {\|\mathcal{E}_{\Omega} \ext q_h\|_{H^1(\Omega)}} 
 \\
-\leq \|\mathcal{E}_{\Omega}\| C_R \sup_{q_h \in Q_h} \frac{ \langle q_h, \mu_h \rangle _{\Lambda,|\DD|} } {\|R_h \mathcal{E}_{\Omega} \ext q_h\|_{H^1(\Omega)}}
+\leq \|\mathcal{E}_{\Omega}\| C_R \sup_{q_h \in Q_h} \frac{ \langle q_h, {\md}_h \rangle _{\Lambda,|\DD|} } {\|R_h \mathcal{E}_{\Omega} \ext q_h\|_{H^1(\Omega)}}
 \\ 
-=  \|\mathcal{E}_{\Omega}\| C_R \sup_{q_h \in Q_h} \frac{ \langle 	\mtrace R_h \mathcal{E}_{\Omega} \ext q_h, \mu_h \rangle _{\Lambda,|\DD|}} {\|R_h \mathcal{E}_{\Omega} \ext w_h\|_{H^1(\Omega)}}
+=  \|\mathcal{E}_{\Omega}\| C_R \sup_{q_h \in Q_h} \frac{ \langle 	\mtrace R_h \mathcal{E}_{\Omega} \ext q_h, {\md}_h \rangle _{\Lambda,|\DD|}} {\|R_h \mathcal{E}_{\Omega} \ext w_h\|_{H^1(\Omega)}}
 \\
-\leq \|\mathcal{E}_{\Omega}\| C_R \sup_{v_h \in X_h(\Omega)} \frac{ \langle \mtrace v_h, \mu_h \rangle _{\Lambda,|\DD|}} {\|v_h\|_{H^1(\Omega)}}. 
+\leq \|\mathcal{E}_{\Omega}\| C_R \sup_{v_h \in X_h(\Omega)} \frac{ \langle \mtrace v_h, {\md}_h \rangle _{\Lambda,|\DD|}} {\|v_h\|_{H^1(\Omega)}}. 
 \end{multline}
-
+Also in this case to prove the disrete inf-sup condition we exploit the conformity of the meshes on $\Omega$, $\Gamma$ and $\Lambda$ and the fact that the operator $\mtrace R_h \mathcal{E}_{\Omega} \ext$ coincides with the identity if applied to functions in $Q_h$. 
 \end{proof}

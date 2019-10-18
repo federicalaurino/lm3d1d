@@ -25,10 +25,6 @@ def setup_mms(params):
 
 
 def setup_problem(n, mms, params):
-    '''Poisson solver'''
-    mesh = UnitCubeMesh(n, n, n)
-
-
     '''Coupled 3d-1d with 1d Lagrange multiplier'''
     # NOTE: inborg distinguishes between parallel and not parallel hmin
     omega = UnitCubeMesh(n, n, n)
@@ -77,7 +73,7 @@ def setup_problem(n, mms, params):
     # Account for reduction from volume to line
     avg_shape = Square(lambda x: np.array([0.25, 0.25, x[-1]]), degree=10)
     # NOTE: Avg only works with functions so need to interpolate it
-    V3h = FunctionSpace(mesh, 'CG', 2)
+    V3h = FunctionSpace(omega, 'CG', 2)
     f1h = interpolate(f1, V3h)
     L[1] = avg_area*inner(Average(f1h, gamma, avg_shape), v1)*dx_
 
@@ -112,7 +108,7 @@ def setup_error_monitor(mms_data, params):
         # is expensive so wi reduce order then
         degree_rise = 1 if u3h.function_space().dim() < 2E6 else 0
         # NOTE: the error is interpolated to P2 disc, or P1 disc
-        return (H1_norm(u1, u1h, degree_rise=degree_rise),
+        return (H1_norm(u3, u3h, degree_rise=degree_rise),
                 H1_norm(u1, u1h, degree_rise=1),  
                 Hs0Norm(p, ph))
     # Pretty print

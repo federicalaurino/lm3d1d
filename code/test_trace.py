@@ -1,24 +1,20 @@
 # Gamma as straight line {0.5}x{0.5}x(0, 1)
 # Omega as [0, 1]^2
 #
-# I consider q from the benchmark q = sin(pi*z/H)
+# Things for formulation with the multiplier on surface
 
-from weak_bcs.burman.generation import line_mesh, line, StraightLineMesh
+
 from dolfin import *
 from xii import *
-from xii.assembler.extension_matrix import uniform_extension_matrix
+from xii.assembler.trace_matrix import trace_mat_no_restrict
 import numpy as np
 
 set_log_level(WARNING)
 
 
-def test_ext(n, f, true=None):
+def test_trace(n, f, true=None):
     '''Surface integral (for benchmark problem)'''
-    omega = UnitCubeMesh(n, n, 2*n)
-
-    A = np.array([0.5, 0.5, 0.0])
-    B = np.array([0.5, 0.5, 1.0])             
-    lmbda = StraightLineMesh(A, B, 2*n)  # The curve
+    omega = UnitCubeMesh(n, n, n)
 
     # Coupling surface
     walls = ['near((x[0]-0.25)*(x[0]-0.75), 0) && ((0.25-tol) < x[1]) && ((0.75+tol) > x[1])',
@@ -33,13 +29,12 @@ def test_ext(n, f, true=None):
 
     V3 = FunctionSpace(omega, 'CG', 1)
     V2 = FunctionSpace(gamma, 'CG', 1)
-    V1 = FunctionSpace(lmbda, 'CG', 1)
 
     # What we want to extend
-    f1 = interpolate(f, V1)
+    f3 = interpolate(f, V3)
 
-    E = uniform_extension_matrix(V1, V2)
-    x = E*f1.vector()
+    T = PETScMatrix(trace_mat_no_restrict(V3, V2))
+    x = T*f3.vector()
     f2 = Function(V2, x)
 
     if true is None:
@@ -59,20 +54,24 @@ if __name__ == '__main__':
     
     # Exact
     f = Constant(1)
-    get_error = partial(test_ext, f=f, true=f)
+    get_error = partial(test_trace, f=f, true=f)
     rate, error = analyze_convergence(ns, get_error)[2:]
     assert error < 1E-12
 
-    # Exact
-    f = Expression('x[2]', degree=5)
-    get_error = partial(test_ext, f=f, true=f)
+    # Exact as we have P1
+    f = Expression('x[0] - x[1] + 2*x[2]', degree=2)
+    get_error = partial(test_trace, f=f, true=f)
     rate, error = analyze_convergence(ns, get_error)[2:]
     assert error < 1E-12
 
     # Convergence
-    f = Expression('sin(pi*x[2])', degree=5)
-    get_error = partial(test_ext, f=f, true=f)
-    res, f, rate, error = analyze_convergence(ns, get_error)
+    f = Expression('sin(2*pi*x[2])', degree=2)
+    get_error = partial(test_trace, f=f, true=f)
+    rate, error = analyze_convergence(ns, get_error)[2:]
     assert rate > 1
 
-    File('extended.pvd') << f
+    # Convergence
+    f = Expression('sin(2*pi*x[0])*sin(2*pi*x[1])*sin(pi*x[2])', degree=2)
+    get_error = partial(test_trace, f=f, true=f)
+    rate, error = analyze_convergence(ns, get_error)[2:]
+    assert rate > 1

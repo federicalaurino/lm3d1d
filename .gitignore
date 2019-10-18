@@ -7,3 +7,11 @@
 *.thm
 *.fdb_latexmk
 *~
+
+*.pyc
+*.vtu
+*.pvd
+
+*.swp
+*.swu
+*#*#

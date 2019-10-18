@@ -39,7 +39,7 @@ python check_sanity.py src_lm3d1d.poisson3d -ncases 4 -plot 1
 This will refine mesh 4 times, dump the rates in the `results` folder and
 plots in `results/plots`.
 
-## Results for formuation with multiplier on curve
+## Results for formulation with multiplier on curve
 
 ```
 l ndofs h e[|u3|_1] r[|u3|_1] e[|u1|_1] r[|u1|_1] e[|p|_{-1/2}] r[|p|_{-1/2}] niters dt |r|_2

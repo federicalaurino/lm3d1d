@@ -3,7 +3,6 @@
 from weak_bcs.burman.generation import line_mesh, line, StraightLineMesh
 from dolfin import *
 from xii import *
-from xii.assembler.average_matrix import average_matrix
 import numpy as np
 
 

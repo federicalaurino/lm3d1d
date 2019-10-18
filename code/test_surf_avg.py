@@ -8,6 +8,7 @@ from dolfin import *
 from xii import *
 from xii.assembler.average_matrix import average_matrix
 import numpy as np
+import warnings
 
 
 def analyze_convergence(ns, get_error):
@@ -18,7 +19,10 @@ def analyze_convergence(ns, get_error):
 
         if her:
             h0, e0, _ = her[-1]
-            rate = np.log(e/e0)/np.log(h/h0)
+            try:
+                rate = np.log(e/e0)/np.log(h/h0)
+            except ZeroDivisionError:
+                rate = np.nan
         else:
             rate = np.nan
 
@@ -27,8 +31,9 @@ def analyze_convergence(ns, get_error):
     # Final fit
     h, e, _ = np.array(her).T
 
-    rate, _ = np.polyfit(np.log(h), np.log(e), deg=1)
-    print 'Final rate %g \n' % rate
+    with warnings.catch_warnings('error'):
+        rate, _ = np.polyfit(np.log(h), np.log(e), deg=1)
+        print 'Final rate %g \n' % rate
     
     return her, f, rate, np.mean(e)
 

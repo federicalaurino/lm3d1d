@@ -25,7 +25,7 @@ e.g. by running from this folder
 ```bash
 cd ..
 export PYTHONPATH=`pwd`:"$PYTHONPATH"
-``
+```
 
 Each benchmark is then defined in a submodule of `src_lm3d1d`. For example
 `src_lm3d1d.poisson3d` is a uncoupled Poisson problem. To check solver defined

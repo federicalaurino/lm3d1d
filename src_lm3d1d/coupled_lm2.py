@@ -8,19 +8,13 @@ from block.algebraic.petsc import LU, AMG
 from block import block_mat, block_vec
 import numpy as np
 
-# NOTE: - integrate only outside
-#       - adjust mesh to have really R small (modelling error)
-#         (THIS MIGHT REQUIRE CHANGING THE SOLUTION TO HAVE THE PROPERTIES
-#          OF THE ORIGINAL ONE)
-#
-#       - make HsNorm use our eigh
 
 def setup_problem(n, mms, params):
     '''Coupled 3d-1d with 2d Lagrange multiplier'''
     # NOTE: inborg distinguishes between parallel and not parallel hmin
     omega = UnitCubeMesh(n, n, n)
 
-    size = params.size
+    size = 0.25
     # Coupling surface
     walls = ['near((x[0]-L)*(x[0]-H), 0) && ((L-tol) < x[1]) && ((H+tol) > x[1])',
              'near((x[1]-L)*(x[1]-H), 0) && ((L-tol) < x[0]) && ((H+tol) > x[0])']
@@ -80,7 +74,7 @@ def setup_problem(n, mms, params):
     f1h = interpolate(f1, V3h)
     L[1] = avg_area*inner(Average(f1h, lmbda, avg_shape), v1)*dl
 
-    L[2] = inner(-fI, q)*dx_
+    L[2] = inner(fI, q)*dx_
     
     # Homog everywhere
     V3_bcs = [DirichletBC(V3, g3, 'on_boundary')]
@@ -95,8 +89,23 @@ def setup_problem(n, mms, params):
 
     return A, b, W
 
-# Generic wrt implementation :)
-setup_mms = lm1.setup_mms
+
+def setup_mms(params):
+    '''Manufactured solution from notes'''
+    
+    u3d = Expression('sin(2*pi*x[0])*sin(2*pi*x[1])', degree=4)
+    f3d = Expression('(8*pi*pi)*sin(2*pi*x[0])*sin(2*pi*x[1])', degree=4)
+
+    u1d = Expression('sin(pi*x[2])', degree=4)
+    f1d = Expression('pi*pi*sin(pi*x[2])', degree=4)
+
+    p = Expression('0', degree=4)  # The multiplier
+    fLM = Expression('sin(2*pi*x[0])*sin(2*pi*x[1]) - sin(pi*x[2])', degree=4)
+
+    return MMSData(solution=[u3d, u1d, p],
+                   rhs=[(f3d, f1d, fLM), (u3d, u1d, p)],
+                   subdomains=[], normals=[])
+
 setup_error_monitor = lm1.setup_error_monitor
 cannonical_inner_product = lm1.cannonical_inner_product
 cannonical_riesz_map = lm1.cannonical_riesz_map

@@ -106,7 +106,37 @@ def setup_mms(params):
                    rhs=[(f3d, f1d, fLM), (u3d, u1d, p)],
                    subdomains=[], normals=[])
 
-setup_error_monitor = lm1.setup_error_monitor
+def setup_error_monitor(mms_data, params):
+    '''We look at H1, H1, Hs norm'''
+    # Error of the passed wh
+    
+    def get_error(wh, mms=mms_data):
+        # We look at the H1 error for velocity
+        u3, u1, p = mms.solution
+        u3h, u1h, ph = wh
+
+        # Passing the HsNorm from preconditioner so that we don't compute
+        # eigenvalues twice
+        Hs0Norm = mms.normals.pop()
+        # e*H*e ie (e, e)_H
+        e = interpolate(p, ph.function_space()).vector()
+        e.axpy(-1, ph.vector())
+
+        e = np.sqrt(e.inner(Hs0Norm*e))
+        # On big meshes constructing the error for interpolation space
+        # is expensive so wi reduce order then
+        degree_rise = 1 if u3h.function_space().dim() < 2E6 else 0
+        # NOTE: the error is interpolated to P2 disc, or P1 disc
+        return (H1_norm(u3, u3h, degree_rise=degree_rise),
+                H1_norm(u1, u1h),  
+                e,
+                L2_norm(p, ph))
+    # Pretty print
+    error_types = ('|u3|_1', '|u1|_1', '|p|_{-1/2}', '|p|_0')
+    
+    return get_error, error_types
+
+
 cannonical_inner_product = lm1.cannonical_inner_product
 cannonical_riesz_map = lm1.cannonical_riesz_map
 

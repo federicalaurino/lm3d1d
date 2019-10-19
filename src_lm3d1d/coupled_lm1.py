@@ -102,14 +102,15 @@ def setup_error_monitor(mms_data, params):
         u3, u1, p = mms.solution
         u3h, u1h, ph = wh
 
-        # Passing the HsNorm from preconditioner so that we don't compute
-        # eigenvalues twice
-        Hs0Norm = mms.normals.pop()
+        # On a finer mesh
+        Q = FunctionSpace(ph.function_space().mesh(), 'CG', 3)
+        Hs = Hs0Norm(Q, s=-0.5, bcs=DirichletBC(Q, Constant(0), 'on_boundary'))
+        
         # e*H*e ie (e, e)_H
-        e = interpolate(p, ph.function_space()).vector()
-        e.axpy(-1, ph.vector())
+        e = interpolate(p, Q).vector()
+        e.axpy(-1, interpolate(ph, Q).vector())
 
-        e = np.sqrt(e.inner(Hs0Norm*e))
+        e = np.sqrt(e.inner(Hs*e))
         # On big meshes constructing the error for interpolation space
         # is expensive so wi reduce order then
         degree_rise = 1 if u3h.function_space().dim() < 2E6 else 0

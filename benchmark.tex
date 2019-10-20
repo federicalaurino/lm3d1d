@@ -46,7 +46,7 @@ u=\sin (2\pi x) \sin (2\pi y)\\
 Let us notice that $\ud$ satisfies homogeneous Dirichlet conditions at the boundary of $\Lambda$.
 Moreover, the solution \eqref{benchm_sol3d}-\eqref{benchm_sol1d} satisfies on $\Gamma$ the relation
 \begin{equation}\label{benchm_flux}
-\lambda=\nabla u \cdot \textbf{n}_{\oplus}=d_z \ud n_{\oplus,z}=0,
+L=\nabla u \cdot \textbf{n}_{\oplus}=d_z \ud n_{\oplus,z}=0,
 \end{equation}
 with $n_{\oplus,z}$ the $z-$component of the normal unit vector to $\Gamma$.
 
@@ -109,7 +109,7 @@ boundary conditions on $\Omega$ and $\Lambda$, from \eqref{eq:problem2_simple_eq
 \quad \forall v \in H^1_0(\Omega), \vd \in H^1(\Lambda).
 \\
 \end{align*}
-Since $\ld=\avrc{\lambda}=0$ and \eqref{benchm_sol3d} satisfies \eqref{benchm_3d} and \eqref{benchm_sol1d}
+Since $\ld=\avrc{L}=0$ and \eqref{benchm_sol3d} satisfies \eqref{benchm_3d} and \eqref{benchm_sol1d}
 satisfies \eqref{benchm_1d}, we have that
 \begin{align*}
 -(\Delta u, v)_{L^2(\Omega)} =  (f,v)_{L^2(\Omega)} \\
@@ -177,7 +177,7 @@ converges linearly (as can be expected due to $P_1$ element discretization).
 Moreover, the error of the Lagrange multiplier approximation in $H^{-1/2}$ norm
 decreases quadratically. In the light of $P_1$ discretization this rate appears
 superconvergent. We speculate that the result is due to the fact that the
-exact solution is particularly simple, $\lambda=0$. In case of the results for
+exact solution is particularly simple, $\lambda=\ld=0$. In case of the results for
 \eqref{eq:problem1_simple} the rate can also be due to the fact that the
 error is interpolated into the same finite element space as the approximation $Q_h$.
 We remark that for $u$ and $\ud$ the error is interpolated into FE space of piecewise

@@ -1,0 +1,99 @@
+\documentclass{standalone}
+\usepackage{tikz,tikz-3dplot}
+
+\begin{document}
+
+\tdplotsetmaincoords{72}{125}
+\begin{tikzpicture}[tdplot_main_coords]
+
+  % -, |
+  \foreach \x in {0, 2, 4, 6, 8}
+    \foreach \y in {0, 2, 4, 6} 
+      {\draw[thin, black] (\x, \y, 1.5) -- (\x, \y+2, 1.5);
+       \draw[thin, black] (\y, \x, 1.5) -- (\y+2, \x, 1.5);
+      }
+  % diag
+  \foreach \x in {0, 2, 4, 6}
+    \foreach \y in {0, 2, 4, 6}
+      {
+        \draw[thin, black] (\x, \y, 1.5) -- (\x+2, \y+2, 1.5);
+      }
+
+  %\foreach \x in {2, 4, 6}
+  %  \foreach \y in {2, 4, 6} 
+  %     {\node[mark size=3pt, color=black] at (\x, \y, 3.5) {\pgfuseplotmark{*}};}
+       
+  \foreach \x in {2, 4, 6}
+    \foreach \y in {2, 4} 
+      {\draw[thin, black] (\x, \y, 3.5) -- (\x, \y+2, 3.5);
+        \draw[thin, black] (\y, \x, 3.5) -- (\y+2, \x, 3.5);
+        \draw[thin, black] (2, \x, 1.5) -- (2, \x, 3.5);
+
+      }
+
+  \foreach \y in {2, 4}
+     \foreach \x in {2, 4} 
+      {\draw[thin, black] (\x, \y, 3.5) -- (\x+2, \y+2, 3.5);
+      }
+
+  \foreach \p in {2, 4, 6}
+    \foreach \q in {2, 4, 6}
+             {
+               \draw[thin, black] (\p, \q, 1.5) -- (\p, \q, 3.5);
+             }
+
+   \foreach \p in {2, 4} 
+      {
+        \draw[thin, black] (\p, 2, 1.5) -- (\p+2, 2, 3.5);
+        \draw[thin, black] (\p, 6, 1.5) -- (\p+2, 6, 3.5);
+        \draw[thin, black] (2, \p, 1.5) -- (2, \p+2, 3.5);
+        \draw[thin, black] (6, \p, 1.5) -- (6, \p+2, 3.5);
+      }
+
+  \fill[blue!20!white, opacity=0.5] (2, 2, 1.5) -- (6, 2, 1.5) -- (6, 2, 3.5) -- (2, 2, 3.5) -- cycle;
+  \fill[blue!20!white, opacity=0.5] (2, 2, 1.5) -- (2, 6, 1.5) -- (2, 6, 3.5) -- (2, 2, 3.5) -- cycle;        
+  \fill[blue!20!white, opacity=0.5] (2, 6, 1.5) -- (6, 6, 1.5) -- (6, 6, 3.5) -- (2, 6, 3.5) -- cycle;
+  \fill[blue!20!white, opacity=0.5] (6, 2, 1.5) -- (6, 6, 1.5) -- (6, 6, 3.5) -- (6, 2, 3.5) -- cycle;
+
+  \draw[blue] (2, 2, 1.5) -- (6, 2, 1.5) -- (6, 2, 3.5) -- (2, 2, 3.5) -- cycle;
+  \draw[blue] (2, 2, 1.5) -- (2, 6, 1.5) -- (2, 6, 3.5) -- (2, 2, 3.5) -- cycle;        
+  \draw[blue] (2, 6, 1.5) -- (6, 6, 1.5) -- (6, 6, 3.5) -- (2, 6, 3.5) -- cycle;
+  \draw[blue] (6, 2, 1.5) -- (6, 6, 1.5) -- (6, 6, 3.5) -- (6, 2, 3.5) -- cycle;
+
+  \draw[thin, black] (6, 0, 1.5) -- (6, 2, 3.5);
+  \draw[thin, black] (8, 2, 1.5) -- (6, 2, 3.5);
+  \fill[yellow!50!white, opacity=0.3] (6, 0, 1.5) -- (6, 2, 3.5) -- (6, 2, 1.5) -- cycle;
+  \fill[yellow!50!white, opacity=0.3] (8, 2, 1.5) -- (6, 2, 3.5) -- (6, 2, 1.5) -- cycle;
+  \fill[yellow!50!white, opacity=0.3] (8, 2, 1.5) -- (6, 0, 1.5) -- (6, 2, 3.5) -- cycle;
+  \fill[yellow!20!white, opacity=0.3] (8, 2, 1.5) -- (6, 0, 1.5) -- (6, 2, 1.5) -- cycle;
+  
+  \draw[thin, black] (4, 2, 3.5) -- (4, 4, 5.5);
+  \draw[thin, black] (6, 4, 3.5) -- (4, 4, 5.5);
+  \fill[yellow!50!white, opacity=0.3] (4, 2, 3.5) -- (4, 4, 5.5) -- (4, 4, 3.5);
+  \fill[yellow!50!white, opacity=0.3] (6, 4, 3.5) -- (4, 4, 5.5) -- (4, 4, 3.5);
+  \fill[yellow!50!white, opacity=0.3] (6, 4, 3.5) -- (4, 2, 3.5) -- (4, 4, 3.5);
+  \fill[yellow!50!white, opacity=0.3] (6, 4, 3.5) -- (4, 2, 3.5) -- (4, 4, 5.5);
+
+  \draw[very thick, red] (4, 4, 1.5) -- (4, 4, 3.5);
+  \draw[very thick, red] (4, 4, 5.5) -- (4, 4, 3.5);
+  {\node[mark size=3pt, color=black] at (4, 4, 1.5) {\pgfuseplotmark{*}};}
+  {\node[mark size=3pt, color=black] at (4, 4, 3.5) {\pgfuseplotmark{*}};}
+  {\node[mark size=3pt, color=black] at (4, 4, 5.5) {\pgfuseplotmark{*}};}
+
+  \node[red, right] at (4, 4, 4.5) {$\mathcal{T}^{\Lambda}_h$};
+  \node[blue, right] at (2, 6, 2.5) {$\mathcal{T}^{\Gamma}_h$};
+  \node[black, below right] at (4, 8, 1.5) {$\mathcal{T}^{\Omega}_h$};
+
+%\draw[thick,->] (0,0,0) -- (1,0,0) node[anchor=north east]{$x$};
+%\draw[thick,->] (0,0,0) -- (0,1,0) node[anchor=north west]{$y$};
+%\draw[thick,->] (0,0,0) -- (0,0,1) node[anchor=south]{$z$};
+%% \tdplotsetrotatedcoords{60}{40}{30}
+%% \draw[thick,color=blue,tdplot_rotated_coords,->] (0,0,0) --
+%% (.7,0,0) node[anchor=north]{$x’$};
+%% \draw[thick,color=blue,tdplot_rotated_coords,->] (0,0,0) --
+%% (0,.7,0) node[anchor=west]{$y’$};
+%% \draw[thick,color=blue,tdplot_rotated_coords,->] (0,0,0) --
+%% (0,0,.7) node[anchor=south]{$z’$};
+\end{tikzpicture}
+\end{document}
+

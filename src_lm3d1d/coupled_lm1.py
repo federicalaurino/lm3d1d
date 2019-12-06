@@ -1,7 +1,8 @@
 # Formulation with the multiplier on the curve
 from dolfin import *
 from xii import *
-from weak_bcs.utils import block_form, MMSData, H1_norm, L2_norm
+from weak_bcs.utils import block_form, MMSData, H1_norm, L2_norm, matrix_fromHs
+from xii.linalg.matrix_utils import identity_matrix
 from hsmg.hseig import Hs0Norm
 from block.algebraic.petsc import LU, AMG
 from block import block_mat, block_vec
@@ -105,7 +106,10 @@ def setup_error_monitor(mms_data, params):
         # On a finer mesh
         Q = FunctionSpace(ph.function_space().mesh(), 'CG', 3)
         Hs = Hs0Norm(Q, s=-0.5, bcs=DirichletBC(Q, Constant(0), 'on_boundary'))
-        
+
+        # A U = M U Lambda
+        # Hs = M * U * Lambda^{-0.5} * (M*U).T
+
         # e*H*e ie (e, e)_H
         e = interpolate(p, Q).vector()
         e.axpy(-1, interpolate(ph, Q).vector())
@@ -157,14 +161,50 @@ def cannonical_riesz_map(W, mms, params, AA):
     return B
 
 
+def withL2_inner_product(W, mms, params, AA):
+    '''Inner product of alpha*H1 x beta*H1 x H-0.5'''
+    V3, V1, Q = W
+    # Extact Vi norms from system
+    V3_inner = AA[0][0]
+    V1_inner = AA[1][1]
+
+    p, q = TrialFunction(Q), TestFunction(Q)
+    Q_inner = assemble(inner(p, q)*dx)
+
+    B = block_diag_mat([V3_inner, V1_inner, Q_inner])
+
+    return B
+
+
+def withL2_riesz_map(W, mms, params, AA):
+    '''Riesz map wrt. inner product of alpha*H1 x beta*H1 x H-0.5'''
+    V3, V1, Q = W
+    # Extact Vi norms from system
+    V3_inner = AA[0][0]
+    V1_inner = AA[1][1]
+    Q_inner = AA[2][2]
+
+    B = block_diag_mat([AMG(V3_inner), AMG(V1_inner), AMG(Q_inner)])
+
+    return B
+
+
+def just_identity(W, mms, params, AA, Z):
+    '''1'''
+    return identity_matrix(W)
+
 # --------------------------------------------------------------------
 
 # The idea now that we register the inner product so that from outside
 # of the module they are accessible without referring to them by name
-W_INNER_PRODUCTS = {0: cannonical_inner_product}
+W_INNER_PRODUCTS = {0: cannonical_inner_product,
+                    1: withL2_inner_product,
+                    2: just_identity}
 
 # And we do the same for preconditioners / riesz maps
-W_RIESZ_MAPS = {0: cannonical_riesz_map}
+W_RIESZ_MAPS = {0: cannonical_riesz_map,
+                1: withL2_riesz_map,
+                2: just_identity}
 
 # How is the problem parametrized
 PARAMETERS = ()

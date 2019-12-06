@@ -1,7 +1,7 @@
 # Formulation with the multiplier on the surface
 from dolfin import *
 from xii import *
-from weak_bcs.utils import block_form, MMSData, H1_norm, Hs0_norm, matrix_fromHs
+from weak_bcs.utils import block_form, MMSData, H1_norm, Hs0_norm, matrix_fromHs, L2_norm
 import src_lm3d1d.coupled_lm1 as lm1
 from hsmg.hseig import Hs0Norm
 from block.algebraic.petsc import LU, AMG
@@ -115,6 +115,10 @@ def setup_error_monitor(mms_data, params):
         u3, u1, p = mms.solution
         u3h, u1h, ph = wh
 
+        # X = ph.function_space()
+        # bcs = DirichletBC(X, Constant(0), 'on_boundary').get_boundary_values().keys()
+        # print np.linalg.norm(ph.vector().get_local()[bcs], np.inf)
+
         # Passing the HsNorm from preconditioner so that we don't compute
         # eigenvalues twice
         Hs0Norm = mms.normals.pop()
@@ -140,14 +144,23 @@ def setup_error_monitor(mms_data, params):
 cannonical_inner_product = lm1.cannonical_inner_product
 cannonical_riesz_map = lm1.cannonical_riesz_map
 
+withL2_inner_product = lm1.withL2_inner_product
+withL2_riesz_map = lm1.withL2_riesz_map
+
+just_identity = lm1.just_identity
+
 # --------------------------------------------------------------------
 
 # The idea now that we register the inner product so that from outside
 # of the module they are accessible without referring to them by name
-W_INNER_PRODUCTS = {0: cannonical_inner_product}
+W_INNER_PRODUCTS = {0: cannonical_inner_product,
+                    1: withL2_inner_product,
+                    2: just_identity}
 
 # And we do the same for preconditioners / riesz maps
-W_RIESZ_MAPS = {0: cannonical_riesz_map}
+W_RIESZ_MAPS = {0: cannonical_riesz_map,
+                1: withL2_riesz_map,
+                2: just_identity}
 
 # How is the problem parametrized
 PARAMETERS = ('size', )

@@ -286,7 +286,7 @@ the resulting preconditioned linear systems. In particular, we shall compare
 spectral condition numbers and the time to convergence of the preconditioned
 minimal residual (MinRes) solver with the with stopping criterion requiring
 the relative preconditioned residual norm to be less than $10^{-8}$. We remark
-that we shall ignore the setup cost of the precondtioner.
+that we shall ignore the setup cost of the preconditioner.
 
 Following operator preconditioning technique \cite{mardal2011preconditioning} we
 propose as preconditioners for \eqref{eq:problem1} and \eqref{eq:problem2} in the
@@ -316,9 +316,10 @@ Let us first note that the proposed preconditioners for \eqref{eq:problem1} and
 \eqref{eq:problem2} in the conforming case seem robust with respect to discretization
 parameter as the iteration counts and condition numbers are bounded in $h$.
 We then see that the solution time for \eqref{eq:problem1_simple} is about 2 times
-longer compared to \eqref{eq:problem2_simple}. This is in addition to the higher setup costs
-of the preconditioner which in our implementation involve solving an eigenvalue
-problem for the fractional Laplacian. Therefore it is advantageous to keep
+longer compared to \eqref{eq:problem2_simple} which is about 4 times more expensive
+than the solution of the Poisson problem \eqref{benchm_3d}. This is in addition to the
+higher setup costs of the preconditioner which in our implementation involve solving
+an eigenvalue problem for the fractional Laplacian. Therefore it is advantageous to keep
 the multiplier space as small as possible. We remark that the missing
 results for \eqref{eq:problem1_simple} in Table \ref{tab:cost} and \ref{tab:error_conform}
 are due to the memory limitations which we encounter when solving the eigenvalue problem
@@ -332,18 +333,18 @@ double on refinement.
 \begin{table}
   \scriptsize{
   \begin{center}
-    \begin{tabular}{l|lll|lll|lll}
+    \begin{tabular}{l|lll|lll|lll|ll}
       \toprule
-      \multirow{2}{*}{$l$} & \multicolumn{3}{c|}{\eqref{eq:problem1}} & \multicolumn{3}{c|}{\eqref{eq:problem2}} & \multicolumn{3}{c}{ Stabilized \eqref{eq:problem2}}\\
-      \cline{2-10}
-      & \# & $T\left[s\right]$ & $\kappa$ & \# & $T\left[s\right]$ & $\kappa$ & \# & $T\left[s\right]$ & $\kappa$\\
+      \multirow{2}{*}{$l$} & \multicolumn{3}{c|}{\eqref{eq:problem1}} & \multicolumn{3}{c|}{\eqref{eq:problem2}} & \multicolumn{3}{c|}{ Stabilized \eqref{eq:problem2}} & \multicolumn{2}{c}{\eqref{benchm_3d}}\\
+      \cline{2-12}
+      & \# & $T\left[s\right]$ & $\kappa$ & \# & $T\left[s\right]$ & $\kappa$ & \# & $T\left[s\right]$ & $\kappa$ & \# & $T\left[s\right]$\\
       \hline
-      1 & 20 & 0.03  & 15.56 & 9  & 0.02  & 3.04 & 21  & 0.01   & 9.70 \\
-      2 & 35 & 0.06  & 16.28 & 17 & 0.03  & 4.67 & 31  & 0.03   & 15.87\\
-      3 & 38 & 0.14  & 16.64 & 22 & 0.06  & 6.25 & 53  & 0.15   & 32.93\\
-      4 & 39 & 1.70  & 16.75 & 24 & 0.89  & 7.03 & 110 & 4.54   & 61.48\\
-      5 & 38 & 12.04 & 16.78 & 20 & 5.21  & 5.02 & 232 & 59.43  & 94.25\\
-      6 & -- & --    & --    & 17 & 28.77 & --   & 507 & 832.90 & --   \\
+      1 & 20 & 0.03  & 15.56 & 9  & 0.02  & 3.04 & 21  & 0.01   & 9.70  &3 & $<0.01$\\ 
+      2 & 35 & 0.06  & 16.28 & 17 & 0.03  & 4.67 & 31  & 0.03   & 15.87 &4 & $<0.01$\\ 
+      3 & 38 & 0.14  & 16.64 & 22 & 0.06  & 6.25 & 53  & 0.15   & 32.93 &5 & 0.01   \\ 
+      4 & 39 & 1.70  & 16.75 & 24 & 0.89  & 7.03 & 110 & 4.54   & 61.48 &5 & 0.12   \\ 
+      5 & 38 & 12.04 & 16.78 & 20 & 5.21  & 5.02 & 232 & 59.43  & 94.25 &5 & 0.90  \\ 
+      6 & -- & --    & --    & 17 & 28.77 & --   & 507 & 832.90 & --    &6 & 7.75  \\ 
       \bottomrule
     \end{tabular}
     \end{center}
@@ -351,7 +352,9 @@ double on refinement.
   \caption{Cost comparison of the formulations across refinement levels $l$.
     Number of MinRes iterations and the conditioned number of the preconditioned
     problem is denoted by $\#$ and $\kappa$ respectively. Time till convergence
-    of the iterative solver (excluding the setup) is shown as $T$.
+    of the iterative solver (excluding the setup) is shown as $T$. Results of algebraic
+    multigrid preconditioned conjugate gradient method for 3D Poisson are shown
+    in the last 2 columns.
   }
 \label{tab:cost}
 \end{table}

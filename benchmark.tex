@@ -178,33 +178,8 @@ $h^{-1}$ & $\norm{u-u_h}_{1, \Omega}$ & $\norm{\ud-u_{\odot, h^{\prime}}}_{1, \L
   \end{minipage}
 \end{table}
 
-Formulations \eqref{eq:problem1_simple} and \eqref{eq:problem2_simple} shall
-be discretized using contiuous Lagrange element of order 1 ($P_1$) for all the spaces
-involved. We recall that since we are investigating the conforming case, the tripplet
-$P_1$-$P_1$-$P_1$ satisfies
-the discrete inf-sup condition. The resulting linear systems are solved
-using the minimal residual method (MinRes) with stopping criterion requiring the relative
-preconditioned residual norm to be less than $10^{-8}$. Following operator
-preconditioning technique \cite{mardal2011preconditioning} we use as preconditioners
-the (approximate) Riesz mapping with respect to the inner products of
-the spaces in which the two formulations were proved to be well posed.
-In particular, the preconditioner for the Lagrange multiplier relies on
-(the inverse of) the fractional Laplacian $-\Delta^{-1/2}$ on $\Gamma$ for
-\eqref{eq:problem1_simple} and $\Lambda$ for \eqref{eq:problem2_simple}.
-In both cases the fractional Laplacian was realized by spectral decomposition
-\cite{kuchta2016preconditioners}.
-%We remark that the size of the linear systems on the finest meshes considered
-%here prevents the use direct solvers. Therefore iterative solvers were necessary.
-We plot the numerical solution of problem \eqref{eq:problem1_simple} and \eqref{eq:problem2_simple} in
-Figure \ref{fig:sol_benchm1} and \ref{fig:sol_benchm2}, respectively. 
-
-\begin{figure}
-\centering
-\includegraphics[width = 0.9\textwidth]{./graphics/mfs_LM2d}
-\caption{Numerical solution of problem \eqref{eq:problem1_simple}: functions $u_h$ and $\udh$ on the left and the Lagrance multiplier $\lambda_h$ on the right.}\label{fig:sol_benchm1}
-\end{figure}
-
-Considering uniform refinements of the initial mesh, Table \ref{tab:error_conform}
+Considering inf-sup stable discretization in terms of continuous linear Lagrange
+($P_1$) elements (for all the spaces), Table \ref{tab:error_conform}
 lists the errors of formulations \eqref{eq:problem1_simple} and \eqref{eq:problem2_simple}
 on the benchmark problem. It can be seen the error in $u$ and $\ud$ in $H^1$ norm
 converges linearly (as can be expected due to $P_1$ element discretization).
@@ -215,22 +190,30 @@ exact solution is particularly simple, $\lambda=\ld=0$.
 %In case of the results for
 %\eqref{eq:problem1_simple} the rate can also be due to the fact that the
 %error is interpolated into the same finite element space as the approximation $Q_h$.
-We remark that for $u$ and $\ud$ the error is interpolated into FE space of piecewise
-quadratic \emph{discontinous} functions. For \eqref{eq:problem2_simple} we
+We remark that for $u$ and $\ud$ the error is interpolated into the finite element space of
+piecewise quadratic \emph{discontinous} functions. For \eqref{eq:problem2_simple} we
 evaluate the fractional norm and interpolate the error using piecewise continuous
-cubic functions. Evaluating the fractional norm in higher order spaces
-for formulation with the multiplier space on $\Gamma$ is prohibitively costly. 
+cubic functions. This is due to the fact that evaluating the fractional norm in higher order spaces
+for on $\Gamma$ is prohibitively costly. For the sake of comparison with non-conforming formulation of \eqref{eq:problem2} from
+\S\ref{sec:unfit2} Table \ref{tab:error_conform} also
+lists the error of the Lagrange multiplier in the $L^2$ norm. Here, quadratic convergence is observed
+for \eqref{eq:problem2_simple}. For \eqref{eq:problem1_simple} the rate between 1.5 and 2.
+
+We plot the numerical solution of problem \eqref{eq:problem1_simple} and \eqref{eq:problem2_simple} in
+Figure \ref{fig:sol_benchm1} and \ref{fig:sol_benchm2}, respectively.
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.9\textwidth]{./graphics/mfs_LM2d}
+\caption{Numerical solution of problem \eqref{eq:problem1_simple}: functions $u_h$ and $\udh$ on the left and the Lagrance multiplier $\lambda_h$ on the right.}\label{fig:sol_benchm1}
+\end{figure}
+
 
 \begin{figure}
 \centering
 \includegraphics[width = 0.9\textwidth]{./graphics/mfs_LM1d}
 \caption{Numerical solution of problem \eqref{eq:problem2_simple}: functions $u_h$ and $\udh$ on the left and the Lagrance multiplier ${\ld}_h$ on the right.}\label{fig:sol_benchm2}
 \end{figure}
-
-For the sake of comparison with non-conforming formulation of \eqref{eq:problem2} from
-\S\ref{sec:unfit2} Table \ref{tab:error_conform} also
-lists the error of the Lagrange multiplier in the $L^2$ norm. Here, quadratic convergence is observed
-for \eqref{eq:problem2_simple}. For \eqref{eq:problem1_simple} the rate between 1.5 and 2.
 
 
 \subsection{Numerical experiments. $\mathcal{T}^{\Omega}_h$ non-conforming to $\Gamma$}\label{sec:experiment_nonconform}
@@ -244,10 +227,12 @@ Using discretization in terms of $P_1$-$P_1$-$P_0$ element Table \ref{tab:error_
 lists the error of the stabilized formulation of \eqref{eq:problem2}. A linear
 convergence in the $H^1$ norm can be observed in the error of $u$ and $\ud$. We
 remark that the norms were computed as in \S\ref{sec:experiment_conform}. For simplicity
-the convergence of the multiplier is measured in the $L^2$ norm
-on $\mathcal{G}_h$ (instead of the $H^{-1/2}(\Gamma)$ norm used in the analysis).
-Then, convergence exceeding order 2 can be observed, however, the rates are rather
-unstable. 
+the convergence of the multiplier is measured in the $L^2$ norm rather then the $H^{-1/2}(\Gamma)$
+norm used in the analysis. Then, convergence exceeding order 1.5 can be observed, however,
+the rates are rather unstable.
+
+\miro{The solution is plotted in ..... I guess there should be some zoom in on the
+cut cells.}
 
 \begin{table}
 %%   %%%
@@ -268,14 +253,14 @@ unstable.
   \begin{center}
     \begin{tabular}{l|lll}
       \toprule
-    $h^{-1}$ & $\norm{u-u_h}_{1, \Omega}$ & $\norm{\ud-\udh}_{1, \Lambda}$ & $\norm{\ld-\ldh}_{0,\mathcal{G}_h}$\\
+    $h^{-1}$ & $\norm{u-u_h}_{1, \Omega}$ & $\norm{\ud-\udh}_{1, \Lambda}$ & $\norm{\ld-\ldh}_{0,\Lambda}$\\
       \hline
-5   & 2.6E0(--)    & 2.3E-1(--)   & 3.0E-2(--)\\
-9   & 1.5E0(0.84)  & 9.4E-2(1.42) & 6.9E-3(2.34)\\
-17  & 8.1E-1(0.94) & 4.3E-2(1.18) & 1.5E-3(2.35)\\
-33  & 4.2E-1(0.98) & 2.1E-2(1.06) & 2.0E-4(2.96)\\
-65  & 2.1E-1(0.99) & 1.1E-2(1.02) & 3.3E-5(2.67)\\
-129 & 1.1E-1(1.00) & 5.2E-3(1.01) & 4.9E-6(2.74)\\
+5   & 2.6E0(--)    & 2.3E-1(--)   & 1.7E-1(--) \\ 
+9   & 1.5E0(0.84)  & 9.4E-2(1.42) & 7.1E-2(1.36)\\
+17  & 8.1E-1(0.94) & 4.3E-2(1.18) & 2.9E-2(1.37)\\
+33  & 4.2E-1(0.98) & 2.1E-2(1.06) & 7.9E-3(1.91)\\
+65  & 2.1E-1(0.99) & 1.1E-2(1.02) & 2.6E-3(1.64)\\
+129 & 1.1E-1(1.00) & 5.2E-3(1.01) & 8.5E-4(1.61)\\
 \bottomrule
     \end{tabular}
   \end{center}    
@@ -296,45 +281,86 @@ here finer. Due to the different definitions in the three formulations, comparis
 multiplier convergence is not straightforward. We therefore limit ourselves to a
 comment that in the $L^2$ norm all the formulations yield faster than linear convergence.
 
+In order to discuss solution cost of the formulations we consider 
+the resulting preconditioned linear systems. In particular, we shall compare
+spectral condition numbers and the time to convergence of the preconditioned
+minimal residual (MinRes) solver with the with stopping criterion requiring
+the relative preconditioned residual norm to be less than $10^{-8}$. We remark
+that we shall ignore the setup cost of the precondtioner.
 
-However, the solution
-cost of the two approaches differs. In Table \ref{tab:cost} we summarize the
-size of the linear systems solved at each level of refinement and the time
-for the iterative solver to converge. Let us first note that the proposed
-preconditioners seem robust with respect to discretization parameter as
-the iteration counts are clearly bounded. We then see that the solution
-time for \eqref{eq:problem1_simple} is about 2 times longer compared to
-\eqref{eq:problem2_simple}. This is in addition to the higher setup costs
+Following operator preconditioning technique \cite{mardal2011preconditioning} we
+use as preconditioners for \eqref{eq:problem1} and \eqref{eq:problem2} in the
+conforming case the (approximate) Riesz mapping with respect to the inner products of
+the spaces in which the two formulations were proved to be well posed.
+In particular, the preconditioner for the Lagrange multiplier relies on
+(the inverse of) the fractional Laplacian $-\Delta^{-1/2}$ on $\Gamma$ for
+\eqref{eq:problem1_simple} and $\Lambda$ for \eqref{eq:problem2_simple}.
+In both cases the fractional Laplacian was realized by spectral decomposition
+\cite{kuchta2016preconditioners}.
+
+For the unfitted stabilized \eqref{eq:problem2} the Lagrange multiplier preconditioner
+uses a Riesz map with respect to the inner product due to $L^2(\mathcal{G}_h)$ and
+the stabilization \eqref{eq:stab}, i.e.
+\[
+({\ld}_h, {\md}_h) \mapsto \sum _{K\in \mathcal{G}_h}\int_{K}{\ld}_h {\md}_h + \sum _{K\in \mathcal{G}_h} \int_{\partial K \setminus \partial \mathcal{G}_h} h \llbracket {\ld}_h \rrbracket \llbracket {\md}_h \rrbracket.
+\]
+This simple choice does not yield bounded
+iterations. However, establishing a robust precondtioner in this case 
+is beyond the scope of the paper and shall be pursued in the future works.
+
+
+In Table \ref{tab:cost} we compare solution time, number of iterations and
+condition numbers of the (linear systems due to the) three formulations.
+Let us first note that the proposed preconditioners for \eqref{eq:problem1} and
+\eqref{eq:problem2} in the conforming case seem robust with respect to discretization
+parameter as the iteration counts and condition numbers are bounded in $h$.
+We then see that the solution time for \eqref{eq:problem1_simple} is about 2 times
+longer compared to \eqref{eq:problem2_simple}. This is in addition to the higher setup costs
 of the preconditioner which in our implementation involve solving an eigenvalue
 problem for the fractional Laplacian. Therefore it is advantageous to keep
 the multiplier space as small as possible. We remark that the missing
 results for \eqref{eq:problem1_simple} in Table \ref{tab:cost} and \ref{tab:error_conform}
 are due to the memory limitations which we encounter when solving the eigenvalue problem
-for the Laplacian, which for finest mesh involves cca 32 thousand eigenvalues.
+for the Laplacian, which for finest mesh involves cca 32 thousand eigenvalues, cf. Appendix \ref{sec:appendix}.
 %
+
+Due to the missing proper preconditioner for the Lagrange multiplier block the
+number of iterations in the third, unfitted formulation can be seen to approximatly
+double on refinement. 
+
 \begin{table}
   \scriptsize{
   \begin{center}
-    \begin{tabular}{l|ll|lll|lll}
+    \begin{tabular}{l|lll|lll|lll}
+      \toprule
+      \multirow{2}{*}{$l$} & \multicolumn{3}{c|}{\eqref{eq:problem1}} & \multicolumn{3}{c|}{\eqref{eq:problem2}} & \multicolumn{3}{c}{ Stabilized \eqref{eq:problem2}}\\
+      \cline{2-10}
+      & \# & $T\left[s\right]$ & $\kappa$ & \# & $T\left[s\right]$ & $\kappa$ & \# & $T\left[s\right]$ & $\kappa$\\
       \hline
-      $h^{-1}$ & $\dim{X^1_{h, 0}(\Omega)}$ & $\dim{X^1_{h, 0}(\Lambda)}$ & $\dim{Q_h(\Gamma)}$ & $\#$ & $T\left[s\right]$ & $\dim{Q_h(\Lambda)}$ & $\#$ & $T\left[s\right]$\\
-      \hline
-4   &125     &5   &40    & &0.03  &5   &9  &0.01\\
-8   &729     &9   &144   & &0.10  &9   &19 &0.02\\
-16  &4913    &17  &544   & &0.25  &17  &36 &0.14\\
-32  &35937   &33  &2112  & &1.97  &33  &42 &1.08\\
-64  &274625  &65  &8320  & &18.01 &65  &36 &8.24\\
-128 &2146947 &129 &--    &-- &--    &129 &31 &61.37\\
-\hline
+      1 & 20 & 0.03  & 15.56 & 9  & 0.02  & 3.04 & 21  & 0.01   & 9.70 \\
+      2 & 35 & 0.06  & 16.28 & 17 & 0.03  & 4.67 & 31  & 0.03   & 15.87\\
+      3 & 38 & 0.14  & 16.64 & 22 & 0.06  & 6.25 & 53  & 0.15   & 32.93\\
+      4 & 39 & 1.70  & 16.75 & 24 & 0.89  & 7.03 & 110 & 4.54   & 61.48\\
+      5 & 38 & 12.04 & 16.78 & 20 & 5.21  & 5.02 & 232 & 59.43  & 94.25\\
+      6 & -- & --    & --    & 17 & 28.77 & --   & 507 & 832.90 & --   \\
+      \bottomrule
     \end{tabular}
     \end{center}
     }
-  \caption{Cost comparison of the two formulations. Number of MinRes iterations
-    is denoted by $\#$. Time till convergence of the iterative solver (excluding the setup) is shown
-    as $T$.
+  \caption{Cost comparison of the formulations across refinement levels $l$.
+    Number of MinRes iterations and the conditioned number of the preconditioned
+    problem is denoted by $\#$ and $\kappa$ respectively. Time till convergence
+    of the iterative solver (excluding the setup) is shown as $T$.
   }
 \label{tab:cost}
 \end{table}
+
+
+
+
+
+
+
 
 %\begin{remark}
 %Let us notice that the 3D solution \eqref{benchm_sol3d} is such that $\avrc{u}=0$. Therefore in \eqref{benchmark} it is like we are solving two separated problems, one in $\Omega$ and the other on $\Lambda$.

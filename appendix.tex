@@ -1,0 +1,25 @@
+\section{System sizes in benchmark formulations}\label{sec:appendix}
+Below we list dimensions of the finite element spaces used to discretize
+formualations \eqref{eq:problem1}, \eqref{eq:problem2} and stabilized
+\eqref{eq:problem2} on different levels of refinement.
+
+\begin{center}
+  \scriptsize{
+    \begin{tabular}{l|lll|lll|lll}
+      \toprule
+      \multirow{2}{*}{$l$} & \multicolumn{3}{c|}{\eqref{eq:problem1}} & \multicolumn{3}{c|}{\eqref{eq:problem2}} & \multicolumn{3}{c}{ Stabilized \eqref{eq:problem2}}\\
+      \cline{2-10}
+      & $\lvert X^1_{h, 0}(\Omega) \rvert$ & $\lvert X^1_{h, 0}(\Lambda) \rvert$ & $\lvert Q_h(\Gamma) \rvert$ &
+      $\lvert X^1_{h, 0}(\Omega) \rvert$ & $\lvert X^1_{h, 0}(\Lambda) \rvert$ & $\lvert Q_h(\Lambda) \rvert$ &
+      $\lvert X^1_{h, 0}(\Omega) \rvert$ & $\lvert X^1_{h^{\prime}, 0}(\Lambda) \rvert$ & $\lvert Q_h(\mathcal{G}_h) \rvert$\\
+      \hline
+     1& 125    & 5  & 40   & 125     & 5   & 5   & 180     & 13  & 24  \\
+     2& 729    & 9  & 144  & 729     & 9   & 9   & 900     & 25  & 48  \\
+     3& 4913   & 17 & 544  & 4913    & 17  & 17  & 5508    & 49  & 96  \\
+     4& 35937  & 33 & 2112 & 35937   & 33  & 33  & 38148   & 97  & 192 \\
+     5& 274625 & 65 & 8320 & 274625  & 65  & 65  & 283140  & 193 & 384 \\
+     6& --     & -- & -    & 2146689 & 129 & 129 & 2180100 & 385 & 768 \\
+      \bottomrule
+    \end{tabular}
+    }
+    \end{center}

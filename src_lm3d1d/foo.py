@@ -27,18 +27,35 @@ Tp, Tq = Average(p, gamma, circle), Average(q, gamma, circle)
 dx_ = Measure('dx', domain=gamma)
 m = inner(Tp, Tq)*dx_
 
-X, y, Z = map(ii_convert, ii_assemble(m).chain)
+M = ii_convert(ii_assemble(m)).array()
 
-x = Function(Q).vector()
-for i in range(Q.dim()):
-    x.set_local(np.eye(Q.dim())[i])
+X = FunctionSpace(gamma, 'DG', 0)
+x, y = Function(Q), Function(Q)
 
-    print (Z*x).norm('l2')
-    #< 1E-13:
-    #    omega_subdomains[int(cut_cells[i])] = 2
-    #    print '!'
-    #x *= 0.
-print Z.array()
+# This shows the problem
+M0 = np.zeros_like(M)
+for i in range(len(M0)):
+    x.vector().set_local(np.eye(Q.dim())[i])
+    x_ = interpolate(x, X)    
+    for j in range(len(M0)):
+        y.vector().set_local(np.eye(Q.dim())[j])
+        y_ = interpolate(y, X)
+        M0[i, j] = assemble(inner(x_, y_)*dx)
 
-print np.sort(np.linalg.eigvalsh(y.array()))
-print np.sort(np.linalg.eigvalsh(ii_convert(ii_assemble(m)).array()))
+print np.linalg.cond(M0)
+
+# X, y, Z = map(ii_convert, ii_assemble(m).chain)
+
+# x = Function(Q).vector()
+# for i in range(Q.dim()):
+#     x.set_local(np.eye(Q.dim())[i])
+
+#     print (Z*x).norm('l2')
+#     #< 1E-13:
+#     #    omega_subdomains[int(cut_cells[i])] = 2
+#     #    print '!'
+#     #x *= 0.
+# print Z.array()
+
+# print np.sort(np.linalg.eigvalsh(y.array()))
+# print np.sort(np.linalg.eigvalsh(ii_convert(ii_assemble(m)).array()))

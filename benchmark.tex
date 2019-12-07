@@ -289,14 +289,15 @@ the relative preconditioned residual norm to be less than $10^{-8}$. We remark
 that we shall ignore the setup cost of the precondtioner.
 
 Following operator preconditioning technique \cite{mardal2011preconditioning} we
-use as preconditioners for \eqref{eq:problem1} and \eqref{eq:problem2} in the
+propose as preconditioners for \eqref{eq:problem1} and \eqref{eq:problem2} in the
 conforming case the (approximate) Riesz mapping with respect to the inner products of
 the spaces in which the two formulations were proved to be well posed.
 In particular, the preconditioner for the Lagrange multiplier relies on
 (the inverse of) the fractional Laplacian $-\Delta^{-1/2}$ on $\Gamma$ for
 \eqref{eq:problem1_simple} and $\Lambda$ for \eqref{eq:problem2_simple}.
-In both cases the fractional Laplacian was realized by spectral decomposition
-\cite{kuchta2016preconditioners}.
+A detailed analysis of the preconditioners will be presented in a separate
+work. We remark that in both cases the fractional Laplacian was here realized
+by spectral decomposition \cite{kuchta2016preconditioners}.
 
 For the unfitted stabilized \eqref{eq:problem2} the Lagrange multiplier preconditioner
 uses a Riesz map with respect to the inner product due to $L^2(\mathcal{G}_h)$ and

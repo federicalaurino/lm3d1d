@@ -2,6 +2,7 @@ from dolfin import *
 from xii import *
 from weak_bcs.utils import block_form, MMSData, H1_norm
 from block import block_mat, block_vec
+from block.algebraic.petsc import AMG
 import numpy as np
 
 
@@ -55,3 +56,32 @@ def setup_error_monitor(mms_data, params):
 
 # How is the problem parametrized
 PARAMETERS = ('mu', )
+
+# --------------------------------------------------------------------
+
+if __name__ == '__main__':
+    from petsc4py import PETSc
+    from IPython import embed
+    
+    for n in [4*2**i for i in range(6)]:
+        mms = setup_mms(None)
+
+        A, b, V = setup_problem(n, mms, params=None)
+        A = A[0][0]
+        b = b[0]
+        V = V[0]
+
+        solver = PETScKrylovSolver('cg', 'hypre_amg')
+        solver.set_operators(A, A)
+
+        solver.parameters['relative_tolerance'] = 1E-8
+
+        ksp = solver.ksp()
+        # ksp.setComputeEigenvalues(1)
+
+        x = Function(V).vector()
+
+        timer = Timer('ksp')
+        niters = solver.solve(x, b)
+        print V.dim(), niters, timer.stop()
+        # print ksp.computeEigenvalues()

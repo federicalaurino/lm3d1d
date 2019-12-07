@@ -1,0 +1,80 @@
+\documentclass{standalone}
+\usepackage{tikz,tikz-3dplot}
+
+\begin{document}
+
+\tdplotsetmaincoords{72}{125}
+\begin{tikzpicture}[tdplot_main_coords]
+
+  % -, |
+  \foreach \x in {0, 8/3, 16/3, 8}
+    \foreach \y in {0, 8/3, 16/3} 
+      {\draw[thin, black] (\x, \y, 1.5) -- (\x, \y+8./3, 1.5);
+       \draw[thin, black] (\y, \x, 1.5) -- (\y+8./3, \x, 1.5);
+      }
+  % diag
+  \foreach \x in {0, 8/3, 16/3}
+   \foreach \y in {0, 8/3, 16/3}
+     {
+       \draw[thin, black] (\x, \y, 1.5) -- (\x+8/3, \y+8/3, 1.5);
+     }
+
+  \foreach \x in {8/3, 16/3}
+    \foreach \y in {8/3} 
+      {\draw[thin, black] (\x, \y, 3.5) -- (\x, \y+8/3, 3.5);
+        \draw[thin, black] (\y, \x, 3.5) -- (\y+8/3, \x, 3.5);
+      }
+      
+  \foreach \x in {8/3, 16/3}
+    \foreach \y in {8/3, 16/3} 
+      {\draw[thin, black] (\x, \y, 1.5) -- (\x, \y, 3.5);
+      }
+
+ \draw[thin, black] (8/3, 8/3, 1.5) -- (16/3, 8/3, 3.5);      
+ \draw[thin, black] (16/3, 8/3, 3.5) -- (16/3, 16/3, 1.5);      
+ \draw[thin, black] (16/3, 16/3, 1.5) -- (8/3, 16/3, 3.5);      
+ \draw[thin, black] (8/3, 16/3, 3.5) -- (8/3, 8/3, 1.5);
+ \draw[thin, black] (16/3, 8/3, 3.5) -- (8/3, 16/3, 3.5);
+      
+ \fill[red!50!white, opacity=0.5] (8/3, 8/3, 1.5) -- (16/3, 8/3, 1.5) -- (16/3, 8/3, 3.5) -- (8/3, 8/3, 3.5) -- cycle;
+ \fill[red!50!white, opacity=0.5] (16/3, 8/3, 1.5) -- (16/3, 16/3, 1.5) -- (16/3, 16/3, 3.5) -- (16/3, 8/3, 3.5)-- cycle;
+ \fill[red!50!white, opacity=0.5] (16/3, 16/3, 1.5) -- (8/3, 16/3, 1.5) -- (8/3, 16/3, 3.5) -- (16/3, 16/3, 3.5) -- cycle;
+ \fill[red!50!white, opacity=0.5] (8/3, 8/3, 1.5) -- (8/3, 16/3, 1.5) -- (8/3, 16/3, 3.5) -- (8/3, 8/3, 3.5) -- cycle;
+ \fill[red!50!white, opacity=0.5] (8/3, 8/3, 3.5) -- (16/3, 8/3, 3.5) -- (16/3, 16/3, 3.5) -- (8/3, 16/3, 3.5) -- cycle;
+
+
+  \draw[thin, black] (16/3, 0, 1.5) -- (16/3, 8/3, 3.5);
+  \draw[thin, black] (8, 8/3, 1.5) -- (16/3, 8/3, 3.5);
+  \fill[yellow!50!white, opacity=0.3] (8, 8/3, 1.5) -- (16/3, 8/3, 1.5) -- (16/3, 8/3, 3.5) -- cycle;
+  \fill[yellow!50!white, opacity=0.3] (8, 8/3, 1.5) -- (16/3, 0, 1.5) -- (16/3, 8/3, 3.5) -- cycle;
+  \fill[yellow!50!white, opacity=0.3] (8, 8/3, 1.5) -- (16/3, 0, 1.5) -- (16/3, 8/3, 1.5) -- cycle;
+  \fill[yellow!50!white, opacity=0.3] (16/3, 0, 1.5) -- (16/3, 8/3, 1.5) -- (16/3, 8/3, 3.5) -- cycle;
+
+  
+  \draw[very thick, red] (4, 4, 1.5) -- (4, 4, 3.5);
+  \draw[very thick, red] (4, 4, 5.5) -- (4, 4, 3.5);
+  {\node[mark size=3pt, color=red] at (4, 4, 1.5) {\pgfuseplotmark{*}};}
+  {\node[mark size=3pt, color=red] at (4, 4, 1.5+2/3) {\pgfuseplotmark{*}};}
+  {\node[mark size=3pt, color=red] at (4, 4, 1.5+4/3) {\pgfuseplotmark{*}};}
+  {\node[mark size=3pt, color=red] at (4, 4, 3.5) {\pgfuseplotmark{*}};}
+  {\node[mark size=3pt, color=red] at (4, 4, 3.5+2/3) {\pgfuseplotmark{*}};}
+  {\node[mark size=3pt, color=red] at (4, 4, 3.5+4/3) {\pgfuseplotmark{*}};}
+  {\node[mark size=3pt, color=red] at (4, 4, 5.5) {\pgfuseplotmark{*}};}
+
+  \node[red, right] at (4, 4, 4.5) {$\mathcal{T}^{\Lambda}_{h^{\prime}}$};
+  \node[red!50!white, right, opacity=0.8] at (8/3, 16/3, 2.0) {$\mathcal{G}_h$};
+  \node[black, below right] at (4, 8, 1.5) {$\mathcal{T}^{\Omega}_h$};
+
+%\draw[thick,->] (0,0,0) -- (1,0,0) node[anchor=north east]{$x$};
+%\draw[thick,->] (0,0,0) -- (0,1,0) node[anchor=north west]{$y$};
+%\draw[thick,->] (0,0,0) -- (0,0,1) node[anchor=south]{$z$};
+%% \tdplotsetrotatedcoords{60}{40}{30}
+%% \draw[thick,color=blue,tdplot_rotated_coords,->] (0,0,0) --
+%% (.7,0,0) node[anchor=north]{$x’$};
+%% \draw[thick,color=blue,tdplot_rotated_coords,->] (0,0,0) --
+%% (0,.7,0) node[anchor=west]{$y’$};
+%% \draw[thick,color=blue,tdplot_rotated_coords,->] (0,0,0) --
+%% (0,0,.7) node[anchor=south]{$z’$};
+\end{tikzpicture}
+\end{document}
+

@@ -67,21 +67,33 @@ if __name__ == '__main__':
         mms = setup_mms(None)
 
         A, b, V = setup_problem(n, mms, params=None)
-        A = A[0][0]
-        b = b[0]
+        A = as_backend_type(A[0][0]).mat()
+        b = as_backend_type(b[0]).vec()
         V = V[0]
 
-        solver = PETScKrylovSolver('cg', 'hypre_amg')
-        solver.set_operators(A, A)
+        ksp = PETSc.KSP().create()
+        ksp.setType('cg')
+        ksp.setOperators(A)
+        ksp.setConvergenceHistory()
+        ksp.setNormType(PETSc.KSP.NormType.NORM_PRECONDITIONED)
 
-        solver.parameters['relative_tolerance'] = 1E-8
+        pc = ksp.getPC()
+        pc.setType('hypre')
+        pc.setOperators(A, A)
+        pc.setUp()
+        
+        # User configs
+        opts = PETSc.Options()
+        opts.setValue('ksp_rtol', 1E-8)
+        opts.setValue('ksp_atol', 1E-20)
+        opts.setValue('ksp_monitor_true_residual', None)
+        ksp.setFromOptions()
+        
+        x = A.createVecLeft()
+        dt = Timer('ksp')
+        ksp.solve(b, x)
+        dt = dt.stop()
 
-        ksp = solver.ksp()
-        # ksp.setComputeEigenvalues(1)
+        niters = ksp.getIterationNumber()
 
-        x = Function(V).vector()
-
-        timer = Timer('ksp')
-        niters = solver.solve(x, b)
-        print V.dim(), niters, timer.stop()
-        # print ksp.computeEigenvalues()
+        print V.dim(), '%.2f' % dt, niters

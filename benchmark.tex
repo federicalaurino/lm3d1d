@@ -350,11 +350,10 @@ double on refinement.
     \end{center}
     }
   \caption{Cost comparison of the formulations across refinement levels $l$.
-    Number of MinRes iterations and the conditioned number of the preconditioned
+    Number of Krylov (preconditioned conjugate gradient for \eqref{benchm_3d},
+    MinRes otherwise) iterations and the conditioned number of the preconditioned
     problem is denoted by $\#$ and $\kappa$ respectively. Time till convergence
-    of the iterative solver (excluding the setup) is shown as $T$. Results of algebraic
-    multigrid preconditioned conjugate gradient method for 3D Poisson are shown
-    in the last 2 columns.
+    of the iterative solver (excluding the setup) is shown as $T$. 
   }
 \label{tab:cost}
 \end{table}

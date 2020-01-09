@@ -1,0 +1,226 @@
+\section{Saddle-point problem analysis}
+Let us consider the general saddle point problem of the form: find $u\in X$, $p\in Q$ s.t.
+\begin{eqnarray}\label{eq:saddle-point}
+\begin{cases}
+a(u,v)+b(v,p)=f(v)\quad &\forall v\in X\\
+b(u,q)=g(q) \quad &\forall q\in M
+\end{cases}
+\end{eqnarray}
+which embraces problems 1 and 2 described before.
+For the analysis of such problems we apply the following general abstract theorem.
+We denote with $A$ and $B$ the operators associated to the bilinear forms $a$ and $b$, 
+namely $A: X \longrightarrow X'$ with $\langle Au,v\rangle _{X',X} = a(u,v)$ and $\langle Bv,q\rangle_{X',Q} = b(v,q)$.
+\begin{theorem}[theorem 2.34 Ern-Guermond]\label{th:bnb}
+Problem \eqref{eq:saddle-point} is well posed iff 
+\begin{eqnarray}\label{BNB1}
+\begin{cases}
+\exists \alpha >0 :\, \inf_{u\in ker(B)}\sup_{v\in ker(B)} \frac{a(u,v)}{\|u\|_{X}\|v\|_{X}}\geq \alpha\\
+\forall v \in ker(B), \, \left( \forall u \in ker(B),\, a(u,v)=0 \right)\implies v=0.
+\end{cases}
+\end{eqnarray}
+and 
+\begin{equation}\label{eq:infsup}
+\exists \beta >0:\,\inf_{q\in Q}\sup_{v\in X} \frac{b(v,q)}{\|v\|_{X}\|q\|_{Q}}\geq \beta .
+\end{equation}
+\end{theorem} 
+Notice that if $a$ is coercive on $ker(B)$, \eqref{BNB1} is clearly fulfilled. 
+
+% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+\subsection{Problem 1}
+It consists to find $u \in H^1_0(\Omega),\ \ud \in H_0^1(\Lambda), \ L \in H^{-\frac12}(\Gamma )$, such that
+\begin{subequations}\label{eq:red_dirneu}
+\begin{align}
+&(u,v)_{H^1(\Omega)} + |{\cal D}| (\ud,\vd)_{H^1(\Lambda)} 
++ \langle \Pi_1 v  - \Pi_2 \vd, L \rangle_\Gamma 
+\\
+\nonumber
+&\qquad\qquad= (f,v)_{L^2(\Omega)} + |{\cal D}(\avrd{g},\vd)_{L^2(\Lambda)}
+\quad \forall v \in H^1_0(\Omega), \ \vd \in H^1(\Lambda)
+\\
+&   |\langle \Pi_1 u - \Pi_2 \ud , M \rangle_\Gamma = 0
+\quad \forall M \in H^{-\frac12}(\Gamma)\,,
+\end{align}
+\end{subequations}
+Here, $\Pi_1: H^1_0(\Omega) \rightarrow H^{\frac12}_{00}(\Gamma)$ is the trace operator 
+while $\Pi_2$ is the uniform extension from $H^1_0(\Lambda)$ to  $H^{\frac12}_{00}(\Gamma)$. 
+We notice that the trace operator is surjective from $H^1_0(\Omega)$ to $H^{\frac12}_{00}(\Gamma)$.
+We apply theorem \ref{th:bnb} in the following spaces 
+$X=H^1_0(\Omega) \times H^1(\Lambda)$, $Q=H^{-\frac 12}(\Gamma)$
+and we prove that:
+\begin{itemize}
+\item $a$ coercive $\implies$ \eqref{BNB1} is fulfilled
+
+\item We have to prove that $\forall M \in H^{-\frac 12}(\Gamma),\, \exists \beta >0$:
+\begin{equation*}
+\sup _{v\in H^1_0(\Omega),\, \vd \in H^1_0(\Lambda)} \frac{ \langle \Pi_1 v  - \Pi_2 \vd, M \rangle_\Gamma}{\sqrt{\|v\|^2_{H^1(\Omega)}+\|\vd \|^2_{H^1(\Lambda)}}}\geq \beta \sup_{q\in H^{\frac 12}_{00}(\Gamma)}\frac{\langle q, M\rangle}{\|q\|_{H^{\frac 12}_{00}(\Gamma)}}.
+\end{equation*}
+We choose $\vd \in H^1_0(\Lambda)$ such that $\Pi _2\vd =0$. Therefore,
+\begin{equation*}
+\sup _{v\in H^1_0(\Omega),\, \vd \in H^1_0(\Lambda)} \frac{ \langle \Pi_1 v  - \Pi_2 \vd, M \rangle_\Gamma}{\sqrt{\|v\|^2_{H^1(\Omega)}+\|\vd \|^2_{H^1(\Lambda)}}} 
+\geq \sup _{v\in H^1_0(\Omega)} \frac{ \langle \Pi_1 v, M \rangle_\Gamma}{\|v\|_{H^1(\Omega)}}.
+\end{equation*}
+
+The trace operator is surjective from $H^1_0(\Omega)$ to $H^{\frac12}_{00}(\Gamma)$. Consequently, $\forall \xi \in H^{\frac 12}_{00}(\Gamma)$, we find $v$ solution of
+\begin{eqnarray*}
+-\Delta v&=0 \quad &\text{in }\Omega\\
+v&=0 &\text{on }\partial \Omega\\
+v&=\xi &\text{on } \Gamma. 
+\end{eqnarray*}
+We denote with $E$ the harmonic extension operator defined above.
+The boundedness/stability of this operator ensures that there exists $\| E \| \in \mathbb{R}$ such that
+$v=E\xi $ and $\|v \|_{H^1(\Omega)}\leq \|E\| \|\xi \|_{H^{\frac 12}_{00}(\Gamma)}$. 
+Substituting in the previous inequalities we obtain
+\begin{equation}\label{infsup_traceop}
+\sup _{v\in H^1_0(\Omega)} \frac{ \langle \Pi_1 v, M \rangle_\Gamma}{\|v\|_{H^1(\Omega)}}
+\geq  \sup _{\xi \in H^{\frac 12}_{00}(\Gamma )} \frac{ \langle \xi , M \rangle_\Gamma}{\|E\| \|\xi\|_{H^{\frac 12}_{00}(\Gamma)}}
+= \|E\|^{-1} \|M\|_{H^{-\frac 12}(\Gamma)},
+\end{equation}
+where in the last inequality we exploited the fact that $H^{-\frac 12}(\Gamma)=(H^{\frac 12 }_{00}(\Gamma))^*$.
+\end{itemize}
+
+
+% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+\subsection{Problem 2}
+This problem requires to find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ L \in H^{-\frac12}(\Lambda)$, such that
+\begin{subequations}\label{eq:red_dirneu}
+\begin{align}
+&(u,v)_{H^1(\Omega)} + |{\cal D}|(U,V)_{H^1(\Lambda)} 
++ |\partial {\cal D}| \langle  \Pi_1 V - \Pi_2 v, L \rangle_\Lambda 
+\\
+\nonumber
+&\qquad\qquad= (f,v)_{L^2(\Omega)} + |{\cal D}| (\avrd{g},V)_{L^2(\Lambda)}
+\quad \forall v \in H^1_0(\Omega), \ V \in H^1(\Lambda)
+\\
+&  |\partial {\cal D}| \langle \Pi_1 U - \Pi_2 u, M \rangle_\Lambda = 0
+\quad \forall M \in H^{-\frac12}(\Lambda)\,.
+\end{align}
+\end{subequations}
+Here, $\Pi_1: H^1_0(\Lambda)\rightarrow H^{\frac 12}_{00}(\Lambda)$ is the immersion operator and $\Pi_2: H^1_0(\Omega)\rightarrow H^{\frac 12}_{00}(\Lambda)$ is defined as the composition of the trace operator $T_{\Gamma}: H^1_0(\Omega) \rightarrow H^{\frac 12}_{00}(\Gamma)$ and the average operator $\bar{(\,)}:H^{\frac 12}_{00}(\Gamma) \rightarrow H^{\frac 12}_{00}(\Lambda)$, namely $\Pi_2= \bar{(\,)}\circ T_{\Gamma}$. 
+First of all we prove that if $v\in H^1_0(\Omega)$, than $\Pi _2 v \in H^{\frac 12}_{00}(\Lambda)$. In particular, from standard trace theory, we have that $T_{\Gamma} v\in H^{\frac 12}_{00}(\Gamma)$, therefore we have to prove that if $v \in H^{\frac 12 }(\Gamma)$ then $\avrc{v}\in H^{\frac 12}(\Lambda)$. 
+
+\begin{lemma}\label{lemma:H12norm}
+When $\Gamma$ is a cylinder, if $u\in H_{00}^{\frac 12}(\Gamma)$, then $\avrc{u}\in H_{00}^{\frac 12}(\Lambda)$.
+\end{lemma}
+\begin{proof}
+Let us denote as $\phi _{ij}$ and $\rho _{ij}$, for $i=1,2,\dots$, $j=0,1,\dots$, the eigenfunctions and the eigenvalues of the laplacian on $\Gamma$, and with $\phi _i$ and $\rho _i$ the eigenfunctions and the eigenvalues of the laplacian on $\Lambda$. In particular,
+\begin{align*}
+\phi _{ij}(s,\theta)=sin (i\pi s)\left( cos(j\theta)+ sin(j\theta) \right),\\
+\rho_{ij}=i\pi ^2+\frac{j^2}{R^2},\\
+\phi _{i}(s)=sin (i\pi s),\\
+\rho _i = i\pi ^2.
+\end{align*}
+It is easy to verify that 
+\begin{eqnarray}
+\label{null_int_eigenf}
+\int_0^{2\pi} \phi _{ij}(s,\theta)=0 \quad \forall j>0, \forall i \\
+\label{nonull_int_eigenf}
+\int_0^{2\pi} \phi _{ij}(s,\theta)= 2\pi R \, \sin(i \pi s) \quad \mbox{if } j=0, \forall i  .\\
+\end{eqnarray}
+Moreover we recall that $\phi_{i,j}(s,\theta)$ and $\phi _i(s)$ are orthogonal basis of $L^2(\Gamma)$ and $L^2(\Lambda)$ respectively. Therefore,
+\begin{multline*}
+\avrc{u}(s)=\frac{1}{2\pi R}\int_0^{2\pi} u(s,\theta)R\, d\theta
+= \frac{1}{2\pi R}\int_0^{2\pi} \sum_{i,j} a_{i,j} \phi_{i,j}(s,\theta) R\, d\theta
+\\= \frac{1}{2\pi R}\sum_{i,j} a_{i,j}\int_0^{2\pi}  \phi_{i,j}(s,\theta) R\, d\theta
+=  \sum_{i} a_{i,0} \phi_{i}(s).
+\end{multline*}
+From \cite[Lemma 4.11]{chandler2015interpolation} we have
+\begin{equation}\label{H12norm_Gamma}
+\|u\|^2_{H^{\frac 12}(\Gamma)}=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left( 1+ \rho_{ij}\right)^{\frac 12}|a_{ij}|^2,
+\text{ with }
+a_{ij}=\int _0^1\int _0^{2\pi} u(s,\theta )\phi_{ij}\, R d\theta ds.
+\end{equation}
+and 
+\begin{equation*}
+\|\avrc{u}\|^2_{H^{\frac 12}(\Lambda)}=\sum_{i=1}^{\infty} \left( 1+ \rho_{i}\right)^{\frac 12}|\avrc{a}_i|^2,
+\text{ with }
+\avrc{a}_i=\int _0^1 \avrc{u}(s )\phi_{i}(s) ds.
+\end{equation*}
+
+Therefore, we have
+\begin{multline*}
+\|\avrc{u}\|^2_{H^{\frac 12}(\Lambda)}=
+\sum_{i=1}^{\infty}\left( 1+ i^2\pi^2\right)^{\frac 12}\left( \int_0^1 \avrc{u}(s) sin(i\pi s)\, ds \right)^2\\
+= \sum_{i=1}^{\infty} \left( 1+ i^2\pi^2\right)^{\frac 12}\left( \sum_{j=1}^\infty a_{j,0}\int_0^1 \sin(j\pi s) \sin(i\pi s) \, ds  \right)^2\\
+= \sum_{i=1}^{\infty} \frac 14 \left( 1+ i^2\pi^2\right)^{\frac 12}a_{i,0}^2\\
+\leq \sum_{i=1}^{\infty} \sum_{j=1}^{\infty}  \left( 1+ i^2\pi^2 + \frac{j^2}{R^2}\right)^{\frac 12} |a_{i,j}|^2 =\|u\|^2_{H^{\frac 12}(\Gamma)},
+\end{multline*}
+
+where we have used the fact that
+\begin{eqnarray*}
+&\int_0^1 \sin(i\pi s) \sin(j\pi s)\, ds=0 \quad \text{if $i\neq j$}\\
+&\int_0^1 \sin(i\pi s) \sin(j\pi s)\, ds=\frac 12 \quad \text{if $i =j$}.
+\end{eqnarray*}
+\hspace*{0.9\textwidth} c.v.d.
+\end{proof}
+
+\begin{lemma}\label{lemma:H12norm_avrc}
+If $\Sigma$ is a straight cylinder, 
+if $u\in H^{\frac 12}_{00}(\Gamma)$ is constant on each cross section, namely $u(s,\theta)=u(s)$, then 
+\begin{equation*}
+\|u\|_{H^{\frac 12}_{00}(\Gamma)}=2\pi R \|u\|_{H^{\frac 12}_{00}(\Lambda)}.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+
+From \eqref{H12norm_Gamma},
+\begin{multline*}
+\|u\|^2_{H^{\frac 12}(\Gamma)}=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left( 1+ \rho_{ij}\right)^{\frac 12}|a_{ij}|^2
+=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left(  1+ i\pi ^2+\frac{j^2}{R^2}\right)^{\frac 12}\left( \int _0^1\int _0^{2\pi} u(s,\theta )\phi_{ij}\, R d\theta ds \right)^2\\
+=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left(  1+ i\pi ^2+\frac{j^2}{R^2}\right)^{\frac 12}\left( \int _0^1 u(s) \int _0^{2\pi} \phi_{ij}\, R d\theta ds \right)^2,
+\end{multline*}
+and using \eqref{null_int_eigenf} and \eqref{nonull_int_eigenf}, we obtain
+\begin{multline*}
+\|u\|^2_{H^{\frac 12}(\Gamma)}=
+\sum_{i=1}^{\infty}\left( 1+ i\pi ^2\right)^{\frac 12}\left(\int _0^1 u(s )sin (i\pi s) 2\pi R ds\right)^2\\
+=4\pi ^2 R^2 \sum_{i=1}^{\infty}\left( 1+ \rho _i\right)^{\frac 12}|a_i|^2 = 4\pi ^2 R^2  \|u\|^2_{H^{\frac 12}(\Lambda)}.
+\end{multline*}
+\end{proof}
+
+Then, we apply Theorem \ref{th:bnb} with the following spaces $X=H^1_0(\Omega) \times H^1_0(\Lambda)$, $Q=H^{-\frac 12}(\Lambda)$.
+Let us consider $X$ equipped with the norm $\vertiii{[u,\ud ]}^2=\|u\|^2_{H^1(\Omega)} + |\D|\|\ud\|^2_{H^1(\Lambda)}$, 
+$Q$ equipped with the norm
+\begin{equation*}
+\|M \|_{H^{-\frac 12}} := \sup_{q\in H^{\frac 12}(\Lambda)}\frac{\langle q, M\rangle}{\|q\|_{H^{\frac 12}(\Lambda)}}
+\end{equation*}
+
+Then, the following properties hold true:
+\begin{itemize}
+\item the form $a([u,U], [v,V])= (u,v)_{H^1(\Omega)} + |{\cal D}|(U,V)_{H^1(\Lambda)}$ is coercive 
+$\implies$ \eqref{BNB1} is fulfilled. Indeed, we have,
+\begin{equation*}
+a([u,\ud], [u,\ud])= (u,u)_{H^1(\Omega)} + |{\cal D}|(\ud,\ud)_{H^1(\Lambda)} = \vertiii{[u,\ud]}^2\,.
+\end{equation*}
+
+\item We have that $\forall M \in H^{-\frac 12}(\Lambda),\, \exists \beta >0$:
+\begin{equation*}
+\sup _{v\in H^1_0(\Omega),\, V \in H^1_0(\Lambda)} \frac{ \langle  \Pi_1 V - \Pi_2 v, M \rangle_\Lambda}{\sqrt{\|v\|^2_{H^1(\Omega)}+|\D| \|V \|^2_{H^1(\Lambda)}}}
+\geq \beta \sup_{q\in H^{\frac 12}(\Lambda)}\frac{\langle q, M\rangle_\Lambda}{\|q\|_{H^{\frac 12}(\Lambda)}}.
+\end{equation*}
+We choose $V=0$ and we obtain
+\begin{equation*}
+\sup _{v\in H^1_0(\Omega),\, V \in H^1_0(\Lambda)} \frac{ \langle  \Pi_1 V - \Pi_2 v, M \rangle_\Lambda}{\sqrt{\|v\|^2_{H^1(\Omega)}+|\D|\|V \|^2_{H^1(\Lambda)}}}
+\geq \sup _{v\in H^1_0(\Omega)} \frac{ \langle \Pi_2 v, M \rangle_\Lambda}{\|v\|_{H^1(\Omega)}}. 
+\end{equation*}
+
+For any $q \in H^{\frac 12}_{00}(\Lambda)$, we consider its uniform extension to $\Gamma$ 
+and then we consider the harmonic extension $v=E(q)\in H^1_0(\Omega)$. It follows that $\Pi_2 v=q$. Therefore, 
+\begin{equation*}
+\sup _{v\in H^1_0(\Omega)}  \langle \Pi_2 v, M \rangle_\Lambda \geq \sup_{q \in H^{\frac 12}_{00}(\Lambda)} \langle q, M  \rangle_\Lambda\,.
+\end{equation*}
+Moreover, using Lemma \ref{lemma:H12norm_avrc} we obtain
+\begin{equation*}
+\|v\|_{H^1_0(\Omega)}\leq \|E\| \|q\|_{H^{\frac 12}_{00}(\Gamma)}  = | \partial {\cal D} | \|E\| \|q\|_{H^{\frac 12}_{00}(\Lambda)}.
+\end{equation*}
+ Therefore,
+\begin{multline*}
+\sup _{v\in H^1_0(\Omega)} \frac{ \langle \Pi_2 v, M \rangle_\Lambda}{\|v\|_{H^1(\Omega)}}
+\geq \sup _{q\in H^{\frac 12}_{00}(\Lambda)} \frac{ \langle q, M \rangle_\Lambda}{\|v\|_{H^1(\Omega)}}
+\geq |\partial {\cal D}|^{-1} \|E\|^{-1} \sup _{q\in H^{\frac 12}_{00}(\Lambda)} \frac{ \langle q, M \rangle_\Lambda}{\|q\|_{H^{\frac 12}_{00}(\Lambda)}} 
+\\= |\partial {\cal D}|^{-1} \|E\|^{-1} \|M\|_{H^{-\frac 12}(\Lambda)}.
+\end{multline*}
+
+\end{itemize}
+
+\begin{remark}
+The results of \eqref{lemma:H12norm} and \eqref{lemma:H12norm_avrc} can be generalized to the case of a  different geometry of $\Gamma$, for example a parallelepiped.  
+\end{remark}

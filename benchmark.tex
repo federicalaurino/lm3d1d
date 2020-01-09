@@ -360,16 +360,23 @@ double on refinement.
 
 
 
-
-
-
-
-
-%\begin{remark}
-%Let us notice that the 3D solution \eqref{benchm_sol3d} is such that $\avrc{u}=0$. Therefore in \eqref{benchmark} it is like we are solving two separated problems, one in $\Omega$ and the other on $\Lambda$.
+%{\color{red}
+%\begin{remark} In the following some observations:\\
+%
+%\begin{itemize}
+%\item \textbf{How do we compute the norm $\|\cdot \|_{H^{-\frac 12}}$ in Table \ref{tab:error_conform}?} The norm $\|\cdot \|_{H^{-\frac 12}}$ has been computed using a decomposition based on eigenvalues and eigenfuctions of $\Delta ^{-\frac 12}$.\\
+%
+%\item \textbf{Why $\lambda _h \neq \lambda$?} Since $\lambda = 0 \in Q_h$, we would expect $\lambda _h = \lambda$. However, first of all we suspect that for the approximation error an estimate similar to \cite[(11.26)]{steinbach2007numerical} holds, reported in the following
+%\begin{equation*}
+%\|u-u_h\|^2_{H^1} + \|\lambda - \lambda_h\|^2_{H^{-\frac 12}} \leq c_1 h^2|u|^2_{H^2} + c_2 h^3\|\lambda_h\|^2_{H^1_{pw}},
+%\end{equation*}
+%where $\|\cdot \|_{H^1_{pw}}$ is the broken $H^1$ norm. 
+%So the error on the LM depends on the error on the solution. We suspect that if for example $u$ and $\ud$ are $P_2$ functions and we use a $P_2$ approximation (therefore $u = u_h$ and $\ud = \udh$), also $\lambda = \lambda_h$.\\
+%
+%\item \textbf{Why the error is larger close to edges, especially in Figure \ref{fig:sol_benchm1}?} 
+%We suspect that the reasoning for why the error is larger close to edges and corner vertices is that the multiplier is
+%related to $\nabla u \cdot \boldsymbol{n}$ and the normal in the corner or on the z-aligned edges in the figure is not well-defined. Btw, the oscillations are smaller if we impose Neumann
+%bcs on z min and max surfaces of $\Omega$ (the rest has Dirichlet).
+%\end{itemize}
 %\end{remark}
-%\begin{remark}
-%It would be interesting to make a comparison between the solution of the fully coupled 3D-3D problem \eqref{eq:dirneu} (also in the simplified case of type \eqref{eq:dirneu_simple}) and the solution of the reduced problems \eqref{eq:problem1} and \eqref{eq:problem2}. 
-%Therefore, we could set the values of the data of the problem such that the reduced formulation becomes non-trivial and fully coupled.
-%Then, we will solve both the original and reduced problem to observe the differences in the solutions and the values of the Lagrange multiplier.
-%\end{remark}
+%}

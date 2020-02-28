@@ -111,7 +111,8 @@ n.a.
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 \section{Introduction}\label{sec:intro}
 
-In this paper we will consider a 3D-1D coupled problem described by the following equations: 
+In this paper we will consider a 3D-1D coupled problem described by the following equations:\\
+\begin{minipage}{0.5\textwidth}
 \begin{subequations}
 \label{eq:pde}
 \begin{align}
@@ -123,6 +124,17 @@ In this paper we will consider a 3D-1D coupled problem described by the followin
 T_\Lambda u - v  &=  h &\mbox{ on } \Lambda . 
 \end{align}
 \end{subequations}
+\end{minipage}
+%
+\begin{minipage}{0.45\textwidth}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.6\textwidth]{domain.pdf}
+\end{center}
+\caption{Geometrical setting of the problem}
+\label{fig1}
+\end{figure}
+\end{minipage}\\
 Here, $u$ and $\ud$ are the unknown scalar fields,  $\lambda$ is the Lagrange multiplier,  $\Omega$ is a bounded domain in $\R^3$, whereas $\Lambda \subset \Omega$ is a 1D structure. 
 The term $p\delta_{\Lambda}$ is a Dirac measure such that 
 $\int_{\Omega}p(x)\delta_{\Lambda}v(x)\,\mathrm{d}x=\int_{\Lambda}p(t)v(t) \,\mathrm{d}t$
@@ -184,13 +196,6 @@ We refer to Figure \ref{fig1} for a sketch of the domains.
 Let $\mathcal{D}(s) = [x(r,t),y(r,t)]: (0,R(s))\times(0,T(s)) \rightarrow \R^2$ be a parametrization of the cross section, while 
 $|\cdot|$ denote the Lebesgue measure of a set, i.e. $|D(0)|$ is the cross-sectional area of the bottom of the cylinder. 
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.5\textwidth]{domain.pdf}
-\end{center}
-\caption{Geometrical setting of the problem}
-\label{fig1}
-\end{figure}
 
 
 %Let $\TT,\NN,\BB$ be the Frenet frame related to the curve.

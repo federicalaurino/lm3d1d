@@ -6,10 +6,8 @@ a(u,v)+b(v,\lambda)=c(v)\quad &\forall v\in X\\
 b(u,\mu)=d(\mu) \quad &\forall \mu\in Q.
 \end{cases}
 \end{eqnarray}
-We denote with $A$ and $B$ the operators associated to the bilinear forms $a$ and $b$, 
-namely $A: X \longrightarrow X'$ with $\langle Au,v\rangle _{X',X} = a(u,v)$ and $B: X \longrightarrow Q'$ with $\langle Bv,\mu\rangle_{Q',Q} = b(v,\mu)$. Problem \eqref{eq:saddle-point} embraces problems 1 and 2 described before. 
-For the analysis of such problems we apply the following general abstract theorem,
-see for example \cite[Theorem 2.34]{MR2050138} and \cite{MR365287} for the seminal work on this topic.
+We denote with $A$ and $B$ the operators associated to the bilinear forms $a$ and $b$, namely $A: X \longrightarrow X'$ with $\langle Au,v\rangle _{X',X} = a(u,v)$ and $B: X \longrightarrow Q'$ with $\langle Bv,\mu\rangle_{Q',Q} = b(v,\mu)$. Problem \eqref{eq:saddle-point} embraces problems 1 and 2 described before. 
+For the analysis of such problems we apply the following general abstract theorem, see for example \cite[Theorem 2.34]{MR2050138} and \cite{MR365287} for a seminal work on this topic.
 \begin{theorem}{}\label{th:bnb}
 Problem \eqref{eq:saddle-point} is well posed iff 
 \begin{eqnarray}\label{BNB1}
@@ -37,9 +35,6 @@ c([v,\vd])&= (f,v)_{L^2(\Omega)} + (\avrd{g},\vd)_{L^2(\Lambda),|\D|}
 \\
 d(\mu)&=0
 \end{align*}
-
-%Here, $\Pi_1: H^1_0(\Omega) \rightarrow H^{\frac12}_{00}(\Gamma)$ is the trace operator 
-%while $\Pi_2$ is the uniform extension from $H^1_0(\Lambda)$ to  $H^{\frac12}_{00}(\Gamma)$. 
 We prove that the hypothesis of \ref{th:bnb} are fullfilled choosing 
 $X=H^1_0(\Omega) \times H^1_0(\Lambda)$, $Q=H^{-\frac 12}(\Gamma)$, where $X$  is equipped with the norm $\vertiii{[u,\ud ]}^2=\|u\|^2_{H^1(\Omega)} + \|\ud\|^2_{H^1(\Lambda),|\D|}$.
 \begin{lemma}\label{lemma:prob1_boundedness} 
@@ -53,8 +48,8 @@ a([u, \ud], [v, \vd])\leq \|u\|_{H^1(\Omega)}\|v\|_{H^1(\Omega)} + \|\ud\|_{H^1(
 Concerning the bilinear form $b(\cdot \ , \ \cdot)$ we have
 \begin{multline*}
 b([v, \vd], \mu)= \langle \trace v - \ext \vd , \mu \rangle_\Gamma 
-\leq \|\trace v - \ext \vd\|_{H^{\frac 12}(\Gamma)}\|\mu\|_{H^{-\frac 12}(\Gamma)}\\
-\leq \left(\|\trace v\|_{H^{\frac 12}(\Gamma)} + \|\ext \vd\|_{H^{\frac 12}(\Gamma)}\right)\|\mu\|_{H^{-\frac 12}(\Gamma)}
+\leq \|\trace v - \ext \vd\|_{H^{\frac 12}_{00}(\Gamma)}\|\mu\|_{H^{-\frac 12}(\Gamma)}\\
+\leq \left(\|\trace v\|_{H^{\frac 12}_{00}(\Gamma)} + \|\ext \vd\|_{H^{\frac 12}_{00}(\Gamma)}\right)\|\mu\|_{H^{-\frac 12}(\Gamma)}
 \leq \left(C_T \|v\|_{H^1(\Omega)} + \|\ext \vd\|_{H^1(\Gamma)}\right)\|\mu\|_{H^{-\frac 12}(\Gamma)}\\
 \leq \left(C_T \|v\|_{H^1(\Omega)} + \left(\frac{\max |\DD|}{\min |\D|}\right)^{\frac 12} \|\vd\|_{H^1(\Lambda),|\D|}\right)\|\mu\|_{H^{-\frac 12}(\Gamma)}\\
 \leq \left( C_T + \left(\frac{\max |\DD|}{\min |\D|}\right)^{\frac 12}\right) \vertiii{[v,\vd]}\|\mu\|_{H^{-\frac 12}(\Gamma)}
@@ -65,11 +60,21 @@ b([v, \vd], \mu)= \langle \trace v - \ext \vd , \mu \rangle_\Gamma
 The bilinear form $a(\cdot \ , \ \cdot)$ is coercive .
 \end{lemma}
 \begin{proof}
- Indeed, we have,
-\begin{equation*}
-a([u,\ud], [u,\ud])= (u,u)_{H^1(\Omega)} + |{\cal D}|(\ud,\ud)_{H^1(\Lambda)} = \vertiii{[u,\ud]}^2\,.
-\end{equation*}
+We have
+$a([u,\ud], [u,\ud])= (u,u)_{H^1(\Omega)} + |{\cal D}|(\ud,\ud)_{H^1(\Lambda)} = \vertiii{[u,\ud]}^2\,.$
 \end{proof}
+
+We denote with $\mathcal{H}_\Omega$ the harmonic extension operator defined as $\mathcal{H}_\Omega \xi = v$ where $v$ is the weak solution of
+\begin{equation}\label{eq:harmonic}
+-\Delta v=0 \ \text{in} \ \Omega,
+\quad
+v=0 \ \text{on} \ \partial \Omega,
+\quad
+v=\xi \ \text{on} \ \Gamma. 
+\end{equation}
+The boundedness/stability of this operator ensures that there exists $\| \mathcal{H}_\Omega \| \in \mathbb{R}$ such that
+$\|v \|_{H^1(\Omega)}\leq \|\mathcal{H}_\Omega\| \|\xi \|_{H^{\frac 12}_{00}(\Gamma)}$. 
+
 \begin{lemma}
 The inf-sup inequality \eqref{eq:infsup} is fulfilled, namely $\exists \beta_1 >0$ such that $\forall \mu \in H^{-\frac 12}(\Gamma)$:
 \begin{equation*}
@@ -83,24 +88,12 @@ We choose $\vd \in H^1_0(\Lambda)$ such that $\ext\vd =0$. Therefore,
 \sup _{\substack{v\in H^1_0(\Omega),\\ \vd \in H^1_0(\Lambda)}} \frac{ \langle \trace v  - \ext \vd, \mu\rangle_\Gamma}{\vertiii{[v, \vd]}} 
 \geq \sup _{v\in H^1_0(\Omega)} \frac{ \langle \trace v, \mu \rangle_\Gamma}{\|v\|_{H^1(\Omega)}}.
 \end{equation*}
-
 We notice that the trace operator is surjective from $H^1_0(\Omega)$ to $H^{\frac12}_{00}(\Gamma)$. Indeed, $\forall \xi \in H^{\frac 12}_{00}(\Gamma)$, 
-we  can find $v$ solution of
-\begin{equation*}
--\Delta v=0 \ \text{in} \ \Omega,
-\quad
-v=0 \ \text{on} \ \partial \Omega,
-\quad
-v=\xi \ \text{on} \ \Gamma. 
-\end{equation*}
-We denote with $\mathcal{E}_\Omega$ the harmonic extension operator defined above.
-The boundedness/stability of this operator ensures that there exists $\| \mathcal{E}_\Omega \| \in \mathbb{R}$ such that
-$v=\mathcal{E}_\Omega(\xi) $ and $\|v \|_{H^1(\Omega)}\leq \|\mathcal{E}_\Omega\| \|\xi \|_{H^{\frac 12}(\Gamma)}$. 
-Substituting in the previous inequalities we obtain
+we  can find $v=\mathcal{H}_\Omega \xi$ solution of \eqref{eq:harmonic}. Using the stability of the harmonic extension we obtain
 \begin{equation}\label{infsup_traceop}
 \sup _{v\in H^1_0(\Omega)} \frac{ \langle \trace v, \mu \rangle_\Gamma}{\|v\|_{H^1(\Omega)}}
-\geq  \sup _{\xi \in H^{\frac 12}_{00}(\Gamma )} \frac{ \langle \xi , \mu \rangle_\Gamma}{\|\mathcal{E}_\Omega\| \|\xi\|_{H^{\frac 12}_{00}(\Gamma)}}
-= \|\mathcal{E}_\Omega\|^{-1} \|\mu\|_{H^{-\frac 12}(\Gamma)},
+\geq  \sup _{\xi \in H^{\frac 12}_{00}(\Gamma )} \frac{ \langle \xi , \mu \rangle_\Gamma}{\|\mathcal{H}_\Omega\| \|\xi\|_{H^{\frac 12}_{00}(\Gamma)}}
+= \|\mathcal{H}_\Omega\|^{-1} \|\mu\|_{H^{-\frac 12}(\Gamma)},
 \end{equation}
 where in the last inequality we exploited the fact that $H^{-\frac 12}(\Gamma)=(H^{\frac 12 }_{00}(\Gamma))^*$. 
 \end{proof}
@@ -157,20 +150,20 @@ We choose $\vd=0$ and we obtain
 \end{equation*}
 
 For any $q \in H^{\frac 12}_{00}(\Lambda)$, we consider its uniform extension to $\Gamma$ named as $\ext q$
-and then we consider the harmonic extension $v=\mathcal{E}_\Omega \ext q\in H^1_0(\Omega)$. It follows that $\mtrace v=q$. Therefore, 
+and then we consider the harmonic extension $v=\mathcal{H}_\Omega \ext q\in H^1_0(\Omega)$. It follows that $\mtrace v=q$. Therefore, 
 \begin{equation*}
 \sup _{v\in H^1_0(\Omega)}  \langle \mtrace v, \md \rangle_{\Lambda,|\DD|} \geq\sup_{q \in H^{\frac 12}_{00}(\Lambda)} \langle q, \md  \rangle_{\Lambda,|\DD|}\,.
 \end{equation*}
 Moreover, using Lemma \ref{lemma:H12norm} we obtain
 \begin{equation*}
-\|v\|_{H^1_0(\Omega)}\leq \|\mathcal{E}_\Omega\| \|\ext q\|_{H^{\frac 12}_{00}(\Gamma)}  = \|\mathcal{E}_\Omega\| \|q\|_{H^{\frac 12}_{00}(\Lambda),|\DD|}.
+\|v\|_{H^1_0(\Omega)}\leq \|\mathcal{H}_\Omega\| \|\ext q\|_{H^{\frac 12}_{00}(\Gamma)}  = \|\mathcal{H}_\Omega\| \|q\|_{H^{\frac 12}_{00}(\Lambda),|\DD|}.
 \end{equation*}
  Therefore,
 \begin{multline*}
 \sup _{v\in H^1_0(\Omega)} \frac{ \langle \mtrace v, \md \rangle_{\Lambda,|\DD|}}{\|v\|_{H^1(\Omega)}}
 \geq \sup _{q\in H^{\frac 12}_{00}(\Lambda)} \frac{ \langle q, \md \rangle_{\Lambda,|\DD|}}{\|v\|_{H^1(\Omega)}}
-\geq \|\mathcal{E}_\Omega\|^{-1} \sup _{q\in H^{\frac 12}_{00}(\Lambda)} \frac{ \langle q, \md \rangle_{\Lambda,|\DD|}}{\|q\|_{H^{\frac 12}_{00}(\Lambda),|\DD|}} 
-\\= \|\mathcal{E}_\Omega\|^{-1} \|\md\|_{H^{-\frac 12}(\Lambda),|\DD|}.
+\geq \|\mathcal{H}_\Omega\|^{-1} \sup _{q\in H^{\frac 12}_{00}(\Lambda)} \frac{ \langle q, \md \rangle_{\Lambda,|\DD|}}{\|q\|_{H^{\frac 12}_{00}(\Lambda),|\DD|}} 
+\\= \|\mathcal{H}_\Omega\|^{-1} \|\md\|_{H^{-\frac 12}(\Lambda),|\DD|}.
 \end{multline*}
 
 

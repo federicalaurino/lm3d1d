@@ -134,22 +134,28 @@ for illustration.
 
 \begin{table}
 %%   %%%
-\begin{minipage}[b]{0.35\linewidth}
+\begin{minipage}[c]{0.35\linewidth}
  \centering
  \includegraphics[width=\textwidth]{graphics/conform_mesh.pdf}
- \vspace{-20pt}
+ \vspace{20pt}
+ \includegraphics[width=\textwidth]{graphics/nonconform_mesh.pdf} 
+ \vspace{-40pt}
  \captionof{figure}{
+   (Top)
 $\Lambda$ and $\Gamma$ conforming discretization of $\Omega$
-   used for \eqref{eq:problem1_simple} and \eqref{eq:problem2_simple}.   
+   used for \eqref{eq:problem1_simple} and \eqref{eq:problem2_simple}.
+   (Bottom) Sample discretization of the benchmark geometry in the non-conforming case. 
  }
 \label{fig:mesh}
 \end{minipage}
 \hspace{2pt}
-\begin{minipage}[b]{0.63\textwidth}
+\begin{minipage}[c]{0.63\textwidth}
   \scriptsize{
   \begin{center}
     \begin{tabular}{l|llll}
-      \toprule
+\hline
+\multicolumn{5}{c}{\textcolor{blue!40!white}{$\mathcal{T}^{\Omega}_h$ conforming to $\Gamma$}}\\
+\hline
     $h^{-1}$ & $\norm{u-u_h}_{1, \Omega}$ & $\norm{\ud-\udh}_{1, \Lambda}$ & $\norm{\lambda-\lambda_h}_{-\tfrac{1}{2},\Gamma}$ & $\norm{\lambda-\lambda_h}_{0,\Gamma}$\\
       \hline
 4  & 3.4E0(--)    & 5.3E-1(--)   & 2.9E0(--)    &8.7E0(--)    \\
@@ -157,7 +163,7 @@ $\Lambda$ and $\Gamma$ conforming discretization of $\Omega$
 16 & 8.7E-1(0.99) & 1.3E-1(1.02) & 1.4E-1(2.13) &4.7E-1(1.99) \\
 32 & 4.4E-1(1.00) & 6.3E-2(1.00) & 3.4E-2(2.03) &1.3E-1(1.80) \\
 64 & 2.2E-1(1.00) & 3.1E-2(1.00) & 8.6E-3(2.00) &4.2E-2(1.68) \\
-\midrule
+\hline
 $h^{-1}$ & $\norm{u-u_h}_{1, \Omega}$ & $\norm{\ud-u_{\odot, h^{\prime}}}_{1, \Lambda}$ & $\norm{\ld-\ldh}_{-\tfrac{1}{2}, \Lambda}$ & $\norm{\ld-\ldh}_{0, \Lambda}$\\
 \hline
 4   & 3.1E0(--)    & 5.4E-1(--)   & 4.4E-2(--)   & 7.8E-2(--)  \\
@@ -166,13 +172,29 @@ $h^{-1}$ & $\norm{u-u_h}_{1, \Omega}$ & $\norm{\ud-u_{\odot, h^{\prime}}}_{1, \L
 32  & 4.4E-1(0.99) & 6.3E-2(1.00) & 6.7E-4(2.01) & 1.2E-3(2.01)\\
 64  & 2.2E-1(1.00) & 3.1E-2(1.00) & 1.7E-4(2.01) & 3.0E-4(2.01)\\
 128 & 1.1E-1(1.00) & 1.6E-2(1.00) & 4.1E-5(2.01) & 7.4E-5(2.00)\\
-\bottomrule
-  \end{tabular}
-  \end{center}
+\hline
+\multicolumn{5}{c}{\textcolor{red!50!white}{$\mathcal{T}^{\Omega}_h$ non conforming to $\Gamma$}}\\
+%    \begin{tabular}{l|lll}
+\hline
+    $h^{-1}$ & $\norm{u-u_h}_{1, \Omega}$ & $\norm{\ud-\udh}_{1, \Lambda}$ & \multicolumn{2}{c}{$\norm{\ld-\ldh}_{0,\Lambda}$}\\
+      \hline
+5   & 2.6E0(--)    & 2.3E-1(--)   & \multicolumn{2}{c}{1.7E-1(--)} \\ 
+9   & 1.5E0(0.84)  & 9.4E-2(1.42) & \multicolumn{2}{c}{7.1E-2(1.36)}\\
+17  & 8.1E-1(0.94) & 4.3E-2(1.18) & \multicolumn{2}{c}{2.9E-2(1.37)}\\
+33  & 4.2E-1(0.98) & 2.1E-2(1.06) & \multicolumn{2}{c}{7.9E-3(1.91)}\\
+65  & 2.1E-1(0.99) & 1.1E-2(1.02) & \multicolumn{2}{c}{2.6E-3(1.64)}\\
+129 & 1.1E-1(1.00) & 5.2E-3(1.01) & \multicolumn{2}{c}{8.5E-4(1.61)}\\
+\hline
+    \end{tabular}
+  \end{center}    
   }
-  \captionof{table}{Error convergence of \eqref{eq:problem1_simple} and \eqref{eq:problem2_simple}
-    on a benchmark problem \eqref{benchmark}. Continuous linear Lagrange
-    elements are used.
+  \captionof{table}{Error convergence on a benchmark problem \eqref{benchmark}.
+    (Top) problem \eqref{eq:problem1_simple}, (middle) \eqref{eq:problem2_simple} wity
+    conforming disretization and (bottom) \eqref{eq:problem2_simple} in case
+    $\mathcal{T}^{\Omega}_h$ does not conform to $\Lambda$. Continuous linear Lagrange
+    elements are used for $u_h$, $\udh$ and $u_{\odot, h^{\prime}}$ and $\ldh$ in
+    conforming case, while in nonconforming case $\ldh$ is piecewise constant
+    on elements of $\mathcal{G}_h$.
   }
   \label{tab:error_conform}
   \end{minipage}
@@ -200,20 +222,27 @@ lists the error of the Lagrange multiplier in the $L^2$ norm. Here, quadratic co
 for \eqref{eq:problem2_simple}. For \eqref{eq:problem1_simple} the rate between 1.5 and 2.
 
 We plot the numerical solution of problem \eqref{eq:problem1_simple} and \eqref{eq:problem2_simple} in
-Figure \ref{fig:sol_benchm1} and \ref{fig:sol_benchm2}, respectively.
+Figure \ref{fig:sol_benchm1}.
 
 \begin{figure}
 \centering
-\includegraphics[width = 0.9\textwidth]{./graphics/mfs_LM2d}
-\caption{Numerical solution of problem \eqref{eq:problem1_simple}: functions $u_h$ and $\udh$ on the left and the Lagrance multiplier $\lambda_h$ on the right.}\label{fig:sol_benchm1}
+\includegraphics[width = 0.6\textwidth]{./graphics/mfs_LM2d}
+\includegraphics[width = 0.3\textwidth]{./graphics/mfs_LM1d_crop}
+\caption{Numerical solution of problem \eqref{eq:problem1_simple} and
+  \eqref{eq:problem2_simple}. (Left) function $u_h$, $\udh$ (practically identical
+  in both problems). (Middle) Lagrange multiplier for \eqref{eq:problem1_simple}
+  and (right) for \eqref{eq:problem2_simple}.}
+\label{fig:sol_benchm1}
 \end{figure}
 
 
-\begin{figure}
-\centering
-\includegraphics[width = 0.9\textwidth]{./graphics/mfs_LM1d}
-\caption{Numerical solution of problem \eqref{eq:problem2_simple}: functions $u_h$ and $\udh$ on the left and the Lagrance multiplier ${\ld}_h$ on the right.}\label{fig:sol_benchm2}
-\end{figure}
+%\begin{figure}
+%\centering
+%\includegraphics[width = 0.9\textwidth]{./graphics/mfs_LM1d}
+%\caption{Numerical solution of problem \eqref{eq:problem2_simple}:
+%  functions $u_h$ and $\udh$ on the left and the Lagrance multiplier
+%  ${\ld}_h$ on the right.}\label{fig:sol_benchm2}
+%\end{figure}
 
 
 \subsection{Numerical experiments. $\mathcal{T}^{\Omega}_h$ non-conforming to $\Gamma$}\label{sec:experiment_nonconform}
@@ -221,9 +250,9 @@ Using benchmark problem \eqref{benchmark} we consider \eqref{eq:problem2} in the
 setting of \S \ref{sec:unfit2}. To this end we let $\mathcal{T}^{\Omega}_h$ be a uniform
 tessilation of $\Omega$ such that no cell $\mathcal{T}^{\Omega}_h$ has any edge
 lying on $\Lambda$. Further we let $h^{\prime}=h/3$ in $\mathcal{T}^{\Lambda}_{h^{\prime}}$,
-cf. Figure \ref{fig:unfit}.
+cf. Figure \ref{fig:mesh}.
 
-Using discretization in terms of $P_1$-$P_1$-$P_0$ element Table \ref{tab:error_unfit}
+Using discretization in terms of $P_1$-$P_1$-$P_0$ element Table \ref{tab:error_conform}
 lists the error of the stabilized formulation of \eqref{eq:problem2}. A linear
 convergence in the $H^1$ norm can be observed in the error of $u$ and $\ud$. We
 remark that the norms were computed as in \S\ref{sec:experiment_conform}. For simplicity
@@ -234,46 +263,46 @@ the rates are rather unstable.
 \miro{The solution is plotted in ..... I guess there should be some zoom in on the
 cut cells.}
 
-\begin{table}
-%%   %%%
-\begin{minipage}[b]{0.35\linewidth}
- \centering
- \includegraphics[width=\textwidth]{graphics/nonconform_mesh.pdf}
- \vspace{-20pt}
- \captionof{figure}{
-   Sample discretization of the benchmark geometry in the non-conforming case. 
- }
-\label{fig:unfit}
-\end{minipage}
-\hspace{2pt}
-%%%
-    \begin{minipage}[b]{0.62\linewidth}
-      %%%
-  \scriptsize{
-  \begin{center}
-    \begin{tabular}{l|lll}
-      \toprule
-    $h^{-1}$ & $\norm{u-u_h}_{1, \Omega}$ & $\norm{\ud-\udh}_{1, \Lambda}$ & $\norm{\ld-\ldh}_{0,\Lambda}$\\
-      \hline
-5   & 2.6E0(--)    & 2.3E-1(--)   & 1.7E-1(--) \\ 
-9   & 1.5E0(0.84)  & 9.4E-2(1.42) & 7.1E-2(1.36)\\
-17  & 8.1E-1(0.94) & 4.3E-2(1.18) & 2.9E-2(1.37)\\
-33  & 4.2E-1(0.98) & 2.1E-2(1.06) & 7.9E-3(1.91)\\
-65  & 2.1E-1(0.99) & 1.1E-2(1.02) & 2.6E-3(1.64)\\
-129 & 1.1E-1(1.00) & 5.2E-3(1.01) & 8.5E-4(1.61)\\
-\bottomrule
-    \end{tabular}
-  \end{center}    
-}    
-  \captionof{table}{
-    Error convergence of \eqref{eq:problem2_simple} on a benchmark problem \eqref{benchmark} in case
-    $\mathcal{T}^{\Omega}_h$ does not conform to $\Lambda$.}
-  \label{tab:error_unfit}    
-  \end{minipage}
-\end{table}
+%% \begin{table}
+%% %%   %%%
+%% \begin{minipage}[b]{0.35\linewidth}
+%%  \centering
+%%  \includegraphics[width=\textwidth]{graphics/nonconform_mesh.pdf}
+%%  \vspace{-20pt}
+%%  \captionof{figure}{
+%%    Sample discretization of the benchmark geometry in the non-conforming case. 
+%%  }
+%% \label{fig:unfit}
+%% \end{minipage}
+%% \hspace{2pt}
+%% %%%
+%%     \begin{minipage}[b]{0.62\linewidth}
+%%       %%%
+%%   \scriptsize{
+%%   \begin{center}
+%%     \begin{tabular}{l|lll}
+%%       \toprule
+%%     $h^{-1}$ & $\norm{u-u_h}_{1, \Omega}$ & $\norm{\ud-\udh}_{1, \Lambda}$ & $\norm{\ld-\ldh}_{0,\Lambda}$\\
+%%       \hline
+%% 5   & 2.6E0(--)    & 2.3E-1(--)   & 1.7E-1(--) \\ 
+%% 9   & 1.5E0(0.84)  & 9.4E-2(1.42) & 7.1E-2(1.36)\\
+%% 17  & 8.1E-1(0.94) & 4.3E-2(1.18) & 2.9E-2(1.37)\\
+%% 33  & 4.2E-1(0.98) & 2.1E-2(1.06) & 7.9E-3(1.91)\\
+%% 65  & 2.1E-1(0.99) & 1.1E-2(1.02) & 2.6E-3(1.64)\\
+%% 129 & 1.1E-1(1.00) & 5.2E-3(1.01) & 8.5E-4(1.61)\\
+%% \bottomrule
+%%     \end{tabular}
+%%   \end{center}    
+%% }    
+%%   \captionof{table}{
+%%     Error convergence of \eqref{eq:problem2_simple} on a benchmark problem \eqref{benchmark} in case
+%%     $\mathcal{T}^{\Omega}_h$ does not conform to $\Lambda$.}
+%%   \label{tab:error_unfit}    
+%%   \end{minipage}
+%% \end{table}
 
 \subsection{Comparison}
-In Tables \ref{tab:error_conform}, \ref{tab:error_unfit} one can observe that 
+In Tables \ref{tab:error_conform}, \ref{tab:error_conform} one can observe that 
 all the formulations yield practically identically accurate approximations of $u$.
 Futher, compared to the conforming case, the stabilized formulation \eqref{eq:problem2}
 results in a greater accuracy of $u_{\cdot, h}$ as the underlying mesh $\mathcal{T}^{\Lambda}_{h}$ is
@@ -334,7 +363,8 @@ double on refinement.
   \scriptsize{
   \begin{center}
     \begin{tabular}{l|lll|lll|lll|ll}
-      \toprule
+      %\toprule
+      \hline
       \multirow{2}{*}{$l$} & \multicolumn{3}{c|}{\eqref{eq:problem1}} & \multicolumn{3}{c|}{\eqref{eq:problem2}} & \multicolumn{3}{c|}{ Stabilized \eqref{eq:problem2}} & \multicolumn{2}{c}{\eqref{benchm_3d}}\\
       \cline{2-12}
       & \# & $T\left[s\right]$ & $\kappa$ & \# & $T\left[s\right]$ & $\kappa$ & \# & $T\left[s\right]$ & $\kappa$ & \# & $T\left[s\right]$\\
@@ -344,8 +374,9 @@ double on refinement.
       3 & 38 & 0.14  & 16.64 & 22 & 0.06  & 6.25 & 53  & 0.15   & 32.93 &5 & 0.01   \\ 
       4 & 39 & 1.70  & 16.75 & 24 & 0.89  & 7.03 & 110 & 4.54   & 61.48 &5 & 0.12   \\ 
       5 & 38 & 12.04 & 16.78 & 20 & 5.21  & 5.02 & 232 & 59.43  & 94.25 &5 & 0.90  \\ 
-      6 & -- & --    & --    & 17 & 28.77 & --   & 507 & 832.90 & --    &6 & 7.75  \\ 
-      \bottomrule
+      6 & -- & --    & --    & 17 & 28.77 & --   & 507 & 832.90 & --    &6 & 7.75  \\
+      \hline
+      %\bottomrule
     \end{tabular}
     \end{center}
     }

@@ -1,10 +1,10 @@
 \section{Saddle-point problem analysis}
 Let $a: X \times X \rightarrow \mathbb{R}$ and $b: X\times Q \rightarrow \mathbb{R}$ be bilinear forms. Let us consider the general saddle point problem of the form: find $u\in X$, $\lambda\in Q$ s.t.
 \begin{eqnarray}\label{eq:saddle-point}
-\begin{aligh}
+\begin{aligned}
 a(u,v)+b(v,\lambda)&=c(v),\quad &\forall v\in X,\\
 b(u,\mu)&=d(\mu), \quad &\forall \mu\in Q.
-\end{aligh}
+\end{aligned}
 \end{eqnarray}
 %We denote with $A$ and $B$ the operators associated to the bilinear forms $a$ and $b$, namely $A: X \longrightarrow X'$ with $\langle Au,v\rangle _{X',X} = a(u,v)$ and $B: X \longrightarrow Q'$ with $\langle Bv,\mu\rangle_{Q',Q} = b(v,\mu)$. Problem \eqref{eq:saddle-point} embraces problems 1 and 2 described before. 
 The Brezzi conditions \cite{MR365287} ensure that the problem \eqref{eq:saddle-point} is well-posed.
@@ -18,11 +18,11 @@ a(u,v) &\le C \|u\|_{X}\|v\|_{X}, & u,v \in X\\
 \label{BNB3}
 b(u,\mu) &\ge D \|u\|_{X} \|\mu\|_{Q}, & u\in X, \mu\in Q\\
 \label{BNB4}
-\sup_{v\in X} \frac{b(v,\mu)}{\|v\|_{X} &\geq \beta\|\mu\|_{Q}}, & \mu \in Q .
+\sup_{v\in X} \frac{b(v,\mu)}{\|v\|_{X}} &\geq \beta\|\mu\|_{Q}, & \mu \in Q .\\
 \end{align}
 Here $\alpha$, $\beta$, $C$, and $D$ are positive numbers. 
 \end{theorem} 
-Here, the coersivity condition applies to $X$, which is a relaxation of Brezzi's original conditions.  
+Here, the coercivity condition applies to $X$, which is a relaxation of Brezzi's original conditions.  
 
 
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

@@ -147,7 +147,7 @@ An intermediate problem, where the coupling between the 3D and 1D problems of \e
 \label{inteq:pde1}
   -\Delta u + u + \lambda \delta_{\Lambda} &= f &\mbox{ in } \Omega,\\
 \label{inteq:pde2}
--d_s² \ud + \ud - E' \lambda  &= g &\mbox{ on } \Lambda,\\
+-d_s^2 \ud + \ud - E' \lambda  &= g &\mbox{ on } \Lambda,\\
 \label{inteq:coupling}
 T_\Gamma u - E_\Gamma v  &=  h &\mbox{ on } \Gamma
 \end{align}
@@ -253,11 +253,11 @@ The corresponding norm is $\|\cdot\|_{H^q(D)}$ and the seminorm is $\vert\cdot\v
 The space $H^q_0(D)$ represents the closure in $H^q(D)$ of smooth functions with compact support in $D$.
 
 Let $\Sigma$ be a Lipschitz co-dimension one subset of $D$. 
-We denote with $\mathcal{T}_\Sigma}: H^q(D) \rightarrow H^{q-\frac12}(\Sigma)$ the trace operator from $\Omega$ to $\Sigma$.
-Functions in $H^{\frac12}(\Sigma)$ with continuous extension by zero outside $\Sigma$ is denoted 
-$H^{\frac12}_{00}(\Sigma)$ and we remark that 
-$H^{\frac12}_{00}(\Sigma) = \mathcal{T}_\Sigma H^1_0(D)$
-and  $H^{-\frac12}(\Sigma) = (H^{\frac12}_{00}(\Sigma))^*$
+We denote with $\mathcal{T}_\Sigma: H^q(D) \rightarrow H^{q-\frac 1 2}(\Sigma)$ the trace operator from $\Omega$ to $\Sigma$.
+Functions in $H^{\frac 1 2}(\Sigma)$ with continuous extension by zero outside $\Sigma$ is denoted 
+$H^{\frac 1 2}_{00}(\Sigma)$ and we remark that 
+$H^{\frac 1 2}_{00}(\Sigma) = \mathcal{T}_\Sigma H^1_0(D)$
+and  $H^{-\frac 1 2}(\Sigma) = (H^{\frac 1 2}_{00}(\Sigma))^*$
 
 We will frequently used inner products and norms that are weighted, such if $X$ is a Hilbert space and $w$ is a positive number, then the
 weighted inner product is denoted 
@@ -292,7 +292,7 @@ we define as $d_s$ and $\partial_s$ the ordinary and partial derivative with res
 
 The operator obtained from a combination of the average operator $\avrc{(\cdot)}$ with the trace on $\Gamma$ will be denoted with $\mtrace = \avrc{(\cdot)} \circ \trace$,
 as it maps functions on $\Omega$ to functions on $\Lambda$.
-Further, let the extension operator $\mathcal{E}_{\Gamma}: H^{\frac12}_{00}(\Lambda) \rightarrow H^{\frac12}_{00}(\Gamma)$ be defined such that
+Further, let the extension operator $\mathcal{E}_{\Gamma}: H^{\frac 1 2}_{00}(\Lambda) \rightarrow H^{\frac 1 2}_{00}(\Gamma)$ be defined such that
  $(\mathcal{E}_{\Omega_{\ominus}}\vd)(x)=\vd(s), \quad \forall x\in \partial D(s)$.
 Then, 
 \begin{equation}\label{eq:ext}
@@ -322,7 +322,7 @@ which shows that the average and the uniform extension operator commute with the
 With the above notation we are now able to formulate the precise weak formulations of the problems 
 \eqref{eq:pde} and \eqref{inteq:pde}. 
 The weak formulation of \eqref{eq:pde}, which we will call the \textbf{Problem 3D-1D-1D} reads: 
-Find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ \ld \in H^{-\frac12}(\Lambda)$, such that
+Find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ \ld \in H^{-\frac 1 2}(\Lambda)$, such that
 \begin{subequations}\label{eq:problem2}
 \begin{align}
 &(u,v)_{H^1(\Omega)} + (\ud,\vd)_{H^1(\Lambda),|\D|} 
@@ -333,11 +333,11 @@ Find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ \ld \in H^{-\frac12}(\Lamb
 \quad && \forall v \in H^1_0(\Omega), \ \vd \in H^1_0(\Lambda)\,,
 \\
 & \langle \mtrace u -   \ud, \md \rangle_{\Lambda,|\DD|} = 0
-\quad &&\forall \md \in H^{-\frac12}(\Lambda)\,,
+\quad &&\forall \md \in H^{-\frac 1 2}(\Lambda)\,,
 \end{align}
 \end{subequations}
 Furthermore, the weak formulation of \eqref{inteq:pde}, refered to as \textbf{Problem 3D-1D-2D}, reads: 
-Find $u \in H^1_0(\Omega), \ \lambda \in H^{-\frac12}(\Gamma ),\ \ud \in H^1_0(\Lambda)$, such that
+Find $u \in H^1_0(\Omega), \ \lambda \in H^{-\frac 1 2}(\Gamma ),\ \ud \in H^1_0(\Lambda)$, such that
 \begin{subequations}\label{eq:problem1}
 \begin{align}
 &(u,v)_{H^1(\Omega)} + (\ud,\vd)_{H^1(\Lambda),|\D|} 
@@ -348,12 +348,12 @@ Find $u \in H^1_0(\Omega), \ \lambda \in H^{-\frac12}(\Gamma ),\ \ud \in H^1_0(\
 \quad &&\forall v \in H^1_0(\Omega), \ \vd \in H^1(\Lambda)\,,
 \\
 & \langle \trace u - \ext \ud , \mu \rangle_\Gamma = 0
-\quad && \forall \mu \in H^{-\frac12}(\Gamma)\,.
+\quad && \forall \mu \in H^{-\frac 1 2}(\Gamma)\,.
 \end{align}
 \end{subequations}
 
 
-\section{Derivation of the model} \\
+\section{Derivation of the model}
 Below we detail the steps performed in order to formulate \ref{eq:problem1} and \ref{eq:problem2} precisely. 
 The derivations are similar~\cite{laurino_m2an},  but here we derive the system including the Lagrange multiplier. 
 
@@ -380,7 +380,7 @@ The strong conditions will, however, be enforced weakly by using the method of L
 %We remark that this case is substantially different from the one previously addressed in \cite{laurino_m2an}.
 
 The variational formulation of problem \eqref{eq:dirneu}
-is to find $\up \in H^1_{\partial\Omega}(\Omega_\oplus), \ \uf \in H^1_{\partial\Omega_\ominus\setminus\Gamma}(\Omega_\ominus), \ \lambda \in H^{-\frac12}(\partial\Omega_\ominus)$ s.t.
+is to find $\up \in H^1_{\partial\Omega}(\Omega_\oplus), \ \uf \in H^1_{\partial\Omega_\ominus\setminus\Gamma}(\Omega_\ominus), \ \lambda \in H^{-\frac 1 2}(\partial\Omega_\ominus)$ s.t.
 \begin{subequations}\label{eq:weak_dirneu}
 \begin{align}
 &(u_\oplus,v_\oplus)_{H^1(\Omega_\oplus)} + (u_\ominus,v_\ominus)_{H^1(\Omega_\ominus)} 
@@ -391,11 +391,11 @@ is to find $\up \in H^1_{\partial\Omega}(\Omega_\oplus), \ \uf \in H^1_{\partial
 \quad \forall v_\oplus \in H^1_{\partial\Omega}(\Omega_\oplus), \ v_\ominus \in H^1_{\partial\Omega_\ominus\setminus\Gamma}(\Omega_\ominus)
 \\
 & \langle u_\oplus - u_\ominus, \mu \rangle_{\Gamma} = 0
-\quad \forall  \mu \in H^{-\frac12}(\Gamma)\,,
+\quad \forall  \mu \in H^{-\frac 1 2}(\Gamma)\,,
 \end{align}
 \end{subequations}
-%where $\langle v, \mu \rangle_{H^{-\frac12}(\Gamma)}$ denotes the duality pairing between 
-%$ \mu \in H^{-\frac12}(\Gamma)$ and $v \in H^{\frac12}(\Gamma)$.
+%where $\langle v, \mu \rangle_{H^{-\frac 1 2}(\Gamma)}$ denotes the duality pairing between 
+%$ \mu \in H^{-\frac 1 2}(\Gamma)$ and $v \in H^{\frac 1 2}(\Gamma)$.
 In this case, $\lambda$ is the Lagrange multiplier and it is equivalent to $\nabla \uf \cdot \nn_\ominus$.
 
 The objective of this work is to derive and analyze a simplified version of problem \eqref{eq:weak_dirneu}, where the domain $\Omega_\ominus$ shrinks to its centerline $\Lambda$ and the corresponding partial differential equation is averaged on the cylinder cross section, namely $\mathcal{D}$. This new problem setting will be called the \emph{reduced} problem. Form the mathematical standpoint it is more challenging than \eqref{eq:weak_dirneu}, because it involves the coupling of 3D/1D elliptic problems.
@@ -515,7 +515,7 @@ and combining with \eqref{eq:1Ddirneu_weak} we obtain the first formulation of t
 
 Hence, we have obtained the Problem 3D-1D-2D, equation 
 \eqref{eq:problem1}: \\
-Find $u \in H^1_0(\Omega), \ \lambda \in H^{-\frac12}(\Gamma ),\ \ud \in H^1_0(\Lambda)$, such that
+Find $u \in H^1_0(\Omega), \ \lambda \in H^{-\frac 1 2}(\Gamma ),\ \ud \in H^1_0(\Lambda)$, such that
 \begin{subequations}
 \begin{align*}
 &(u,v)_{H^1(\Omega)} + (\ud,\vd)_{H^1(\Lambda),|\D|} 
@@ -526,7 +526,7 @@ Find $u \in H^1_0(\Omega), \ \lambda \in H^{-\frac12}(\Gamma ),\ \ud \in H^1_0(\
 \quad &&\forall v \in H^1_0(\Omega), \ \vd \in H^1(\Lambda)\,,
 \\
 & \langle \trace u - \ext \ud , \mu \rangle_\Gamma = 0
-\quad && \forall \mu \in H^{-\frac12}(\Gamma)\,.
+\quad && \forall \mu \in H^{-\frac 1 2}(\Gamma)\,.
 \end{align*}
 \end{subequations}
 This coupled problem is classifies as 3D-1D-2D because the unknowns $u,\lambda,\ud$ belong to 
@@ -554,7 +554,7 @@ Thanks to the additional assumption that the product of fluctuations is small, n
 the term $\left(\trace v, \lambda \right)_{\Gamma}$ becomes $\left( \mtrace v, \avrc{\lambda} \right)_{\Lambda, |\DD|}$, where $\mtrace$ denotes the composition of operators $\trace \circ \avrc{(\cdot)}$.  Combined with \eqref{eq:1Ddirneu_weak}, this leads to the second formulation of the reduced problem.
 
 Hence, we have derived the Problem 3D-1D-1D, equation \eqref{eq:problem2}: \\ 
-Find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ \ld \in H^{-\frac12}(\Lambda)$, such that
+Find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ \ld \in H^{-\frac 1 2}(\Lambda)$, such that
 \begin{subequations}
 \begin{align*}
 &(u,v)_{H^1(\Omega)} + (\ud,\vd)_{H^1(\Lambda),|\D|} 
@@ -565,11 +565,11 @@ Find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ \ld \in H^{-\frac12}(\Lamb
 \quad && \forall v \in H^1_0(\Omega), \ \vd \in H^1_0(\Lambda)\,,
 \\
 & \langle \mtrace u -   \ud, \md \rangle_{\Lambda,|\DD|} = 0
-\quad &&\forall \md \in H^{-\frac12}(\Lambda)\,,
+\quad &&\forall \md \in H^{-\frac 1 2}(\Lambda)\,,
 \end{align*}
 \end{subequations}
 We notice that all the integrals of the reduced problem are well defined because 
-$\mtrace: H^1_0(\Omega) \rightarrow H^\frac12_{00}(\Lambda)$ as shown in Corollary \ref{corollary:H12norm}.
+$\mtrace: H^1_0(\Omega) \rightarrow H^\frac 1 2_{00}(\Lambda)$ as shown in Corollary \ref{corollary:H12norm}.
 
 The well-posedness of $\eqref{eq:problem1}$ and $\eqref{eq:problem2}$ 
 can be studied in the framework of the classical theory of saddle point problems as shown in the following.
@@ -577,7 +577,7 @@ can be studied in the framework of the classical theory of saddle point problems
 
 We conclude this section with the analysis of a fundamental property for the problem formulation that we will address.
 It consists in the characterization of the regularity of the operator $\mtrace$.
-More precisely we aim to show that $\mtrace: H^1_0(\Omega) \rightarrow H^\frac12_{00}(\Lambda)$.
+More precisely we aim to show that $\mtrace: H^1_0(\Omega) \rightarrow H^\frac 1 2_{00}(\Lambda)$.
 This is a consequence of the following lemma.
 
 \input{preliminary_results.tex}

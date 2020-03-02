@@ -112,64 +112,73 @@ n.a.
 \section{Introduction}\label{sec:intro}
 
 In this paper we will consider a 3D-1D coupled problem described by the following equations:\\
-\begin{minipage}{0.5\textwidth}
 \begin{subequations}
 \label{eq:pde}
 \begin{align}
 \label{eq:pde1}
   -\Delta u + u + \lambda \delta_{\Lambda} &= f &\mbox{ in } \Omega,\\
 \label{eq:pde2}
--\Delta \ud + \ud - \lambda &= g &\mbox{ on } \Lambda,\\
+ d_s^2 \ud + \ud - \lambda &= g &\mbox{ on } \Lambda,\\
 \label{eq:coupling}
-T_\Lambda u - v  &=  h &\mbox{ on } \Lambda . 
+\mathcal{T}_\Lambda u - v  &=  h &\mbox{ on } \Lambda . 
 \end{align}
 \end{subequations}
-\end{minipage}
 %
-\begin{minipage}{0.45\textwidth}
-\begin{figure}[H]
-\begin{center}
-\includegraphics[width=0.6\textwidth]{domain.pdf}
-\end{center}
-\caption{Geometrical setting of the problem}
-\label{fig1}
-\end{figure}
-\end{minipage}\\
-Here, $u$ and $\ud$ are the unknown scalar fields,  $\lambda$ is the Lagrange multiplier,  $\Omega$ is a bounded domain in $\R^3$, whereas $\Lambda \subset \Omega$ is a 1D structure. 
-The term $p\delta_{\Lambda}$ is a Dirac measure such that 
-$\int_{\Omega}p(x)\delta_{\Lambda}v(x)\,\mathrm{d}x=\int_{\Lambda}p(t)v(t) \,\mathrm{d}t$
-for a continuous function $v$. 
+Here, $u$, $\ud$,  $\lambda$ are unknowns,  $\Omega$ is a bounded domain in $\R^3$, whereas $\Lambda \subset \Omega$ is a 1D structure
+parameterized in terms of $s$ and $d_s$ is the derivative with respect to $s$. 
+The term $\lambda\delta_{\Lambda}$ is a Dirac measure such that 
+$\int_{\Omega}\lambda(x)\delta_{\Lambda}v(x)\,\mathrm{d}x=\int_{\Lambda}\lambda(t)v(t) \,\mathrm{d}t$
+for a continuous function $v$ and $\mathcal{T}_\Lambda: \Omega\rightarrow\Lambda$ is a trace operator. 
 
 
 
-From a mathematical point of view, the challenge involved in problem \eqref{eq:pde} is that neither $T_\Lambda$ nor $\delta_\Lambda$ are well defined. That is, traces of co-dimension one are well defined, while here we face traces of co-dimension two, mapping 3D functions to 1D functions. Similarly, Dirac delta functions are well defined on measures of one lower dimension, but not two. Several studies \cite{DAngelo,..} have remedied the well-posedness by weakening the solution concept. The approach naturally leads to non-symmetric formulations. An alternative approach is to decompose the solution into smooth and non-smooth components, where the non-smooth component may be represented in terms of Greens functions, and then consider the well-posedness of the smooth component~\cite{Peaceman1983531,secomb2004green}. Both of these approaches have successfully be analyzed in a discrete setting and implemented~\cite{}. 
+From a mathematical point of view, the challenge involved in problem \eqref{eq:pde} is that neither $\mathcal{T}_\Lambda$ nor $\delta_\Lambda$ are well defined. 
+That is, without extra regularity,  solutions of elliptic PDEs only have well defined traces of co-dimension one. Here, $\mathcal{T}_\Lambda$ is of co-dimension two, mapping functions defined on a domain in 3D to
+functions defined along a 1D curve. Similarly, Dirac delta functions are well defined on measures of co-dimension one, but not two. Several studies \cite{DAngelo,d2012finite,d2008coupling} have remedied the well-posedness by weakening the solution concept. The approach naturally leads to non-symmetric formulations. An alternative approach is to decompose the solution into smooth and non-smooth components, where the non-smooth component may be represented in terms of Greens functions, and then consider the well-posedness of the smooth component~\cite{Peaceman1983531,secomb2004green}. Both of these approaches have successfully be analyzed in a discrete setting and implemented~\cite{}. Error estimates etc... Many more references can be mentioned. 
+In this work we analyze an alternative approach, closely related to \cite{laurino_m2an}, where we exploit the fact that the $\Lambda$ is not strictly a 1D curve, but rather a very thin 3D structure with 
+a cross-sectional area far below what we can resolve. With this additional assumption, we show that robustness with respect to the cross-sectional area can be restored. 
 
+The mathematical problem is motivated by the fact that many problems in geo- and biophysics are characterized by slender cylindrical structures coupled to a larger 3D body, where the characteristic transverse length scale of the slender structure is many orders of magnitude smaller than the longitudinal length.  For example, in geophysical applications the radius of wells are often of the order of 10 cm while the length may be several kilometers~\cite{gjerde2019singularity}. Similarly, in applications involving the blood flow and oxygen transport of the micro-circulation the capillary radius is a few microns, while simulations are often performed on mm to cm scale, with thousands of vessels~\cite{berg2020modelling,fang2008oxygen,gould2017capillary}. Finally, in neuro-science applications a neuron has width of a few microns, while  its length is much longer. For example, an axon of a motor neurons may be as long as a meter.  Hence,  at least 4 orders of magnitude in difference in transverse and longitudinal direction is common in both geo-physics, bio-mechanics and neuro-science. Meshes dictated by resolving the transverse length scale in 3D would then possibly lead to the order of $10^{12}$ degrees of freedom. Even if adaptive and strongly anisotropic meshes are allowed for, the computations quickly become demanding if many slender structures and their interactions are under study.  If the quantity of interest is the far field impact (relative to the transverse lengthscale) caused by processes in the slender structures, the high resolution involved in the near field of the slender structure may not be needed.  
 
-The mathematical problem is motivated by the fact that many problems in geophysics and bio-mechanics are characterized by slender cylindrical structures coupled to larger 3D body, where the characteristic transverse length scale of the slender structure is many orders of magnitude smaller than the longitudinal length scale.  For example, in geophysical applications the radius of wells are often of the order of 10 cm while the length may be several kilometers~\cite{gjerde2019singularity}. Similarly, in applications involving the blood flow and oxygen transport of the micro-circulation the capillary radius is a few microns, while simulations are often performed on mm to cm scale, with thousands of vessels~\cite{berg2020modelling,fang2008oxygen,gould2017capillary}. Finally, in neuro-science applications a neuron has with a few microns, while  its length is much longer. For examples motor neurons may be as long as a meter.  Hence,  at least 4 orders of magnitude in difference in transverse and longitudinal direction is common in both geo-physics, bio-mechanics and neuro-science. Meshes dictated by resolving the transverse length scale in 3D would then possibly lead to the order of $10^{12}$ degrees of freedom. Even if adaptive and strongly anisotropic meshes are allowed for, the computations quickly become demanding if many slender structures and their interactions are under study.  If the quantity of interest is the far field impact caused by processes in the slender structures, the high resolution involved in the near field of the slender structure may not be needed.  
-
-In this work we propose to analyze the problem in terms of an intermediate problem, posed either explicitly or implicitly. The intermediate problem reads, 
+An intermediate problem, where the coupling between the 3D and 1D problems of \eqref{eq:pde} is a 2D surface, reads 
 \begin{subequations}
 \label{inteq:pde}
 \begin{align}
 \label{inteq:pde1}
   -\Delta u + u + \lambda \delta_{\Lambda} &= f &\mbox{ in } \Omega,\\
 \label{inteq:pde2}
--\Delta \ud + \ud - E' \lambda  &= g &\mbox{ on } \Lambda,\\
+-d_s² \ud + \ud - E' \lambda  &= g &\mbox{ on } \Lambda,\\
 \label{inteq:coupling}
 T_\Gamma u - E_\Gamma v  &=  h &\mbox{ on } \Gamma
 \end{align}
 \end{subequations}
 where $\Gamma \subset \Omega$ is a 2D surface corresponding to $\Lambda$
 and $E$ is an extension operator from $\Lambda$ to $\Gamma$. 
-\kent{check consistency with notation}
 
+
+
+\kent{
 Detail the approach and result a bit.
-\kent{either here or later, something like the below}
-The setting of this paper is quite
+Mention that some stuff is 
 similar to~\cite{laurino_m2an}, but for completeness and the readers convenience we repeat some basic derivations. 
+}
+
+
 
 
 %We address the geometrical configuration of the problem for a 3D coupled problem formulation based on from Dirichlet-Neumann interface conditions. Then, we apply a model reduction technique that transforms the problem into 3D-1D coupled PDEs. We develop and analyze a robust definition of the coupling operators form a 3D domain, $\Omega$, to 1D manifold, $\Lambda$, and vice versa. This is a non trivial objective because the standard trace operator form a domain $\Omega$ to a subset $\Lambda$ is not well posed if $\Lambda$ is a manifold of co-dimension two of $\Omega$.
+
+
+
+%This work is based on the assumption that \emph{the transversal diameter of $\Omega_{\ominus}$ is small compared to the diameter of $\Omega$}. 
+%Let $d= \max_{s \in (0,S)} \mathrm{diam}(\D(s))$ be the largest diameter of the cross sections of $\Omega_{\ominus}$, that is the transversal diameter of $\Omega_{\ominus}$.
+%The central assumption of this work is that $d \ll \mathrm{diam}(\Omega)$.
+%Let us now scale the domains $\Omega$ and $\Omega_{\ominus}$.
+%Let $\chi_{\Omega}(\xx) = \xx / \mathrm{diam}(\Omega)$ be a scaling function and let be $\Omega_\chi = \chi_{\Omega}(\Omega), \ {\Omega_{\ominus}}_\chi =  \chi_{\Omega}(\Omega_{\ominus})$ be the scaled domains. %The previous assumption implies that for the scaled domains $\epsilon = d_\chi = d/\mathrm{diam}(\Omega)$
+%is such that $0 < \epsilon \ll 1$. For simplicity of notation, and without loss of generality, form now on we will implicitly refer to the scaled domains dropping the subindex $\chi$.
+%\kent{this is a good explanatory paragraph, but not sure we use the notation introduced}
+
+
 
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 \section{Preliminaries}\label{sec:setting}
@@ -180,23 +189,39 @@ similar to~\cite{laurino_m2an}, but for completeness and the readers convenience
 %Finally, the section ends with the formal derivation of the problem, 
 %based on averaging techniques applied to a fully three-dimensional model in the geometrical setting defined before.
 
-%\subsection{Geometry of the problem}
-The domain is denoted as $\Omega\in \RR^3 $ is convex and composed by two parts, 
+
+
+Let the domain $\Omega\in \R^3 $ be convex and composed of two parts, 
 $\Omega_{\ominus}$ and $\Omega_{\oplus}:=\Omega\setminus\overline{\Omega}_{\ominus}$. 
-Let $\Omega_{\ominus}$ be a \emph{generalized cylinder}, 
-that is the swept volume of a two dimensional set moved along a curve in the three-dimensional space, see for example \cite{MR1940257}.
-We also assume that $\Omega_{\ominus}$ crosses $\Omega$ from side to side, and we call $\Gamma$ the lateral surface of $\Omega_{\ominus}$, 
-while the upper and lower faces of $\Omega_{\ominus}$ belong to $\partial\Omega$. 
-Let $\boldsymbol \lambda(s) = [\xi(s), \tau(s), \zeta(s)], \ s\in(0,S)$ be a $\mathcal{C}^2$-regular curve in the three-dimensional space.
+Let 
+$\Omega_{\ominus}$ be a \emph{generalized cylinder}, c.f.  \cite{MR1940257}, 
+that is; the swept volume of a two dimensional set, $\partial D$, moved along a curve, $\Lambda$, in the three-dimensional domain, $\Omega$, see for Figure \ref{fig1} for an illustration. 
+In detail, the curve 
+$\Lambda = \{\boldsymbol \lambda(s), \ s\in(0,S)\}$,  where 
+$\boldsymbol \lambda(s) = [\xi(s), \tau(s), \zeta(s)], \ s\in(0,S)$ is a $\mathcal{C}^2$-regular curve in the three-dimensional domain $\Omega$.
 For simplicity, let us assume that $\|\boldsymbol \lambda^\prime(s)\|=1$ such that the arc-length and the coordinate $s$ coincide.
-Let $\Lambda = \{\boldsymbol \lambda(s), \ s\in(0,S)\}$ be the centerline of the cylinder. 
+Further, let $\mathcal{D}(s) = [x(r,t),y(r,t)]: (0,R(s))\times(0,T(s)) \rightarrow \R^2$ be a parametrization of the cross section
+and $\Gamma$ be the lateral surface of $\Omega_{\ominus}$, i.e.
+$\Gamma=\{ \ \partial D(s) \  | \ s \in \Gamma\}$,
+while the upper and lower faces of $\Omega_{\ominus}$ belong to $\partial\Omega$. 
+We will assume that $\Omega_{\ominus}$ crosses $\Omega$ from si
+de to side.
 According to the geometrical setting, we will denote with $v,\,v_\oplus,\,v_\ominus,\,\vd$,
 functions defined on $\Omega,\,\Omega_{\oplus},\,\Omega_{\ominus},\,\Lambda$, respectively.
-We refer to Figure \ref{fig1} for a sketch of the domains.
-Let $\mathcal{D}(s) = [x(r,t),y(r,t)]: (0,R(s))\times(0,T(s)) \rightarrow \R^2$ be a parametrization of the cross section, while 
-$|\cdot|$ denote the Lebesgue measure of a set, i.e. $|D(0)|$ is the cross-sectional area of the bottom of the cylinder. 
 
 
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.3\textwidth]{domain.pdf}
+\end{center}
+\caption{Geometrical setting of the problem}
+\label{fig1}
+\end{figure}
+
+
+
+ 
 
 %Let $\TT,\NN,\BB$ be the Frenet frame related to the curve.
 %Let $\mathcal{D}(s) = [x(r,t),y(r,t)]: (0,R(s))\times(0,T(s)) \rightarrow \R^2$ be a parametrization of the cross section.
@@ -214,121 +239,126 @@ $|\cdot|$ denote the Lebesgue measure of a set, i.e. $|D(0)|$ is the cross-secti
 %Let $|\cdot|$ denote the Lebesgue measure of a set. %If $|\mathcal{D}(0)|, \ |\mathcal{D}(S)| >0$ then %$\Omega_{\ominus}$ has \emph{top} and \emph{bottom} %boundaries,
 %which belong to $\partial\Omega$.
 
-This work is based on the assumption that \emph{the transversal diameter of $\Omega_{\ominus}$ is small compared to the diameter of $\Omega$}. 
-Let $d= \max_{s \in (0,S)} \mathrm{diam}(\D(s))$ be the largest diameter of the cross sections of $\Omega_{\ominus}$, that is the transversal diameter of $\Omega_{\ominus}$.
-The central assumption of this work is that $d \ll \mathrm{diam}(\Omega)$.
-Let us now scale the domains $\Omega$ and $\Omega_{\ominus}$.
-Let $\chi_{\Omega}(\xx) = \xx / \mathrm{diam}(\Omega)$ be a scaling function and let be $\Omega_\chi = \chi_{\Omega}(\Omega), \ {\Omega_{\ominus}}_\chi =  \chi_{\Omega}(\Omega_{\ominus})$ be the scaled domains. The previous assumption implies that for the scaled domains $\epsilon = d_\chi = d/\mathrm{diam}(\Omega)$
-is such that $0 < \epsilon \ll 1$. For simplicity of notation, and without loss of generality, form now on we will implicitly refer to the scaled domains dropping the subindex $\chi$.
-\kent{this is a good explanatory paragraph, but not sure we use the notation introduced}
-
-
 
 
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 %\subsection{Functional setting and preliminary results}
 
-Let $D$ be a generic regular bounded domain in $\R^3$. 
-Let $X$ be a Hilbert space defined on $D$.
-Let $(\cdot,\cdot)_X$ denote the inner product of $X$.
-Let $(\cdot,\cdot)_L^2(D)$,  $(\cdot,\cdot)_D$ or simply $(\cdot,\cdot)$ be the $L^2(D)$ inner product on $D$.
-For the 1D domain $\Lambda$ we will frequently use
-weighted $L^2$ inner products, denoted as follows
-\begin{equation*}
-(\ud,\vd)_{\Lambda,w} = \int_0^S w(s) \ud(s) \vd(s) ds\,.
-\end{equation*}
-Given an Hilbert space $X$ and its dual $X^*$, the duality pairing between the two is denoted as $\langle\cdot,\cdot\rangle$.
-When needed, the integration weights will be also applied to the duality product.
-\kent{I think we use weighted H1 as well.}
-
+Let $D$ be a generic regular bounded domain in $\R^3$
+and $X$ be a Hilbert space defined on $D$ then  $(\cdot,\cdot)_X$ and $\|\cdot\|_X$ denote the inner product and norm of $X$, respectively.
+The duality pairing between the $X$ and its dual $X^*$ is denoted as $\langle\cdot,\cdot\rangle$.
+Let $(\cdot,\cdot)_{L^2(D)}$,  $(\cdot,\cdot)_D$ or simply $(\cdot,\cdot)$ be the $L^2(D)$ inner product on $D$.
 We will use the standard notation $H^q(D)$ to denote the Sobolev space of functions on $D$ with all derivatives up to the order $q$ in $L^2(D)$.
 The corresponding norm is $\|\cdot\|_{H^q(D)}$ and the seminorm is $\vert\cdot\vert_{H^q(D)}$.
 The space $H^q_0(D)$ represents the closure in $H^q(D)$ of smooth functions with compact support in $D$.
 
 Let $\Sigma$ be a Lipschitz co-dimension one subset of $D$. 
-We denote with $\mathcal{T}: H^q(D) \rightarrow H^{q-\frac12}(\Sigma)$ the trace operator from $D$ to $\Sigma$.
-For the purpose of this work we will extensively use traces on $\Gamma$ of functions defined on $\Omega$. Such operator will be denoted with $\trace$. 
-Fractional Sobolev spaces arising from the application of the trace operator are particularly important in this work.
-For example the trace space on $\Gamma$ of $H^1_0(\Omega)$ will be be extensively used for this study.
-We denote this space as $H^{\frac12}_{00}(\Gamma) = \trace H^1_0(\Omega)$.
-It can be interpreted as the subspace of $H^{\frac12}(\Gamma)$ of functions with continuous extension by zero outside $\Gamma$.
-We remark that $(H^{\frac12}_{00}(D))^* = H^{-\frac12}(D)$ with $D=\Gamma,\Lambda$.
+We denote with $\mathcal{T}_\Sigma}: H^q(D) \rightarrow H^{q-\frac12}(\Sigma)$ the trace operator from $\Omega$ to $\Sigma$.
+Functions in $H^{\frac12}(\Sigma)$ with continuous extension by zero outside $\Sigma$ is denoted 
+$H^{\frac12}_{00}(\Sigma)$ and we remark that 
+$H^{\frac12}_{00}(\Sigma) = \mathcal{T}_\Sigma H^1_0(D)$
+and  $H^{-\frac12}(\Sigma) = (H^{\frac12}_{00}(\Sigma))^*$
+
+We will frequently used inner products and norms that are weighted, such if $X$ is a Hilbert space and $w$ is a positive number, then the
+weighted inner product is denoted 
+\[
+(u,v)_{X,w} = (w \, u,  v)_X
+\]
+with a corresponding norm $\|\cdot\|_{X,w}$. Finally, 
+$|\cdot|$ denote the Lebesgue measure of a set, i.e. $|D(0)|$ is the cross-sectional area of the bottom of the cylinder.
+We will in the following assume that the cross-sectional area $D(s)$ is constant, but remark that this assumption is only made to simplify the notation. 
+\kent{I wrote this comment for simplicity. Otherwise, we need to be a bit more careful with the definition of the inner product above}
 
 
-
-Due to the  geometrical structure of the generalized cylinder, 
-for any sufficiently regular function $w$ we decompose integrals as follows
-and we define the corresponding averages $\avrc{w},\,\avrd{w}$,
+Central in our analysis are the transverse averages $\avrc{w},\,\avrd{w}$ defined as, 
+\begin{gather*}
+\avrc{w}(s) = |\partial\mathcal{D}(s)|^{-1} \int_{\partial\mathcal{D}(s)} w d\gamma \quad \mbox{and} \quad 
+\avrd{w}(s) = |\mathcal{D}(s)|^{-1} \int_{\mathcal{D}(s)} w d\sigma, 
+\end{gather*}
+where $d\omega, \ d\sigma, \ d\gamma$ are the generic volume, surface and curvilinear Lebesgue measures.
+Clearly, 
 \begin{gather*}
 \int_{\Omega_{\ominus}} w d\omega 
 = \int_\Lambda \int_{\mathcal{D}(s)} w d\sigma ds
-= \int_\Lambda |\mathcal{D}(s)|\avrd{w}(s) ds\,,
-\ \textrm{where} \ \avrd{w}(s) = |\mathcal{D}(s)|^{-1} \int_{\mathcal{D}(s)} w d\sigma\,,
-\\
+= \int_\Lambda |\mathcal{D}(s)|\avrd{w}(s) ds\, \ \mbox{and} \ 
 \int_{\partial\Omega_{\ominus}} w d\sigma 
 = \int_\Lambda \int_{\partial\mathcal{D}(s)} w d\gamma ds
-= \int_\Lambda  |\partial \mathcal{D}(s)| \avrc{w}(s) ds\,,
-\ \textrm{where} \ \avrc{w}(s) = |\partial\mathcal{D}(s)|^{-1} \int_{\partial\mathcal{D}(s)} w d\gamma\,,
+= \int_\Lambda  |\partial \mathcal{D}(s)| \avrc{w}(s) ds\,. 
 \end{gather*}
-being $d\omega, \ d\sigma, \ d\gamma$ the generic volume, surface and curvilinear Lebesgue measures.
 Analogously, for functions defined on $\Lambda$ and $\Omega_\ominus$ respectively, 
 we define as $d_s$ and $\partial_s$ the ordinary and partial derivative with respect to the arclength.
 
 
 
-The operator obtained form the combination of the average operator $\avrc{(\cdot)}$ with the trace on $\Gamma$ will be denoted with $\mtrace = \avrc{(\cdot)} \circ \trace$,
+The operator obtained from a combination of the average operator $\avrc{(\cdot)}$ with the trace on $\Gamma$ will be denoted with $\mtrace = \avrc{(\cdot)} \circ \trace$,
 as it maps functions on $\Omega$ to functions on $\Lambda$.
-We will see later that functions belonging to $H^{\frac12}_{00}(\Lambda)$ are generated from the application of $\mtrace$ to $H^1_0(\Omega)$.
-
-
-
-In what follows we will also use the uniform extension to $\Omega_{\ominus}$ of functions defined on $\Lambda$.
-Namely, given $\vd(s)$ we define $\mathcal{E}_{\Omega_{\ominus}}$ as $\mathcal{E}_{\Omega_{\ominus}}\vd(s,r,t)=\vd(s)$.
-Then, taking the trace on $\Gamma$ of the extended function we obtain an extension map from $\Lambda$ to $\Gamma$, denoted as $\ext$.
-We observe that $\ext: H^\frac12_0(\Lambda) \rightarrow H^\frac12_{00}(\Gamma)$ satisfies the following property
+Further, let the extension operator $\mathcal{E}_{\Gamma}: H^{\frac12}_{00}(\Lambda) \rightarrow H^{\frac12}_{00}(\Gamma)$ be defined such that
+ $(\mathcal{E}_{\Omega_{\ominus}}\vd)(x)=\vd(s), \quad \forall x\in \partial D(s)$.
+Then, 
 \begin{equation}\label{eq:ext}
 \langle \mtrace u, \vd \rangle_{\Lambda, |\DD|} 
 = \int _{\Lambda} |\DD| \left( \frac{1}{|\DD|} \int_{\DD} \trace u \, d\gamma \right) \vd \, ds 
 = \langle \trace u, \ext \vd\rangle_{\Gamma}\,,
 \end{equation} 
-which shows that the average and the uniform extension operator commute.
+which shows that the average and the uniform extension operator commute with the trace.
 
-From the theory of interpolation of Sobolev spaces we define the fractional norms $\|\cdot \|_{H^{\frac 12}_{00}(\Gamma)}$ and $\|\cdot \|_{H^{\frac 12}_{00}(\Lambda)}$ as functions of the eigenvalues and eigenfunctions of the Laplacian on $\Gamma$ and $\Lambda$ respectively, see for example \cite{MR0350177,MR2328004}. 
-We denote as $\phi _{ij}$ and $\rho _{ij}$, for $i=1,2,\dots$, $j=0,1,\dots$, the eigenfunctions and the eigenvalues of the Laplacian on $\Gamma$ with homogeneous Dirichlet condition at the boundary. Then, the norms of $H^{\frac 12}_{00}(\Gamma),\,H^{\frac 12}_{00}(\Lambda)$ and the corresponding dual norms are defined as
-\begin{equation}\label{eq:fracnorm_gamma}
-\|u\|_{H^{\frac 12}_{00}(\Gamma)}=\left(\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left( 1+ \rho_{ij}\right)^{\frac 12}|a_{ij}|^2\right)^{\frac 12}
-\ \text{with} \ a_{ij}=\left( u,\phi _{ij} \right)_{\Gamma};
-\quad
-\| v \|_{H^{-\frac 12}(\Gamma)} = \sup_{u\in H^{\frac 12}_{00}(\Gamma)}\frac{\langle u, v \rangle_\Gamma}{\|u\|_{H^{\frac 12}_{00}(\Gamma)}}\,.
-\end{equation}
-Similarly, denoting with $\phi _i$ and $\rho _i$ the eigenfunctions and the eigenvalues of the Laplacian on $\Lambda$ with homogenous Dirichlet boundary conditions, if $u \in H^{\frac 12}(\Lambda)$ we have
-\begin{equation}\label{eq:fracnorm_lambda}
-\|u\|_{H^{\frac 12}_{00}(\Lambda)}=\left(\sum_{i=1}^{\infty} \left( 1+ \rho_{i}\right)^{\frac 12}|a_i|^2\right)^{\frac 12}
-\ \text{with} \ a_i=\left(u, \phi _i \right)_{\Lambda};
-\quad
-\| v \|_{H^{-\frac 12}(\Lambda)} = \sup_{u\in H^{\frac 12}_{00}(\Lambda)}\frac{\langle u, v \rangle_\Lambda}{\|u\|_{H^{\frac 12}_{00}(\Lambda)}}\,.
-\end{equation}
-We define the equivalent weighted norm in $H^{\frac 12}_{00}(\Lambda)$ in the same way,
-\begin{equation}\label{eq:weightfracnorm}
-\|u\|_{H^{\frac 12}_{00}(\Lambda), |\DD|}=\left(\sum_{i=1}^{\infty} \left( 1+ \rho_{i}\right)^{\frac 12}|a_i|^2\right)^{\frac 12},
-\ \text{with} a_i=\left(u, \phi _i \right)_{\Lambda, |\DD|};
-\quad
-\| v \|_{H^{-\frac 12}(\Lambda)} = \sup_{u\in H^{\frac 12}_{00}(\Lambda)}\frac{\langle u, v \rangle_{\Lambda, |\DD|}}{\|u\|_{H^{\frac 12}_{00}(\Lambda), |\DD|}}\,.
-\end{equation}
+%From the theory of interpolation of Sobolev spaces we define the fractional norms $\|\cdot \|_{H^{\frac 12}_{00}(\Gamma)}$ and $\|\cdot \|_{H^{\frac 12}_{00}(\Lambda)}$ as functions of the eigenvalues and eigenfunctions of the Laplacian on $\Gamma$ and $\Lambda$ respectively, see for example \cite{MR0350177,MR2328004}. 
+%We denote as $\phi _{ij}$ and $\rho _{ij}$, for $i=1,2,\dots$, $j=0,1,\dots$, the eigenfunctions and the eigenvalues of the Laplacian on $\Gamma$ with homogeneous Dirichlet condition at the boundary. Then, the norms of $H^{\frac 12}_{00}(\Gamma),\,H^{\frac 12}_{00}(\Lambda)$ and the corresponding dual norms are defined as
+%\begin{equation}\label{eq:fracnorm_gamma}
+%\|u\|_{H^{\frac 12}_{00}(\Gamma)}=\left(\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left( 1+ \rho_{ij}\right)^{\frac 12}|a_{ij}|^2\right)^{\frac 12}
+%\ \text{with} \ a_{ij}=\left( u,\phi _{ij} \right)_{\Gamma};
+%\quad
+%\| v \|_{H^{-\frac 12}(\Gamma)} = \sup_{u\in H^{\frac 12}_{00}(\Gamma)}\frac{\langle u, v \rangle_\Gamma}{\|u\|_{H^{\frac 12}_{00}(\Gamma)}}\,.
+%\end{equation}
 
-We conclude this section with the analysis of a fundamental property for the problem formulation that we will address.
-It consists in the characterization of the regularity of the operator $\mtrace$.
-More precisely we aim to show that $\mtrace: H^1_0(\Omega) \rightarrow H^\frac12_{00}(\Lambda)$.
-This is a consequence of the following lemma.
+%We define the equivalent weighted norm in $H^{\frac 12}_{00}(\Lambda)$ in the same way,
+%\begin{equation}\label{eq:weightfracnorm}
+%\|u\|_{H^{\frac 12}_{00}(\Lambda), |\DD|}=\left(\sum_{i=1}^{\infty} \left( 1+ \rho_{i}\right)^{\frac 12}|a_i|^2\right)^{\frac 12},
+%\ \text{with} a_i=\left(u, \phi _i \right)_{\Lambda, |\DD|};
+%\quad
+%\| v \|_{H^{-\frac 12}(\Lambda)} = \sup_{u\in H^{\frac 12}_{00}(\Lambda)}\frac{\langle u, v \rangle_{\Lambda, |\DD|}}{\|u\|_{H^{\frac 12}_{00}(\Lambda), |\DD|}}\,.
+%\end{equation}
 
-\input{preliminary_results.tex}
+With the above notation we are now able to formulate the precise weak formulations of the problems 
+\eqref{eq:pde} and \eqref{inteq:pde}. 
+The weak formulation of \eqref{eq:pde}, which we will call the \textbf{Problem 3D-1D-1D} reads: 
+Find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ \ld \in H^{-\frac12}(\Lambda)$, such that
+\begin{subequations}\label{eq:problem2}
+\begin{align}
+&(u,v)_{H^1(\Omega)} + (\ud,\vd)_{H^1(\Lambda),|\D|} 
++  \langle \mtrace v - \vd, \ld \rangle_{\Lambda, |\DD|} &&
+\\
+\nonumber
+&\qquad\qquad= (f,v)_{L^2(\Omega)} +  (\avrd{g},V)_{L^2(\Lambda),|\D|}
+\quad && \forall v \in H^1_0(\Omega), \ \vd \in H^1_0(\Lambda)\,,
+\\
+& \langle \mtrace u -   \ud, \md \rangle_{\Lambda,|\DD|} = 0
+\quad &&\forall \md \in H^{-\frac12}(\Lambda)\,,
+\end{align}
+\end{subequations}
+Furthermore, the weak formulation of \eqref{inteq:pde}, refered to as \textbf{Problem 3D-1D-2D}, reads: 
+Find $u \in H^1_0(\Omega), \ \lambda \in H^{-\frac12}(\Gamma ),\ \ud \in H^1_0(\Lambda)$, such that
+\begin{subequations}\label{eq:problem1}
+\begin{align}
+&(u,v)_{H^1(\Omega)} + (\ud,\vd)_{H^1(\Lambda),|\D|} 
++ \langle \trace v  - \ext \vd, \lambda \rangle_\Gamma &&
+\\
+\nonumber
+&\qquad= (f,v)_{L^2(\Omega)} +  (\avrd{g},\vd)_{L^2(\Lambda),|\D|}
+\quad &&\forall v \in H^1_0(\Omega), \ \vd \in H^1(\Lambda)\,,
+\\
+& \langle \trace u - \ext \ud , \mu \rangle_\Gamma = 0
+\quad && \forall \mu \in H^{-\frac12}(\Gamma)\,.
+\end{align}
+\end{subequations}
 
-% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+\section{Derivation of the model} \\
+Below we detail the steps performed in order to formulate \ref{eq:problem1} and \ref{eq:problem2} precisely. 
+The derivations are similar~\cite{laurino_m2an},  but here we derive the system including the Lagrange multiplier. 
+
 \subsection{Topological model reduction}
 
-\subsection{Problem formulation}
 We consider the problem arising from \emph{Dirichlet-Neumann} conditions. Find $\up,\uf$ s.t.:
 \begin{subequations}\label{eq:dirneu}
 \begin{align}
@@ -345,10 +375,9 @@ We consider the problem arising from \emph{Dirichlet-Neumann} conditions. Find $
 \end{align}
 \end{subequations}
 
-We observe that the coupling constraints defined on $\Gamma$ involve \emph{essential}-type conditions.
-To address such conditions at the level of the variational formulation, we adopt the method of Lagrange multipliers,
-which has been widely used for this purpose since the origin of the finite element method, \cite{MR359352}.
-We remark that this case is substantially different from the one previously addressed in \cite{laurino_m2an}.
+We observe that the coupling constraints defined on $\Gamma$ involve essential or strong conditions.
+The strong conditions will, however, be enforced weakly by using the method of Lagrange multipliers~\cite{MR359352}.
+%We remark that this case is substantially different from the one previously addressed in \cite{laurino_m2an}.
 
 The variational formulation of problem \eqref{eq:dirneu}
 is to find $\up \in H^1_{\partial\Omega}(\Omega_\oplus), \ \uf \in H^1_{\partial\Omega_\ominus\setminus\Gamma}(\Omega_\ominus), \ \lambda \in H^{-\frac12}(\partial\Omega_\ominus)$ s.t.
@@ -371,7 +400,7 @@ In this case, $\lambda$ is the Lagrange multiplier and it is equivalent to $\nab
 
 The objective of this work is to derive and analyze a simplified version of problem \eqref{eq:weak_dirneu}, where the domain $\Omega_\ominus$ shrinks to its centerline $\Lambda$ and the corresponding partial differential equation is averaged on the cylinder cross section, namely $\mathcal{D}$. This new problem setting will be called the \emph{reduced} problem. Form the mathematical standpoint it is more challenging than \eqref{eq:weak_dirneu}, because it involves the coupling of 3D/1D elliptic problems.
 We end up with two different formulations of a reduced problem for the unknown $u$ defined on the entire 3D domain $\Omega$, 
-coupled with the unknown $\ud$, defined on the 1D manifold $\Lambda$ and a Lagrange multiplier defined either on $\Gamma$ (problem 1) or on $\Lambda$ (problem 2). 
+coupled with the unknown $\ud$, defined on the 1D manifold $\Lambda$ and a Lagrange multiplier defined either on $\Gamma$ (Problem 3D-1D-2D) or on $\Lambda$ (Problem 3D-1D-1D). 
 The scope of this work is to analyze and compare the two alternatives,
 with the aim to determine which is the most suitable to set up a computational model for 3D-1D PDEs coupled with Dirichlet-Neumann constraint.
 
@@ -484,10 +513,11 @@ Therefore, we obtain
 \end{equation*}
 and combining with \eqref{eq:1Ddirneu_weak} we obtain the first formulation of the reduced problem.
 
-\subsubsection*{Problem 1 (3D-2D-1D)}
+Hence, we have obtained the Problem 3D-1D-2D, equation 
+\eqref{eq:problem1}: \\
 Find $u \in H^1_0(\Omega), \ \lambda \in H^{-\frac12}(\Gamma ),\ \ud \in H^1_0(\Lambda)$, such that
-\begin{subequations}\label{eq:problem1}
-\begin{align}
+\begin{subequations}
+\begin{align*}
 &(u,v)_{H^1(\Omega)} + (\ud,\vd)_{H^1(\Lambda),|\D|} 
 + \langle \trace v  - \ext \vd, \lambda \rangle_\Gamma &&
 \\
@@ -497,11 +527,11 @@ Find $u \in H^1_0(\Omega), \ \lambda \in H^{-\frac12}(\Gamma ),\ \ud \in H^1_0(\
 \\
 & \langle \trace u - \ext \ud , \mu \rangle_\Gamma = 0
 \quad && \forall \mu \in H^{-\frac12}(\Gamma)\,.
-\end{align}
+\end{align*}
 \end{subequations}
-This coupled problem is classifies as 3D-2D-1D because the unknowns $u,\lambda,\ud$ belong to 
+This coupled problem is classifies as 3D-1D-2D because the unknowns $u,\lambda,\ud$ belong to 
 $\Omega \subset \R^3,\, \Gamma \subset \R^2,\, \Lambda \subset \R$, respectively.
-Then, we apply a topological model reduction of the interface conditions, namely we go from a 3D-2D-1D formulation
+Then, we apply a topological model reduction of the interface conditions, namely we go from a 3D-1D-2D formulation
 involving sub-problems on $\Omega$ and $\Lambda$ and coupling operators defined on $\Gamma$
 to a 3D-1D-1D formulation where the coupling terms are set on $\Lambda$. 
 To this purpose, let us write the Lagrange multiplier and the test functions on every cross section $\partial\mathcal{D}(s)$ as their average plus some fluctuation,
@@ -523,10 +553,10 @@ Thanks to the additional assumption that the product of fluctuations is small, n
 \end{equation*}
 the term $\left(\trace v, \lambda \right)_{\Gamma}$ becomes $\left( \mtrace v, \avrc{\lambda} \right)_{\Lambda, |\DD|}$, where $\mtrace$ denotes the composition of operators $\trace \circ \avrc{(\cdot)}$.  Combined with \eqref{eq:1Ddirneu_weak}, this leads to the second formulation of the reduced problem.
 
-\subsubsection*{Problem 2 (3D-1D-1D)}
+Hence, we have derived the Problem 3D-1D-1D, equation \eqref{eq:problem2}: \\ 
 Find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ \ld \in H^{-\frac12}(\Lambda)$, such that
-\begin{subequations}\label{eq:problem2}
-\begin{align}
+\begin{subequations}
+\begin{align*}
 &(u,v)_{H^1(\Omega)} + (\ud,\vd)_{H^1(\Lambda),|\D|} 
 +  \langle \mtrace v - \vd, \ld \rangle_{\Lambda, |\DD|} &&
 \\
@@ -536,13 +566,22 @@ Find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ \ld \in H^{-\frac12}(\Lamb
 \\
 & \langle \mtrace u -   \ud, \md \rangle_{\Lambda,|\DD|} = 0
 \quad &&\forall \md \in H^{-\frac12}(\Lambda)\,,
-\end{align}
+\end{align*}
 \end{subequations}
 We notice that all the integrals of the reduced problem are well defined because 
 $\mtrace: H^1_0(\Omega) \rightarrow H^\frac12_{00}(\Lambda)$ as shown in Corollary \ref{corollary:H12norm}.
 
 The well-posedness of $\eqref{eq:problem1}$ and $\eqref{eq:problem2}$ 
 can be studied in the framework of the classical theory of saddle point problems as shown in the following.
+
+
+We conclude this section with the analysis of a fundamental property for the problem formulation that we will address.
+It consists in the characterization of the regularity of the operator $\mtrace$.
+More precisely we aim to show that $\mtrace: H^1_0(\Omega) \rightarrow H^\frac12_{00}(\Lambda)$.
+This is a consequence of the following lemma.
+
+\input{preliminary_results.tex}
+
 
 %>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 %Analysis of the continuous problem 

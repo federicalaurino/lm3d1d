@@ -1,11 +1,11 @@
 \def\patch{\omega _j}
 \subsection{$\mathcal{T}^{\Omega}_h$ non conforming to $\Gamma$ and $\Lambda$} \label{sec:unfit2}
 We analyze now the case in which the elements of the 3D mesh $\mathcal{T}^{\Omega}_h$ do not conform with the surface $\Gamma$ nor with $\Lambda$. In this case, the 3D-1D-1D
-formulation, namely Problem 2, is more suitable. 
+formulation, namely Problem 3D-1D-1D, is more suitable. 
 %{\color{red} Add more details, we can refer also to cutFEM (Burman, Massing etc.) explaining the limitation of that approach (network case for example).}\\
 Therefore we focus on the analysis of this discretization approach for Problem 2 solely.
 
-\subsubsection{Problem 2} We consider for the solutions $u_h$ and ${\ud}_h$ the spaces $X_h = X_{h,0}^1(\Omega) \times X_{h^\prime,0}^1(\Lambda)$. With little abuse of notation, we assume that the characteristic mesh size of the 3D mesh $\mathcal{T}^{\Omega}_h$ and the one of the 1D mesh $\mathcal{T}^{\Lambda}_{h'}$ are different. Concerning the multiplier space, let $\mathcal{G}_h = \{K \in \mathcal{T}^{\Omega}_h: \, K\cap \Lambda \neq \emptyset\}$, be the set of the 3D elements that intersect $\Lambda$. Then we define $Q_h=\{{\ld}_h : {\ld}_h \in P^0(K) \, \forall K \in \mathcal{G}_h\}$. We notice that the multiplier functions are defined on the 3D elements. With little abuse of notation, we denote with $Q_h$ also the restriction to $\Lambda$ of the space of piecewise constant functions defined in 3D. As a result, we have $Q_h \subset L^2(\Lambda) \subset H^{-\frac12}(\Lambda)$.
+\subsubsection{Problem 3D-1D-1D} We consider for the solutions $u_h$ and ${\ud}_h$ the spaces $X_h = X_{h,0}^1(\Omega) \times X_{h^\prime,0}^1(\Lambda)$. With little abuse of notation, we assume that the characteristic mesh size of the 3D mesh $\mathcal{T}^{\Omega}_h$ and the one of the 1D mesh $\mathcal{T}^{\Lambda}_{h'}$ are different. Concerning the multiplier space, let $\mathcal{G}_h = \{K \in \mathcal{T}^{\Omega}_h: \, K\cap \Lambda \neq \emptyset\}$, be the set of the 3D elements that intersect $\Lambda$. Then we define $Q_h=\{{\ld}_h : {\ld}_h \in P^0(K) \, \forall K \in \mathcal{G}_h\}$. We notice that the multiplier functions are defined on the 3D elements. With little abuse of notation, we denote with $Q_h$ also the restriction to $\Lambda$ of the space of piecewise constant functions defined in 3D. As a result, we have $Q_h \subset L^2(\Lambda) \subset H^{-\frac12}(\Lambda)$.
 With this choice of multipliers the problem is not inf-sup stable, therefore the idea is to add a stabilization term $s({\ld}_h, {\md}_h): \ Q_h \times Q_h \rightarrow \mathbb{R}$ to \eqref{eq:prob2_discrete} following the approach introduced in \cite{burman2014}. 
 The objective of this section is to analyze the stabilized version of the 3D-1D-1D problem: find $[u_h, {\ud}_h] \in X_h$ and ${\ld}_h \in Q_h$ such that
 \begin{multline}\label{eq:prob2_stabilized}
@@ -42,7 +42,7 @@ being $\vertiii{[\cdot \, ,\, \cdot] }_{X_h}$ a suitable discrete norm.
 \end{enumerate}
 Then, problem \eqref{eq:prob2_stabilized} admits a unique solution.
 \end{lemma}
-For the proof of this result we remand the reader to Lemma 2.3 of \cite{burman2014}. In the reminder of this section we show how to find a multiplier space $Q_H$ and a stabilization operator $s_h$ such that all the assumptions of lemma \ref{lemma23burman} are satisfied.
+For the proof of this result we remind the reader to Lemma 2.3 of \cite{burman2014}. In the remainder of this section we show how to find a multiplier space $Q_H$ and a stabilization operator $s_h$ such that all the assumptions of lemma \ref{lemma23burman} are satisfied.
 
 % The stabilization operator is based on a new multiplier space $Q_H$, for which the discrete inf-sup condition is fulfilled, and a projection operator $\pi_H: Q_h \rightarrow Q_H$ such that for any $[v, \vd] \in X $
 % \begin{equation}\label{condition_pi_L}

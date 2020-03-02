@@ -1,29 +1,32 @@
 \section{Saddle-point problem analysis}
-Let $a: X \times X \rightarrow \mathbb{R}$ and $b: X\times Q \rightarrow \mathbb{R}$ be bounded bilinear forms. Let us consider the general saddle point problem of the form: find $u\in X$, $\lambda\in Q$ s.t.
+Let $a: X \times X \rightarrow \mathbb{R}$ and $b: X\times Q \rightarrow \mathbb{R}$ be bilinear forms. Let us consider the general saddle point problem of the form: find $u\in X$, $\lambda\in Q$ s.t.
 \begin{eqnarray}\label{eq:saddle-point}
-\begin{cases}
-a(u,v)+b(v,\lambda)=c(v)\quad &\forall v\in X\\
-b(u,\mu)=d(\mu) \quad &\forall \mu\in Q.
-\end{cases}
+\begin{aligh}
+a(u,v)+b(v,\lambda)&=c(v),\quad &\forall v\in X,\\
+b(u,\mu)&=d(\mu), \quad &\forall \mu\in Q.
+\end{aligh}
 \end{eqnarray}
-We denote with $A$ and $B$ the operators associated to the bilinear forms $a$ and $b$, namely $A: X \longrightarrow X'$ with $\langle Au,v\rangle _{X',X} = a(u,v)$ and $B: X \longrightarrow Q'$ with $\langle Bv,\mu\rangle_{Q',Q} = b(v,\mu)$. Problem \eqref{eq:saddle-point} embraces problems 1 and 2 described before. 
-For the analysis of such problems we apply the following general abstract theorem, see for example \cite[Theorem 2.34]{MR2050138} and \cite{MR365287} for a seminal work on this topic.
+%We denote with $A$ and $B$ the operators associated to the bilinear forms $a$ and $b$, namely $A: X \longrightarrow X'$ with $\langle Au,v\rangle _{X',X} = a(u,v)$ and $B: X \longrightarrow Q'$ with $\langle Bv,\mu\rangle_{Q',Q} = b(v,\mu)$. Problem \eqref{eq:saddle-point} embraces problems 1 and 2 described before. 
+The Brezzi conditions \cite{MR365287} ensure that the problem \eqref{eq:saddle-point} is well-posed.
+For our purpose here, we use the following relaxed version of the Brezzi conditions:  
 \begin{theorem}{}\label{th:bnb}
-Problem \eqref{eq:saddle-point} is well posed iff 
-\begin{eqnarray}\label{BNB1}
-\begin{cases}
-\exists \alpha >0 :\, \inf_{u\in ker(B)}\sup_{v\in ker(B)} \frac{a(u,v)}{\|u\|_{X}\|v\|_{X}}\geq \alpha\\
-\forall v \in ker(B), \, \left( \forall u \in ker(B),\, a(u,v)=0 \right)\implies v=0.
-\end{cases}
-\end{eqnarray}
-\begin{equation}\label{eq:infsup}
-\exists \beta >0:\,\inf_{\mu\in Q}\sup_{v\in X} \frac{b(v,\mu)}{\|v\|_{X}\|\mu\|_{Q}}\geq \beta .
-\end{equation}
+Problem \eqref{eq:saddle-point} is well posed if the following conditions are satisfied
+\begin{align}\label{BNB1}
+a(u,u) &\ge \alpha \|u\|^2_{X}, & u\in X\\
+\label{BNB2}
+a(u,v) &\le C \|u\|_{X}\|v\|_{X}, & u,v \in X\\
+\label{BNB3}
+b(u,\mu) &\ge D \|u\|_{X} \|\mu\|_{Q}, & u\in X, \mu\in Q\\
+\label{BNB4}
+\sup_{v\in X} \frac{b(v,\mu)}{\|v\|_{X} &\geq \beta\|\mu\|_{Q}}, & \mu \in Q .
+\end{align}
+Here $\alpha$, $\beta$, $C$, and $D$ are positive numbers. 
 \end{theorem} 
-Notice that if $a$ is coercive on $ker(B)$, \eqref{BNB1} is clearly fulfilled. \\
+Here, the coersivity condition applies to $X$, which is a relaxation of Brezzi's original conditions.  
+
 
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-\subsection{Problem 1}
+\subsection{Problem 3D-1D-2D}
 We aim to find $u \in H^1_0(\Omega),\ \ud \in H_0^1(\Lambda), \ \lambda \in H^{-\frac12}(\Gamma )$,
 solutions of \eqref{eq:saddle-point}, where
 \begin{align*}
@@ -35,17 +38,18 @@ c([v,\vd])&= (f,v)_{L^2(\Omega)} + (\avrd{g},\vd)_{L^2(\Lambda),|\D|}
 \\
 d(\mu)&=0
 \end{align*}
-We prove that the hypothesis of \ref{th:bnb} are fullfilled choosing 
+We prove that the conditions of Theorem \ref{th:bnb} are fullfilled choosing 
 $X=H^1_0(\Omega) \times H^1_0(\Lambda)$, $Q=H^{-\frac 12}(\Gamma)$, where $X$  is equipped with the norm $\vertiii{[u,\ud ]}^2=\|u\|^2_{H^1(\Omega)} + \|\ud\|^2_{H^1(\Lambda),|\D|}$.
 \begin{lemma}\label{lemma:prob1_boundedness} 
-The bilinear forms $a(\cdot \ , \ \cdot)$ and $b(\cdot \ , \ \cdot)$ are bounded.
+The Problem 3D-1D-2D is well-posed.
 \end{lemma}
 \begin{proof}
-The bilinear form $a(\cdot \ , \ \cdot)$ is clearly bounded since
+We need to establish the four Brezzi conditions. 
+The bilinear form $a(\cdot \ , \ \cdot)$ is clearly bounded and coersive since 
 \begin{equation*}
-a([u, \ud], [v, \vd])\leq \|u\|_{H^1(\Omega)}\|v\|_{H^1(\Omega)} + \|\ud\|_{H^1(\Lambda), |\D|}\|\vd\|_{H^1(\Lambda), |\D|} \leq 2 \vertiii{[u, \ud]}\vertiii{[v, \vd]}.
+a([u, \ud], [v, \vd]) = (u,v)_{H^1(\Omega)} + (\ud, \vd)_{H^1(\Lambda), |\D|}.
 \end{equation*}
-Concerning the bilinear form $b(\cdot \ , \ \cdot)$ we have
+Furthermore, the bilinear form $b(\cdot \ , \ \cdot)$ is bounded because
 \begin{multline*}
 b([v, \vd], \mu)= \langle \trace v - \ext \vd , \mu \rangle_\Gamma 
 \leq \|\trace v - \ext \vd\|_{H^{\frac 12}_{00}(\Gamma)}\|\mu\|_{H^{-\frac 12}(\Gamma)}\\
@@ -54,17 +58,9 @@ b([v, \vd], \mu)= \langle \trace v - \ext \vd , \mu \rangle_\Gamma
 \leq \left(C_T \|v\|_{H^1(\Omega)} + \left(\frac{\max |\DD|}{\min |\D|}\right)^{\frac 12} \|\vd\|_{H^1(\Lambda),|\D|}\right)\|\mu\|_{H^{-\frac 12}(\Gamma)}\\
 \leq \left( C_T + \left(\frac{\max |\DD|}{\min |\D|}\right)^{\frac 12}\right) \vertiii{[v,\vd]}\|\mu\|_{H^{-\frac 12}(\Gamma)}
 \end{multline*}
-\end{proof}
 
-\begin{lemma}\label{lemma:prob1_coercivity}
-The bilinear form $a(\cdot \ , \ \cdot)$ is coercive .
-\end{lemma}
-\begin{proof}
-We have
-$a([u,\ud], [u,\ud])= (u,u)_{H^1(\Omega)} + |{\cal D}|(\ud,\ud)_{H^1(\Lambda)} = \vertiii{[u,\ud]}^2\,.$
-\end{proof}
-
-We denote with $\mathcal{H}_\Omega$ the harmonic extension operator defined as $\mathcal{H}_\Omega \xi = v$ where $v$ is the weak solution of
+To show the inf-sup condition, we will employ a harmonic extension operator. 
+We denote with $\mathcal{H}_\Omega$ the harmonic extension operator defined is $\mathcal{H}_\Omega \xi = v$ where $v$ is the weak solution of
 \begin{equation}\label{eq:harmonic}
 -\Delta v=0 \ \text{in} \ \Omega,
 \quad
@@ -75,15 +71,9 @@ v=\xi \ \text{on} \ \Gamma.
 The boundedness/stability of this operator ensures that there exists $\| \mathcal{H}_\Omega \| \in \mathbb{R}$ such that
 $\|v \|_{H^1(\Omega)}\leq \|\mathcal{H}_\Omega\| \|\xi \|_{H^{\frac 12}_{00}(\Gamma)}$. 
 
-\begin{lemma}
-The inf-sup inequality \eqref{eq:infsup} is fulfilled, namely $\exists \beta_1 >0$ such that $\forall \mu \in H^{-\frac 12}(\Gamma)$:
-\begin{equation*}
-\sup _{\substack{v\in H^1_0(\Omega),\\ \vd \in H^1_0(\Lambda)}} \frac{ \langle \trace v  - \ext \vd, \mu \rangle_\Gamma}{\vertiii{[v, \vd]}}
-\geq \beta_1 \sup_{q\in H^{\frac 12}_{00}(\Gamma)}\frac{\langle q, \mu\rangle_{\Gamma}}{\|q\|_{H^{\frac 12}_{00}(\Gamma)}}.
-\end{equation*}
-\end{lemma} 
-\begin{proof}
-We choose $\vd \in H^1_0(\Lambda)$ such that $\ext\vd =0$. Therefore,
+
+The inf-sup inequality is fulfilled, that is; 
+we choose $\vd \in H^1_0(\Lambda)$ such that $\ext\vd =0$. Therefore,
 \begin{equation*}
 \sup _{\substack{v\in H^1_0(\Omega),\\ \vd \in H^1_0(\Lambda)}} \frac{ \langle \trace v  - \ext \vd, \mu\rangle_\Gamma}{\vertiii{[v, \vd]}} 
 \geq \sup _{v\in H^1_0(\Omega)} \frac{ \langle \trace v, \mu \rangle_\Gamma}{\|v\|_{H^1(\Omega)}}.
@@ -100,7 +90,7 @@ where in the last inequality we exploited the fact that $H^{-\frac 12}(\Gamma)=(
 
 
 % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-\subsection{Problem 2}
+\subsection{Problem 3D-1D-1D}
 We aim to find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ \ld \in H^{-\frac12}(\Lambda)$,
 solution of \eqref{eq:saddle-point} with
 \begin{align*}
@@ -118,10 +108,14 @@ Let us consider $X$ equipped again with the norm $\vertiii{[\cdot,\cdot ]}$ and
 $Q$ equipped with the norm $\|\cdot \|_{H^{-\frac 12}(\Lambda),|\DD|}$.
 Then, we have the following lemmas.
 \begin{lemma}
-The bilinear forms $a(\cdot \ , \ \cdot)$ and $b(\cdot \ , \ \cdot)$ are bounded.
+The Problem 3D-1D-1D is well-posed.
 \end{lemma}
 \begin{proof}
-The boundedness of $a(\cdot \ , \ \cdot)$ can be proved as in Lemma \ref{lemma:prob1_boundedness}. Concerning $b(\cdot \ , \ \cdot)$, we have
+Again, 
+\begin{equation*}
+a([u, \ud], [v, \vd]) = (u,v)_{H^1(\Omega)} + (\ud, \vd)_{H^1(\Lambda), |\D|}.
+\end{equation*}
+The bound on $b(\cdot \ , \ \cdot)$ is established as
 \begin{multline*}
 b([v, \vd], \md)=  \langle  \mtrace v - \vd, \md \rangle_{\Lambda, |\DD|} 
 \leq \|\mtrace v - \vd\|_{H^{\frac 12 }_{00}(\Lambda), |\DD|}\|\md\|_{H^{-\frac 12}(\Lambda),|\DD|}\\
@@ -130,19 +124,7 @@ b([v, \vd], \md)=  \langle  \mtrace v - \vd, \md \rangle_{\Lambda, |\DD|}
 \leq \left(C_\Gamma C_T\|v\|_{H^1(\Omega)}+ \left(\frac{\max |\DD|}{\min |\D|}\right)^{\frac 12} \|\vd\|_{H^1(\Lambda), |\D|}\right) \|\md\|_{H^{-\frac 12}(\Lambda),|\DD|} \\
 \leq  \left( C_\Gamma C_T + \left(\frac{\max |\DD|}{\min |\D|}\right)^{\frac 12} \right) \vertiii{[v,\vd]}\|\md\|_{H^{-\frac 12}(\Lambda),|\DD|}.
 \end{multline*} 
-\end{proof}
-
-\begin{lemma}\label{lemma:prob2_coercivity}
-The bilinear form $a(\cdot \ , \ \cdot)$ is coercive.
-\end{lemma}
-
-\begin{lemma}
-The inf-sup inequality \eqref{eq:infsup} holds, namely $ \exists \beta_2 >0$ such that $\forall \md \in H^{-\frac 12}(\Lambda),\,$:
-\begin{equation*}
-\sup _{\substack{v\in H^1_0(\Omega),\\ \vd \in H^1_0(\Lambda)}} \frac{ \langle \mtrace v - \vd, \md \rangle_{\Lambda,|\DD|}}{\vertiii{[v,\vd]}}
-\geq \beta_2 \|\md\|_{H^{-\frac 12}(\Lambda)}.
-\end{equation*}
-\end{lemma} 
+The inf-sup condition holds. 
 We choose $\vd=0$ and we obtain
 \begin{equation*}
 \sup _{\substack{v\in H^1_0(\Omega),\\ \vd \in H^1_0(\Lambda)}} \frac{ \langle \mtrace v - \vd, \md \rangle_{\Lambda,|\DD|}}{\vertiii{[v,\vd]}}
@@ -159,12 +141,13 @@ Moreover, using Lemma \ref{lemma:H12norm} we obtain
 \|v\|_{H^1_0(\Omega)}\leq \|\mathcal{H}_\Omega\| \|\ext q\|_{H^{\frac 12}_{00}(\Gamma)}  = \|\mathcal{H}_\Omega\| \|q\|_{H^{\frac 12}_{00}(\Lambda),|\DD|}.
 \end{equation*}
  Therefore,
-\begin{multline*}
+\begin{align*}
 \sup _{v\in H^1_0(\Omega)} \frac{ \langle \mtrace v, \md \rangle_{\Lambda,|\DD|}}{\|v\|_{H^1(\Omega)}}
 \geq \sup _{q\in H^{\frac 12}_{00}(\Lambda)} \frac{ \langle q, \md \rangle_{\Lambda,|\DD|}}{\|v\|_{H^1(\Omega)}}
-\geq \|\mathcal{H}_\Omega\|^{-1} \sup _{q\in H^{\frac 12}_{00}(\Lambda)} \frac{ \langle q, \md \rangle_{\Lambda,|\DD|}}{\|q\|_{H^{\frac 12}_{00}(\Lambda),|\DD|}} 
-\\= \|\mathcal{H}_\Omega\|^{-1} \|\md\|_{H^{-\frac 12}(\Lambda),|\DD|}.
-\end{multline*}
+\geq \frac{1}{\|\mathcal{H}_\Omega\|} \sup _{q\in H^{\frac 12}_{00}(\Lambda)} \frac{ \langle q, \md \rangle_{\Lambda,|\DD|}}{\|q\|_{H^{\frac 12}_{00}(\Lambda),|\DD|}} 
+= \frac{1}{\|\mathcal{H}_\Omega\|} \|\md\|_{H^{-\frac 12}(\Lambda),|\DD|}.
+\end{align*}
+\end{proof}
 
 
 

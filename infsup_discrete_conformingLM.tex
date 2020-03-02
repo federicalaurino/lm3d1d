@@ -1,5 +1,5 @@
 \section{Finite element approximation}
-In this section we consider the discretization of Problem 1 and 2 by means of the finite element method. We address two main challenges; first we aim to identify a suitable approximation space for the Lagrange multiplier and to analyze the stability of the discrete saddle point problem; second we aim to derive a stable discretization method that uses independent computational meshes for $\Omega$, $\Gamma$ and $\Lambda$. Let us introduce a shape-regular triangulation $\mathcal{T}^{\Omega}_h$ of $\Omega$ and an admissible partition $\mathcal{T}^{\Lambda}_{h}$ of $\Lambda$.
+In this section we consider the discretization of the Problems 3D-1D-2D and 3D-1D-1D by means of the finite element method. We address two main challenges; first we aim to identify a suitable approximation space for the Lagrange multiplier and to analyze the stability of the discrete saddle point problem; second we aim to derive a stable discretization method that uses independent computational meshes for $\Omega$, $\Gamma$ and $\Lambda$. Let us introduce a shape-regular triangulation $\mathcal{T}^{\Omega}_h$ of $\Omega$ and an admissible partition $\mathcal{T}^{\Lambda}_{h}$ of $\Lambda$.
 We analyze two different cases: the one in which the 3D mesh is conforming to the interface $\Gamma$, namely the set of the intersections of the 3D elements of $\mathcal{T}^{\Omega}_h$ with $\Gamma$ is constituted by facets of such elements, and the non conforming case, namely the interface $\Gamma$ cuts the mesh arbitrarily. The discrete equivalent of \eqref{eq:saddle-point} reads as finding $u_h\in X_h\subset X$, $\lambda_h\in Q_h\subset Q$ s.t.
 \begin{eqnarray}\label{eq:saddle-point_discrete}
 \begin{cases}
@@ -7,25 +7,25 @@ a(u_h,v_h)+b(v_h,\lambda_h)=c(v_h)\quad &\forall v_h\in X_h\\
 b(u_h,\mu_h)=d(\mu_h) \quad &\forall \mu_h\in Q_h.
 \end{cases}
 \end{eqnarray}
-Let $B_h: Q'_h \longrightarrow Q_h$ be the operator induced by $b$ such that $\langle B_h v_h,\mu _h\rangle_{Q'_h,Q_h} = b(v_h,\mu _h)$.
-The well posedness of such problem is governed by the classical result reported below.
-
-\begin{corollary}{\cite[Theorem 2.42]{MR2050138}}Let $a(\cdot, \cdot)$ and $b(\cdot, \cdot)$ be continuous bilinear forms. 
-Problem \eqref{eq:saddle-point_discrete} is well-posed if and only if 
+This discrete problem is well-posed if the \eqref{BNB1}-\eqref{BNB4} conditions applies to $X_h$ and $Q_h$. Since $X_h\subset X$ and $Q_h\subset Q$,  
+\eqref{BNB1}-\eqref{BNB3} follows immediately and only the inf-sup condition needs consideration.  We summarize this in the Corollary below. 
+\begin{corollary}{\cite[Theorem 2.42]{MR2050138}}\\
+Let
+$X_h \subset X$, $Q_h \subset Q$, $a(\cdot, \cdot)$ and $b(\cdot, \cdot)$ satisfy the conditions  \eqref{BNB1}-\eqref{BNB3} then  
+the problem \eqref{eq:saddle-point_discrete} is well-posed if 
+the discrete counterpart of \eqref{BNB4} is satisfied, ie., 
+there exists a $\beta_h>0$ such that
 \begin{align}\label{BNB1_discrete}
-& \exists \alpha_h >0 : && \inf_{u_h\in ker(B_h)}\sup_{v_h\in ker(B_h)} \frac{a(u_h,v_h)}{\|u_h\|_{X}\|v_h\|_{X}}\geq \alpha_h\,,
-\\
 \label{eq:infsup_discrete}
- &\exists \beta_h >0: &&\inf_{\mu_h\in Q_h}\sup_{v_h\in X_h} \frac{b(v_h,\mu_h)}{\|v_h\|_{X}\|\mu_h\|_{Q}}\geq \beta_h\, .
+ \sup_{v_h\in X_h} \frac{b(v_h,\mu_h)}{\|v_h\|_{X}}\geq \beta_h |\mu_h\|_{Q}\, .
 \end{align}
 \end{corollary}
-This corollary is the discrete counterpart of Theorem \ref{th:bnb} where at the discrete level condition \eqref{BNB1_discrete} implies both of \eqref{BNB1}. We remark that \eqref{eq:infsup_discrete} does not follow from the conformity of the finte element spaces and it must be analysed independetly of \eqref{eq:infsup}.  
-Let us notice that for both problem 1 and problem 2 the bilinear form $a(\cdot, \cdot)$ is coercive as stated in Lemmas \eqref{lemma:prob1_coercivity} and \eqref{lemma:prob2_coercivity}. Consequently, \eqref{BNB1_discrete} is automatically satisfied, being $\alpha_h$ the coercivity constant.\\
+
 
 \subsection{$\mathcal{T}^{\Omega}_h$ conforming to $\Gamma$}
- We first analyze the case in which the 3D mesh is conforming to the interface $\Gamma$. As conformity conditions between $\mathcal{T}^{\Omega}_h$ and $\mathcal{T}^{\Lambda}_h$ with $\Gamma$ , we require that the intersection of $\mathcal{T}^{\Omega}_h$ and $\Gamma$ is made of entire faces of elemets $K \in \mathcal{T}^{\Omega}_h$. Furthermore, we also set a restriction between $\mathcal{T}^{\Omega}_h$ and $\mathcal{T}^{\Lambda}_h$. We assume that $\Lambda$ is a piecewise linear manifold. We want that the intersection of $\Gamma$ with any orthogonal plane to $\Lambda$ that crosses $\Lambda$ at the internal nodes of $\mathcal{T}^{\Lambda}_h$, consists of entire edges of $\mathcal{T}^{\Omega}_h$. 
+ We first analyze the case in which the 3D mesh is conforming to the interface $\Gamma$. As conformity conditions between $\mathcal{T}^{\Omega}_h$ and $\mathcal{T}^{\Lambda}_h$ with $\Gamma$ , we require that the intersection of $\mathcal{T}^{\Omega}_h$ and $\Gamma$ is made of entire faces of elements $K \in \mathcal{T}^{\Omega}_h$. Furthermore, we also set a restriction between $\mathcal{T}^{\Omega}_h$ and $\mathcal{T}^{\Lambda}_h$. We assume that $\Lambda$ is a piecewise linear manifold. We want that the intersection of $\Gamma$ with any orthogonal plane to $\Lambda$ that crosses $\Lambda$ at the internal nodes of $\mathcal{T}^{\Lambda}_h$, consists of entire edges of $\mathcal{T}^{\Omega}_h$. 
  
-\subsubsection{Problem 1}
+\subsubsection{Problem 3D-1D-2D}
 We denote by $X_{h,0}^k(\Omega)\subset H^1_0(\Omega)$, with $k>0$, the conforming finite element space of continuous piecewise polynomials of degree $k$ defined on $\Omega$ satisfying homogeneous Dirichlet conditions on the boundary and by $X_{h,0}^k(\Lambda)\subset H^1_0(\Lambda)$ the space of continuous piecewise polynomials of degree $k$ defined on $\Lambda$, satisfying homogeneous Dirichlet conditions on $\Lambda \cap \partial \Omega$. 
 
 The discrete version of Problem 1 is:
@@ -171,7 +171,7 @@ Therefore the inf-sup condition $\eqref{inf_sup_discrete_prob1}$ holds with $\be
 %\begin{remark} We notice that to prove the result in Lemma \ref{lemma:trspace_infsup} (and then the discrete inf-sup condition)  basically we need a projection operator $P_h: H^{\frac 12}_{00} \longrightarrow W_{h,0}^k(\Gamma)$ orthogonal in the multiplier space $Q_h$, namely such that $\langle P_h v, \mu_h \rangle = \langle v, \mu_h \rangle, \, \forall \mu_h \in Q_h$, and continuous in $H^{\frac 12}(\Gamma)$. Therefore, in principle different choices than $Q_h=W_{h,0}^k(\Gamma)$ could be considered if we can build an operator $P_h$ satisfying these properties. In \cite{belgacem1999mortar} such operator $P_h$  is built for a particular choice of $Q_h$ but it is not clear how to prove the $H^1$-stability inequality (and consequently the $H^{\frac 12 }$-stability) with a constant independent of the mesh size $h$.
 %\end{remark}  
 
-\subsubsection{Problem 2}
+\subsubsection{Problem 3D-1D-1D}
 We aim to find  $u_h \in X_{h,0}^k(\Omega) ,\ {\ud}_h \in X_{h,0}^k(\Lambda), \ {\ld}_h \in Q_h \subset H^{-\frac12}(\Lambda)$, such that
 \begin{subequations}
 \begin{align}\label{eq:prob2_discrete}

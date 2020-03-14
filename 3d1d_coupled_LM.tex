@@ -140,7 +140,7 @@ for a continuous function $v$ and $\mathcal{T}_\Lambda: \Omega\rightarrow\Lambda
 Using models based on mixed dimensional PDEs is motivated by the fact that many problems in geo- and biophysics are characterized by slender cylindrical structures coupled to a larger 3D body, where the characteristic transverse length scale of the slender structure is many orders of magnitude smaller than the longitudinal length.  For example, in geophysical applications the radius of wells are often of the order of 10 cm while the length may be several kilometers~\cite{Peaceman1978183, Peaceman1983531}. Similarly, in applications involving the blood flow and oxygen transport of the micro-circulation the capillary radius is a few microns, while simulations are often performed on mm to cm scale, with thousands of vessels~\cite{berg2020modelling,fang2008oxygen,gould2017capillary, secomb2004green}. Finally, in neuro-science applications a neuron has width of a few microns, while  its length is much longer. For example, an axon of a motor neurons may be as long as a meter.  Hence,  at least 4 orders of magnitude in difference in transverse and longitudinal direction is common in both geo-physics, bio-mechanics and neuro-science. Meshes dictated by resolving the transverse length scale in 3D would then possibly lead to the order of $10^{12}$ degrees of freedom. Even if adaptive and strongly anisotropic meshes are allowed for, the computations quickly become demanding if many slender structures and their interactions are under study.  
 
 From a mathematical standpoint, the challenge involved in problem \eqref{eq:pde} is that neither $\mathcal{T}_\Lambda$ nor $\delta_\Lambda$ are well defined. That is, without extra regularity,  solutions of elliptic PDEs only have well defined traces of co-dimension one. Here, $\mathcal{T}_\Lambda$ is of co-dimension two, mapping functions defined on a domain in 3D to functions defined along a 1D curve. 
-The challenge of coupling PDEs on domains with high dimensionality gap has recently attracted the attention of many researchers. The sequence of works by D'Angelo, \cite{DAngelo,d2012finite,d2008coupling} have remedied the well-posedness by weakening the solution concept. The approach naturally leads to non-symmetric formulations. An alternative approach is to decompose the solution into smooth and non-smooth components, where the non-smooth component may be represented in terms of Green functions, and then consider the well-posedness of the smooth component \cite{gjerde2019singularity}. The numerical approximation of such equations has been also studied in a series of works. The consistent derivation of numerical approximations schemes for PDEs in mixed dimension is addressed in \cite{Nordbotten}. Concerning approximability,  elliptic equations with Dirac sources represent an effective prototype case that has been addressed in \cite{Bertoluzza201897,koppl2016local,koppl2014optimal}, where the optimal a-priori error estimates for the finite element approximation are derived. Furthermore, the interplay between the mathematical structure of the problem and solvers, as well as preconditioners for its discretization has been studied in details  in \cite{Kuchta2016B962} for the solution of 1D differential equations embedded in 2D, and more recently extended to the 3D-1D case in \cite{KMM2}.
+The challenge of coupling PDEs on domains with high dimensionality gap has recently attracted the attention of many researchers. The sequence of works by D'Angelo, \cite{DAngelo,d2012finite,d2008coupling} have remedied the well-posedness by weakening the solution concept. The approach naturally leads to non-symmetric formulations. An alternative approach is to decompose the solution into smooth and non-smooth components, where the non-smooth component may be represented in terms of Green functions, and then consider the well-posedness of the smooth component \cite{gjerde2019singularity}. The numerical approximation of such equations has been also studied in a series of works. The consistent derivation of numerical approximations schemes for PDEs in mixed dimension is addressed in \cite{Nordbotten}. Concerning approximability,  elliptic equations with Dirac sources represent an effective prototype case that has been addressed in \cite{Bertoluzza201897,koppl2016local,koppl2014optimal}, where the optimal a-priori error estimates for the finite element approximation are derived. Furthermore, the interplay between the mathematical structure of the problem and solvers, as well as preconditioners for its discretization has been studied in details  in \cite{kuchta2016preconditioners} for the solution of 1D differential equations embedded in 2D, and more recently extended to the 3D-1D case in \cite{KMM2}.
 
 Stemming from this literature, in this work we adopt and analyze a different approach, closely related to \cite{KVWZ,laurino_m2an}. That is, we exploit the fact that the $\Lambda$ is not strictly a 1D curve, but rather a very thin 3D structure with a cross-sectional area far below what can be resolved. With this additional assumption, we show that robustness with respect to the cross-sectional area can be restored. The major novelty with respect to the previous works is that we address essential type coupling conditions, namely Dirichlet-Neumann conditions, rather than natural type ones, such as the Neumann-Robin or Robin-Robin cases. These coupling conditions pose additional difficulties as the conditions 
 are not a natural part of the weak formulation of the problem. We overcome this difficulty by  resorting to a weak formulation of the Dirichlet-Neumann coupling conditions across dimensions by using Lagrange multipliers.
@@ -1197,8 +1197,8 @@ for illustration.
 
 \begin{figure}
  \centering
- \includegraphics[width=0.45\textwidth]{graphics/conform_mesh.tex}
- \includegraphics[width=0.45\textwidth]{graphics/nonconform_mesh.tex} 
+ \includegraphics[width=0.45\textwidth]{graphics/conform_mesh.pdf}
+ \includegraphics[width=0.45\textwidth]{graphics/nonconform_mesh.pdf} 
  \captionof{figure}{
    (Top)
 $\Lambda$ and $\Gamma$ conforming discretization of $\Omega$
@@ -1360,7 +1360,7 @@ the rates are rather unstable.
 %% \end{table}
 
 \subsection{Comparison}
-In Tables \ref{tab:error_conform}, \ref{tab:error_conform} one can observe that 
+In Tables \ref{tab:error_conform} one can observe that 
 all the formulations yield practically identically accurate approximations of $u$.
 Further, compared to the conforming case, the stabilized formulation \eqref{eq:problem2}
 results in a greater accuracy of $u_{\odot h}$ as the underlying mesh $\mathcal{T}^{\Lambda}_{h}$ is
@@ -1386,14 +1386,14 @@ A detailed analysis of the preconditioners will be presented in a separate
 work. We remark that in both cases the fractional Laplacian was here realized
 by spectral decomposition \cite{kuchta2016preconditioners}.
 
-For the unfitted stabilized \eqref{eq:problem2} the Lagrange multiplier preconditioner
+For the unfitted stabilized formulation \eqref{eq:problem2} the Lagrange multiplier preconditioner
 uses a Riesz map with respect to the inner product due to $L^2(\mathcal{G}_h)$ and
 the stabilization \eqref{eq:stab}, i.e.
 \[
 ({\ld}_h, {\md}_h) \mapsto \sum _{K\in \mathcal{G}_h}\int_{K}{\ld}_h {\md}_h + \sum _{K\in \mathcal{G}_h} \int_{\partial K \setminus \partial \mathcal{G}_h} h \llbracket {\ld}_h \rrbracket \llbracket {\md}_h \rrbracket.
 \]
 This simple choice does not yield bounded
-iterations. However, establishing a robust precondtioner in this case 
+iterations. However, establishing a robust preconditioner in this case 
 is beyond the scope of the paper and shall be pursued in the future works.
 
 
@@ -1405,16 +1405,16 @@ parameter as the iteration counts and condition numbers are bounded in $h$.
 We then see that the solution time for \eqref{eq:problem1_simple} is about 2 times
 longer compared to \eqref{eq:problem2_simple} which is about 4 times more expensive
 than the solution of the Poisson problem \eqref{benchm_3d}. This is in addition to the
-higher setup costs of the preconditioner which in our implementation involve solving
+higher setup costs of the preconditioner, which in our implementation involve solving
 an eigenvalue problem for the fractional Laplacian. Therefore it is advantageous to keep
 the multiplier space as small as possible. We remark that the missing
-results for \eqref{eq:problem1_simple} in Table \ref{tab:cost} and \ref{tab:error_conform}
-are due to the memory limitations which we encounter when solving the eigenvalue problem
+results for \eqref{eq:problem1_simple} in Table \ref{tab:cost} are due to the
+memory limitations encountered when solving the eigenvalue problem
 for the Laplacian, which for finest mesh involves cca 32 thousand eigenvalues, cf. Appendix \ref{sec:appendix}.
 %
 
 Due to the missing proper preconditioner for the Lagrange multiplier block the
-number of iterations in the third, unfitted formulation can be seen to approximatly
+number of iterations in the third, unfitted formulation can be seen to approximately
 double on refinement. 
 
 \begin{table}
@@ -1439,8 +1439,8 @@ double on refinement.
     \end{center}
     }
   \caption{Cost comparison of the formulations across refinement levels $l$.
-    Number of Krylov (preconditioned conjugate gradient for \eqref{benchm_3d},
-    MinRes otherwise) iterations and the conditioned number of the preconditioned
+    Number of Krylov  terations (preconditioned conjugate gradient for \eqref{benchm_3d},
+    MinRes otherwise) and the condition number of the preconditioned
     problem is denoted by $\#$ and $\kappa$ respectively. Time till convergence
     of the iterative solver (excluding the setup) is shown as $T$. 
   }

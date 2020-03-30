@@ -134,7 +134,7 @@ Therefore, we obtain
 \end{equation*}
 and combining with \eqref{eq:1Ddirneu_weak} we obtain the first formulation of the reduced problem.
 
-Hence, we have obtained the Problem 3D-2D-1D, equation 
+Hence, we have obtained the Problem 3D-1D-2D, equation 
 \eqref{eq:problem1}:
 Find $u \in H^1_0(\Omega), \ \lambda \in H^{-\frac 1 2}(\Gamma ),\ \ud \in H^1_0(\Lambda)$, such that
 \begin{subequations}
@@ -150,9 +150,9 @@ Find $u \in H^1_0(\Omega), \ \lambda \in H^{-\frac 1 2}(\Gamma ),\ \ud \in H^1_0
 \quad && \forall \mu \in H^{-\frac 1 2}(\Gamma)\,.
 \end{align*}
 \end{subequations}
-This coupled problem is classified as 3D-2D-1D because the unknowns $u,\lambda,\ud$ belong to 
-$\Omega \subset \R^3,\, \Gamma \subset \R^2,\, \Lambda \subset \R$, respectively.
-Then, we apply a topological model reduction of the interface conditions, namely we go from a 3D-2D-1D formulation
+This coupled problem is classified as 3D-1D-2D because the unknowns $u$, $\ud$, $\lambda$ belong to 
+$\Omega \subset \R^3$, $\Lambda \subset \R$ and $\Gamma \subset \R^2$ respectively.
+Then, we apply a topological model reduction of the interface conditions, namely we go from a 3D-1D-2D formulation
 involving sub-problems on $\Omega$ and $\Lambda$ and coupling operators defined on $\Gamma$
 to a 3D-1D-1D formulation where the coupling terms are set on $\Lambda$. 
 To this purpose, let us write the Lagrange multiplier and the test functions on every cross section $\partial\mathcal{D}(s)$ as their average plus some fluctuation,
@@ -196,7 +196,7 @@ find $u \in H^1_0(\Omega)$, $\ud \in H^1_0(\Lambda)$, $\ld \in H^{-\frac 1 2}(\L
 \section{Proof of Lemma \ref{lemma:H12norm}}
 
 \begin{proof}
-Let us consider the eigenvalue problems for the Laplace operator on $\Gamma$ with homogeneous Dirichlet conditions at $x=0,\, X$ and periodic boundary conditions at $y=0,\, Y$. Let us also consider the Laplace eigenproblem on $(0,X)$ with homogeneous Dirichlet conditions. Let us denote as $\phi _{ij}(x,y)$ and $\rho _{ij}$, for $i=1,2,\dots$, $j=0,1,\dots$, the eigenfunctions and the eigenvalues of the Laplacian on $\Gamma$, and with $\phi _i(x)$ and $\rho _i$ the eigenfunctions and the eigenvalues of the laplacian on $(0,X)$. In particular,
+Let us consider the eigenvalue problems for the Laplace operator on $\Gamma$ with homogeneous Dirichlet conditions at $x=0,\, X$ and periodic boundary conditions at $y=0,\, Y$. Let us also consider the Laplace eigenproblem on $(0,X)$ with homogeneous Dirichlet conditions. Let us denote as $\phi _{ij}(x,y)$ and $\rho _{ij}$, for $i=1,2,\dots$, $j=0,1,\dots$, the eigenfunctions and the eigenvalues of the Laplacian on $\Gamma$, and with $\phi _i(x)$ and $\rho _i$ the eigenfunctions and the eigenvalues of the Laplacian on $(0,X)$. In particular,
 \begin{align*}
 &\phi _{ij}(x,y)=\sin \left(\frac{i\pi x}{X}\right)\left( \cos\left(\frac{j2\pi y}{Y}\right)+ \sin\left(\frac{j2\pi y}{Y}\right) \right),\quad
 &&\rho_{ij}=\left(\frac{i\pi}{X}\right) ^2+\left(\frac{j2\pi}{Y}\right)^2,
@@ -278,7 +278,7 @@ We recall that the discrete spaces in the respected formulations
 are $X^1_{h, 0}(\Omega)\times X^1_{h, 0}(\Lambda)\times Q_h(\Gamma)$,
       $X^1_{h, 0}(\Omega)\times X^1_{h, 0}(\Lambda)\times Q_h(\Lambda)$,
       and 
-      $X^1_{h, 0}(\Omega)\times X^1_{h^{\prime}, 0}(\Lambda)\times Q_h(\mathcal{G}_h)$.
+      $X^1_{h, 0}(\Omega)\times X^1_{\mathfrak{h}, 0}(\Lambda)\times Q_h(\mathcal{G}_h)$.
 
 \begin{center}
   \scriptsize{
@@ -289,7 +289,7 @@ are $X^1_{h, 0}(\Omega)\times X^1_{h, 0}(\Lambda)\times Q_h(\Gamma)$,
       \cline{2-10}
        & $\lvert W_{1, h}\rvert$  & $\lvert W_{2, h}\rvert$ & $\lvert W_{3, h}\rvert$ 
        & $\lvert W_{1, h}\rvert$  & $\lvert W_{2, h}\rvert$ & $\lvert W_{3, h}\rvert$
-       & $\lvert W_{1, h}\rvert$  & $\lvert W_{2, h}\rvert$ & $\lvert W_{3, h}\rvert$\\
+       & $\lvert W_{1, h}\rvert$  & $\lvert W_{2, \mathfrak{h}}\rvert$ & $\lvert W_{3, h}\rvert$\\
       %& $\lvert X^1_{h, 0}(\Omega) \rvert$ & $\lvert X^1_{h, 0}(\Lambda) \rvert$ & $\lvert Q_h(\Gamma) \rvert$ &
       %$\lvert X^1_{h, 0}(\Omega) \rvert$ & $\lvert X^1_{h, 0}(\Lambda) \rvert$ & $\lvert Q_h(\Lambda) \rvert$ &
       %$\lvert X^1_{h, 0}(\Omega) \rvert$ & $\lvert X^1_{h^{\prime}, 0}(\Lambda) \rvert$ & $\lvert Q_h(\mathcal{G}_h) \rvert$\\

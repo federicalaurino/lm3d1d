@@ -1264,7 +1264,7 @@ $\Lambda$ and $\Gamma$ conforming discretization of $\Omega$
 \hline
 \multicolumn{5}{c}{\textcolor{blue}{$\mathcal{T}^{\Omega}_h$ conforming to $\Gamma$}}\\
 \hline
-    $h^{-1}$ & $\norm{u-u_h}_{1, \Omega}$ & $\norm{\ud-\udh}_{1, \Lambda}$ & $\norm{\lambda-\lambda_h}_{-\tfrac{1}{2},\Gamma}$ & $\norm{\lambda-\lambda_h}_{0,\Gamma}$\\
+    $h^{-1}$ & $\norm{u-u_h}_{H^1(\Omega)}$ & $\norm{\ud-\udh}_{H^1(\Lambda)}$ & $\norm{\lambda-\lambda_h}_{H^{-1/2}(\Gamma)}$ & $\norm{\lambda-\lambda_h}_{L^2(\Gamma)}$\\
       \hline
 4  & 3.4E0(--)    & 5.3E-1(--)   & 2.9E0(--)    &8.7E0(--)    \\
 8  & 1.7E0(0.99)  & 2.6E-1(1.06) & 6.1E-1(2.25) &1.9E0(2.21)  \\
@@ -1272,7 +1272,7 @@ $\Lambda$ and $\Gamma$ conforming discretization of $\Omega$
 32 & 4.4E-1(1.00) & 6.3E-2(1.00) & 3.4E-2(2.03) &1.3E-1(1.80) \\
 64 & 2.2E-1(1.00) & 3.1E-2(1.00) & 8.6E-3(2.00) &4.2E-2(1.68) \\
 \hline
-$h^{-1}$ & $\norm{u-u_h}_{1, \Omega}$ & $\norm{\ud-u_{\odot h^{\prime}}}_{1, \Lambda}$ & $\norm{\ld-\ldh}_{-\tfrac{1}{2}, \Lambda}$ & $\norm{\ld-\ldh}_{0, \Lambda}$\\
+$h^{-1}$ & $\norm{u-u_h}_{H^1(\Omega)}$ & $\norm{\ud-u_{\odot}}_{H^1(\Lambda)}$ & $\norm{\ld-\ldh}_{H^{-1/2}(\Lambda)}$ & $\norm{\ld-\ldh}_{L^2(\Lambda)}$\\
 \hline
 4   & 3.1E0(--)    & 5.4E-1(--)   & 4.4E-2(--)   & 7.8E-2(--)  \\
 8   & 1.7E0(0.87)  & 2.6E-1(1.06) & 1.1E-2(2.01) & 1.9E-2(2.01)\\
@@ -1284,7 +1284,7 @@ $h^{-1}$ & $\norm{u-u_h}_{1, \Omega}$ & $\norm{\ud-u_{\odot h^{\prime}}}_{1, \La
 \multicolumn{5}{c}{\textcolor{red}{$\mathcal{T}^{\Omega}_h$ non conforming to $\Gamma$}}\\
 %    \begin{tabular}{l|lll}
 \hline
-    $h^{-1}$ & $\norm{u-u_h}_{1, \Omega}$ & $\norm{\ud-\udh}_{1, \Lambda}$ & \multicolumn{2}{c}{$\norm{\ld-\ldh}_{0,\Lambda}$}\\
+    $h^{-1}$ & $\norm{u-u_h}_{H^1(\Omega)}$ & $\norm{\ud-u_{\odot\mathfrak{h}}}_{H^1(\Lambda)}$ & \multicolumn{2}{c}{$\norm{\ld-\ldh}_{L^2(\mathcal{G}_h)}$}\\
       \hline
 5   & 2.6E0(--)    & 2.3E-1(--)   & \multicolumn{2}{c}{1.7E-1(--)} \\ 
 9   & 1.5E0(0.84)  & 9.4E-2(1.42) & \multicolumn{2}{c}{7.1E-2(1.36)}\\
@@ -1300,7 +1300,7 @@ $h^{-1}$ & $\norm{u-u_h}_{1, \Omega}$ & $\norm{\ud-u_{\odot h^{\prime}}}_{1, \La
     (Top) problem \eqref{eq:problem1_simple}, (middle) \eqref{eq:problem2_simple} with
     conforming discretization and (bottom) \eqref{eq:problem2_simple} in case
     $\mathcal{T}^{\Omega}_h$ does not conform to $\Lambda$. Continuous linear Lagrange
-    elements are used for $u_h$, $\udh$ and $u_{\odot h^{\prime}}$ and $\ldh$ in
+    elements are used for $u_h$, $\udh$ and $u_{\odot \mathfrak{h}}$ and $\ldh$ in
     conforming case, while in nonconforming case $\ldh$ is piecewise constant
     on elements of $\mathcal{G}_h$.
   }

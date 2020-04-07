@@ -1,0 +1,319 @@
+% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+\section{Derivation of the model}
+This section provides a rigorous derivation of 3D-1D-1D problem \eqref{eq:problem2} and 3D-1D-2D problem \eqref{eq:problem1}. 
+The steps are similar to the derivation presented in \cite{laurino_m2an}, 
+however, here the coupling conditions are different,
+giving rise to coupled problems featuring Lagrange multipliers. 
+Precisely, the starting point is the problem arising from \emph{Dirichlet-Neumann} conditions. 
+Find $\up,\uf$ s.t.:
+\begin{subequations}\label{eq:dirneu}
+\begin{align}
+\label{eq:dirneu1}
+- \Delta \up  + \up &= f  && \text{ in } \Omega_{\oplus},\\
+\label{eq:dirneu2}
+- \Delta \uf  + \uf &= g  && \text{ in } \Omega_\ominus,\\
+\label{eq:dirneu4}
+\up - \uf &= q && \text{ on }  \Gamma,\\
+\label{eq:dirneu3}
+\nabla\left( \up - \uf \right) \cdot \nn_{\oplus} &=0  && \text{ on } \Gamma,\\
+\label{eq:dirneu5}
+\up &= 0 && \text{ on } \partial \Omega\,.
+\end{align}
+\end{subequations}
+The coupling constraints defined on $\Gamma$ involve essential or strong conditions.
+Such conditions will be enforced weakly by using the method of Lagrange multipliers~\cite{MR359352}. Then, the variational formulation of problem \eqref{eq:dirneu}
+is to find $\up \in H^1_{\partial\Omega}(\Omega_\oplus), \ \uf \in H^1_{\partial\Omega_\ominus\setminus\Gamma}(\Omega_\ominus), \ \lambda \in H^{-\frac 1 2}(\Gamma)$ s.t.
+\begin{subequations}\label{eq:weak_dirneu}
+\begin{align}
+&(u_\oplus,v_\oplus)_{H^1(\Omega_\oplus)} + (u_\ominus,v_\ominus)_{H^1(\Omega_\ominus)} 
++ \langle  v_\oplus - v_\ominus, \lambda \rangle_{\Gamma} 
+\\
+\nonumber
+&\quad = (f,v_\oplus)_{L^2(\Omega_\oplus)} + (g,v_\ominus)_{L^2(\Omega_\ominus)}
+\quad \forall v_\oplus \in H^1_{\partial\Omega}(\Omega_\oplus), \ v_\ominus \in H^1_{\partial\Omega_\ominus\setminus\Gamma}(\Omega_\ominus),
+\\
+& \langle u_\oplus - u_\ominus, \mu \rangle_{\Gamma} = 0
+\quad \forall  \mu \in H^{-\frac 1 2}(\Gamma)\,.
+\end{align}
+\end{subequations}
+%where $\langle v, \mu \rangle_{H^{-\frac 1 2}(\Gamma)}$ denotes the duality pairing between 
+%$ \mu \in H^{-\frac 1 2}(\Gamma)$ and $v \in H^{\frac 1 2}(\Gamma)$.
+where $\lambda$ is the Lagrange multiplier and it is equivalent to $\nabla \uf \cdot \nn_\ominus$.
+
+\subsubsection*{Model reduction of the problem on $\Omega_{\ominus}$}
+
+We apply the averaging technique to equation \eqref{eq:dirneu2}. In particular, we consider an arbitrary portion $\mathcal{P}$ of the cylinder $\Omega_\ominus$, with lateral surface $\Gamma _{\mathcal{P}}$ and bounded by two perpendicular sections to $\Lambda$, namely $\mathcal{D}(s_1), \ \mathcal{D}(s_2)$ with $s_1<s_2$. We have,
+\begin{multline*}
+\int_{\mathcal{P}} -\Delta \uf + \uf d\omega =
+-\int_{\partial \mathcal{P}} \nabla \uf \cdot \nn_{\ominus} \, d\sigma  + \int_{\mathcal{P}}\uf d\omega=
+\\
+ \int_{\mathcal{D}(s_1)} \partial_s \uf d\sigma -  \int_{\mathcal{D}(s_2)} \partial_s \uf d\sigma -  \int_{\Gamma_{\mathcal{P}}} \nabla \uf \cdot \nn_{\ominus} d\sigma +\int_{\mathcal{P}}\uf d\omega
+\end{multline*}
+By the fundamental theorem of integral calculus 
+\begin{equation*}
+\int_{\mathcal{D}(s_1)} \partial_s \uf d\sigma -  \int_{\mathcal{D}(s_2)} \partial_s \uf d\sigma 
+= -\int_{s_1}^{s_2} d_s \int_{\mathcal{D}(s)}  \partial_s \uf d\sigma ds
+= -\int_{s_1}^{s_2} d_s \left( |\mathcal{D}(s)| \avrd{\partial_s \uf} \right)
+\end{equation*}
+Moreover, we have
+\begin{equation*}
+\int_{\Gamma_{\mathcal{P}}} \nabla \uf \cdot \nn_{\ominus} d\sigma =  \int_{\Gamma_{\mathcal{P}}} \lambda \, d\sigma
+=  \int_{s_1}^{s_2} \int_{\partial\mathcal{D}(s)} \lambda d\gamma \, ds 
+= \int_{s_1}^{s_2} |\DD(s)| \avrc{\lambda} \,ds\,.
+\end{equation*}
+From the combination of all the above terms with the right hand side, we obtain that the solution $\uf$ of \eqref{eq:dirneu2} satisfies,
+\begin{equation*}
+\int_{s_1}^{s_2} \left[ 
+-d_s (|\D(s)|\avrd{\partial_s \uf}) + |\D(s)|\avrd{u}_{\ominus} 
+- |\partial\mathcal{D}(s)| \avrc{\lambda} - |\mathcal{D}(s)| \avrd{g}
+\right]\, ds = 0.
+\end{equation*}
+Since the choice of the points $s_1,s_2$ is arbitrary, we conclude that the following equation holds true,
+\begin{equation}\label{eq:averaged_f}
+-d_s (|\D(s)|\avrd{\partial_s \uf}) + |\D(s)|\avrd{u}_{\ominus} 
+- |\partial\mathcal{D}(s)| \avrc{\lambda}
+= |\mathcal{D}(s)| \avrd{g} \quad \text{on} \ \Lambda\,,
+\end{equation}
+which is complemented by the following conditions at the boundary of $\Lambda$,
+\begin{equation}\label{eq:averaged_f_boundary}
+|\D(s)| \avrd{\partial_s \uf}= 0, \quad \text{on} \quad s=0,S.
+\end{equation}
+Then, we consider variational formulation of the averaged equation \eqref{eq:averaged_f}.
+After multiplication by a test function $\vd \in H^1(\Lambda)$, integration on $\Lambda$ and suitable application of integration by parts, we obtain,
+\begin{multline*}
+\int_\Lambda |\D(s)| \avrd{\partial_s \uf} d_s \vd \, ds - (|\D(s)| \avrd{\partial_s \uf}) \vd |_{s=0}^{s=S}- \int_\Lambda |\DD(s)| \avrc{\lambda} \vd \, ds
++\int_\Lambda |\D(s)| \avrd{u}_\ominus \vd 
+\\
+= \int_\Lambda |\D(s)| \avrd{g} V\, ds\,.
+\end{multline*}
+Using boundary conditions, we obtain,
+\begin{equation}\label{eq:averaged_f_weak}
+  (\avrd{\partial_s \uf}, d_s \vd )_{\Lambda,|\D|} 
++ (\avrd{u}_\ominus, \vd)_{\Lambda, |\D|}
+- (\avrc{\lambda},\vd)_{\Lambda,|\DD|}
+= (\avrd{g},V)_{\Lambda,|\D|}\,.
+\end{equation}
+Let us now formulate the modelling assumption that allows us to reduce equation \eqref{eq:averaged_f_weak} to a solvable one-dimensional (1D) model.
+More precisely, we assume that the function $\uf$ has a \emph{uniform profile} on each cross section $\mathcal{D}(s)$, namely $\uf(r,s,t) = \ud(s)$.
+Therefore, observing that $\ud=\avrc{u}_{\ominus}=\avrd{u}_{\ominus}$, 
+and that $\avrd{\partial_s \uf} = \avrd{\partial_s \ud} = d_s \ud$,
+problem \eqref{eq:averaged_f_weak} turns out to find $\ud \in H^1(\Lambda)$ such that
+\begin{equation}\label{eq:1Ddirneu_weak}
+ (d_s \ud, d_s \vd)_{\Lambda,|\mathcal{D}|} 
++(\ud, \vd)_{\Lambda, |\D|}
+-(\avrc{\lambda},\vd)_{\Lambda, |\DD|}
+=  (\avrd{g},\vd)_{\Lambda, |\mathcal{D}|}
+\quad \forall \vd \in H^1(\Lambda)\,.
+\end{equation}
+
+% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+\subsubsection*{Topological model reduction of the problem on $\Omega_{\oplus}$}
+We focus here on the subproblem of \eqref{eq:dirneu1} related to $\Omega_{\oplus}$.
+We multiply both sides of \eqref{eq:dirneu1} by a test function $v\in H^1_0(\Omega)$ and integrate on $\Omega_\oplus$. Integrating by parts and using boundary and interface conditions, we obtain
+\begin{equation*}
+\begin{split}
+\int_{\Omega _{\oplus}}fv\,d\omega&=
+\int _{\Omega _{\oplus}}\nabla \up \cdot\nabla v\,d\omega -\int _{\partial \Omega _{\oplus}}\nabla \up \cdot \nn_{\oplus} v\,d\sigma + \int_{\Omega_{\oplus}} \up v \,d\omega
+\\
+&=\int _{\Omega _{\oplus}}\nabla \up \cdot\nabla v\,d\omega -\int_{\Gamma} \nabla \up \cdot \nn_{\oplus} v\,d\sigma + \int_{\Omega_{\oplus}} \up v\,d\omega
+\\
+&=\int _{\Omega _{\oplus}}\nabla \up \cdot\nabla v\,d\omega +\int_{\Gamma} \lambda v\,d\sigma + \int_{\Omega_{\oplus}} \up v\,d\omega.
+\end{split}
+\end{equation*} 
+Then, we make the following modelling assumption:
+we identify the domain $\Omega_{\oplus}$ with the entire $\Omega$, 
+and we correspondingly omit the subscript $\oplus$ to the functions defined on $\Omega_{\oplus}$,
+namely
+\begin{equation*}
+\int_{\Omega_{\oplus}} u_\oplus\, d\omega \simeq \int_{\Omega} u\, d\omega\,.
+\end{equation*}
+Therefore, we obtain 
+\begin{equation*}
+(\nabla u ,\nabla v)_{\Omega} +(u,v)_{\Omega}+(\lambda, v)_{\Gamma}  =(f,v)_{\Omega}
+\end{equation*}
+and combining with \eqref{eq:1Ddirneu_weak} we obtain the first formulation of the reduced problem.
+
+Hence, we have obtained the Problem 3D-1D-2D, equation 
+\eqref{eq:problem1}:
+Find $u \in H^1_0(\Omega), \ \lambda \in H^{-\frac 1 2}(\Gamma ),\ \ud \in H^1_0(\Lambda)$, such that
+\begin{subequations}
+\begin{align*}
+&(u,v)_{H^1(\Omega)} + (\ud,\vd)_{H^1(\Lambda),|\D|} 
++ \langle \trace v  - \ext \vd, \lambda \rangle_\Gamma &&
+\\
+\nonumber
+&\qquad= (f,v)_{L^2(\Omega)} +  (\avrd{g},\vd)_{L^2(\Lambda),|\D|}\,,
+\quad &&\forall v \in H^1_0(\Omega), \ \vd \in H^1(\Lambda)\,,
+\\
+& \langle \trace u - \ext \ud , \mu \rangle_\Gamma 
+= \langle q, \mu \rangle_\Gamma\,,
+\quad && \forall \mu \in H^{-\frac 1 2}(\Gamma)\,.
+\end{align*}
+\end{subequations}
+This coupled problem is classified as 3D-1D-2D because the unknowns $u$, $\ud$, $\lambda$ belong to $\Omega \subset \R^3$, $\Lambda \subset \R$ and $\Gamma \subset \R^2$ respectively.
+Then, we apply a topological model reduction of the interface conditions, namely we go from a 3D-1D-2D formulation
+involving sub-problems on $\Omega$ and $\Lambda$ and coupling operators defined on $\Gamma$
+to a 3D-1D-1D formulation where the coupling terms are set on $\Lambda$. 
+To this purpose, let us write the Lagrange multiplier and the test functions on every cross section $\partial\mathcal{D}(s)$ as their average plus some fluctuation,
+\begin{equation*}
+\lambda=\avrc{\lambda}+\tilde{\lambda}, \qquad v=\avrc{v}+\tilde{v},
+\quad \text{on} \ \partial\mathcal{D}(s)\,,
+\end{equation*}
+where $\avrc{\tilde{\lambda}}=\avrc{\tilde{v}}=0$. 
+Therefore, the coupling term on $\Gamma$ can be decomposed as,
+\begin{equation*}
+\int_{\Gamma}\lambda v\, d\sigma
+=\int _{\Lambda}  \int_{\partial\mathcal{D}(s)} (\avrc{\lambda}+\tilde{\lambda})(\avrc{v}+\tilde{v})d\gamma ds
+= \int_{\Lambda}|\partial\mathcal{D}(s)| \avrc{\lambda}\avrc{v}\,ds+\int_{\Lambda}  \int_{\partial\mathcal{D}(s)} \tilde{\lambda}\tilde{v}d\gamma ds\,.
+\end{equation*}
+Thanks to the additional assumption that the product of fluctuations is small,
+\begin{equation*}
+\int_{\partial\mathcal{D}(s)} \tilde{\lambda}\tilde{v} d\gamma \simeq 0\,
+\end{equation*}
+the term $\left(\trace v, \lambda \right)_{\Gamma}$ becomes $\left( \mtrace v, \avrc{\lambda} \right)_{\Lambda, |\DD|}$, where $\mtrace$ denotes the composition of operators $\avrc{(\cdot)}\circ \trace$.  Combined with \eqref{eq:1Ddirneu_weak}, this leads to the 3D-1D-1D formulation of the reduced problem, namely equation \eqref{eq:problem2}:
+find $u \in H^1_0(\Omega)$, $\ud \in H^1_0(\Lambda)$, $\ld \in H^{-\frac 1 2}(\Lambda)$, such that
+\begin{subequations}
+\begin{align*}
+&(u,v)_{H^1(\Omega)} + (\ud,\vd)_{H^1(\Lambda),|\D|} 
++  \langle \mtrace v - \vd, \ld \rangle_{\Lambda, |\DD|} &&
+\\
+\nonumber
+&\qquad\qquad= (f,v)_{L^2(\Omega)} +  (\avrd{g},V)_{L^2(\Lambda),|\D|}\,,
+\quad && \forall v \in H^1_0(\Omega), \ \vd \in H^1_0(\Lambda)\,,
+\\
+& \langle \mtrace u - \ud, \md \rangle_{\Lambda,|\DD|} 
+= \langle q, \md \rangle_\Gamma = \langle \avrc{q}, \md \rangle_{\Lambda,|\DD|} \,,
+\quad &&\forall \md \in H^{-\frac 1 2}(\Lambda)\,.
+\end{align*}
+\end{subequations}
+
+% We notice that all the integrals of the reduced problem are well defined because 
+% $\mtrace: H^1_0(\Omega) \rightarrow H^\frac 1 2_{00}(\Lambda)$ as shown in Corollary \ref{corollary:H12norm}.
+% The well-posedness of $\eqref{eq:problem1}$ and $\eqref{eq:problem2}$ 
+% can be studied in the framework of the classical theory of saddle point problems as shown in the following.
+
+%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+\section{Proof of Lemma \ref{lemma:H12norm}}
+
+\begin{proof}
+Let us consider the eigenvalue problem for the Laplace operator on $\Gamma$ with homogeneous Dirichlet conditions at $x=0,\, X$ and periodic boundary conditions at $y=0,\, Y$. Let us also consider the Laplace eigenproblem on $(0,X)$ with homogeneous Dirichlet conditions. Let us denote as $\phi _{ij}(x,y)$ and $\rho _{ij}$, for $i=1,2,\dots$, $j=0,1,\dots$, the eigenfunctions and the eigenvalues of the Laplacian on $\Gamma$, and with $\phi _i(x)$ and $\rho _i$ the eigenfunctions and the eigenvalues of the Laplacian on $(0,X)$. In particular,
+\begin{align*}
+&\phi _{ij}(x,y)=\sin \left(\frac{i\pi x}{X}\right)\left( \cos\left(\frac{j2\pi y}{Y}\right)+ \sin\left(\frac{j2\pi y}{Y}\right) \right),\quad
+&&\rho_{ij}=\left(\frac{i\pi}{X}\right) ^2+\left(\frac{j2\pi}{Y}\right)^2,
+\\
+&\phi _{i}(x)=\sin \left(\frac{i\pi x}{X}\right),\quad
+&&\rho _i = \left(\frac{i\pi}{X}\right) ^2.
+\end{align*}
+
+We use here the following representation of the fractional norms, 
+\begin{equation}\label{eq:fracnorm_lambda}
+\begin{aligned}
+&\|u\|_{H^{\frac 12}_{00}(\Lambda)}=\left(\sum_{i=1}^{\infty} \left( 1+ \rho_{i}\right)^{\frac 12}|a_i|^2\right)^{\frac 12},\\
+&\|u\|_{H^{\frac 12}_{00}(\Gamma)}=
+\sum_{i=1}^{\infty} \sum_{j=1}^{\infty}  \left( 1+ \left(\frac{i\pi}{X}\right)^2 
++ \left(\frac{j2\pi}{Y}\right)^2\right)^{\frac 12} |a_{i,j}|^2
+\end{aligned}
+\end{equation} 
+with $a_i=\left(u, \phi _i \right)_{\Lambda}$ and $a_{ij}=\left( u, \phi_{ij}\right)_{\Gamma}$.
+It is easy to verify that 
+\begin{equation}\label{int_eigenf}
+\int_0^{Y} \phi _{ij}(x,y)=0 \quad \forall j>0, \forall i\,,
+\quad
+\int_0^{Y} \phi _{ij}(x,y)= Y \, \sin\left(\frac{i\pi x}{X}\right) \quad \mbox{if } j=0, \forall i  .
+\end{equation}
+Moreover we recall that $\phi_{i,j}(x,y)$ and $\phi _i(x)$ form an orthogonal basis of $L^2(\Gamma)$ and $L^2(0,X)$ respectively. Therefore,
+\begin{equation*}
+\avrc{u}(x)=\frac{1}{Y}\int_0^{Y} u(x,y)\, dy
+%= \frac{1}{Y}\int_0^{Y} \sum_{i,j} a_{i,j} \phi_{i,j}(x,y) \, dy
+= \frac{1}{Y}\sum_{i,j} a_{i,j}\int_0^{Y}  \phi_{i,j}(x,y) \, dy
+=  \sum_{i} a_{i,0} \phi_{i}(x).
+\end{equation*}
+
+Let the constant $C$ be equal to 
+$C=C(X)=\sum_{i=1}^{\infty}\left( 1+ \left(\frac{i\pi}{X}\right)^2\right)^{\frac 12}$. 
+Then,  from \eqref{eq:fracnorm_lambda} we have 
+\begin{multline*}
+\|\avrc{u}\|^2_{H^{\frac 12}_{00}(0,X)}
+=\sum_{i=1}^{\infty} \left( 1+ \rho_{i}\right)^{\frac 12}a_i^2
+\\
+=C\left( \int_0^X \avrc{u}(x) \sin\left(\frac{i\pi x}{X}\right)\, dx \right)^2
+= C\left( \sum_{j=1}^\infty a_{j,0}\int_0^X \sin\left(\frac{j\pi x}{X}\right) \sin\left(\frac{i\pi x}{X}\right) \, dx  \right)
+\\
+= \sum_{i=1}^{\infty} \frac{X^2}{4} \left( 1+ \left(\frac{i\pi}{X}\right)^2\right)^{\frac 12}a_{i,0}^2
+\leq \frac{X^2}{4}\sum_{i=1}^{\infty} \sum_{j=1}^{\infty}  \left( 1+ \left(\frac{i\pi}{X}\right)^2 
++ \left(\frac{j2\pi}{Y}\right)^2\right)^{\frac 12} |a_{i,j}|^2
+\\ 
+=\frac{X^2}{4}\|u\|^2_{H^{\frac 12}_{00}(\Gamma)},
+\end{multline*}
+where we have used the orthogonality property
+\begin{equation*}
+\int_0^X \sin\left(\frac{i\pi x}{X}\right) \sin\left(\frac{j\pi x}{X}\right)\, dx=\begin{cases} 0 & i\neq j\\
+\frac X 2 & i = j\\
+\end{cases}
+\end{equation*}
+and we have applied \eqref{eq:fracnorm_lambda} in the last equality.
+As a result of the previous inequality, we have proved the first statement of the Corollary, namely $u\in H^\frac12_{00}(\Gamma) \rightarrow \overline{u}\in H^\frac12_{00}(\Lambda)$.
+
+The second statement of the Corollary addresses the case of the function $u$ constant with respect to $y$. Precisely, we have
+\begin{equation*}
+    \begin{aligned}
+&\|u\|^2_{H^{\frac 12}_{00}(\Gamma)}=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left( 1+ \rho_{ij}\right)^{\frac 12}|a_{ij}|^2\\
+&=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left(  1+ \left(\frac{i\pi}{X}\right)^2 + \left(\frac{j2\pi}{Y}\right)^2\right)^{\frac 12}\left( \int _0^X\int _0^Y u(x,y )\phi_{ij}(x,y) \right)^2
+\\
+&=\sum_{i=1}^{\infty}\sum_{j=0}^{\infty} \left(  1+ \left(\frac{i\pi}{X}\right)^2 + \left(\frac{j2\pi}{Y}\right)^2\right)^{\frac 12}\left( \int _0^X u(x) \int _0^Y \phi_{ij}(x,y) \right)^2,
+\end{aligned}
+\end{equation*}
+and using \eqref{int_eigenf} we obtain
+\begin{equation*}
+\begin{aligned}
+\|u\|^2_{H^{\frac 12}_{00}(\Gamma)}
+&=\sum_{i=1}^{\infty}\left( 1+ \left(\frac{i\pi}{X}\right)^2\right)^{\frac 12}\left(\int _0^X Yu(x)\, \sin\left(\frac{i\pi x}{X}\right)\right)^2\\
+&=Y^2 \sum_{i=1}^{\infty}\left( 1+ \rho _i\right)^{\frac 12}|a_i|^2 = Y^2  \|u\|^2_{H^{\frac 12}_{00}(0,X)}.
+\end{aligned}
+\end{equation*}
+\end{proof}
+
+%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+\section{System sizes in benchmark formulations} \label{sec:appendix}
+In Table \ref{tab:dof} we list dimensions of the finite element spaces used to discretize formualations \eqref{eq:problem1}, \eqref{eq:problem2} and stabilized
+\eqref{eq:problem2} on different levels of refinement. The number of 
+degrees of freedom in subspace $W_{i, h}$ is denote as $\lvert W_{i, h}\rvert$. 
+We recall that the discrete spaces  
+are $X^1_{h, 0}(\Omega)\times X^1_{h, 0}(\Lambda)\times Q_h(\Gamma)$
+for the 3D-1D-2D problem \eqref{eq:problem1},
+$X^1_{h, 0}(\Omega)\times X^1_{h, 0}(\Lambda)\times Q_h(\Lambda)$
+for the 3D-1D-1D problem \eqref{eq:problem2}, and 
+$X^1_{h, 0}(\Omega)\times X^1_{\mathfrak{h}, 0}(\Lambda)\times Q_h(\mathcal{G}_h)$
+for the stabilized 3D-1D-1D problem.
+
+\begin{table}[h!]
+\begin{center}
+  \scriptsize{
+    \begin{tabular}{l|lll|lll|lll}
+      %\toprule
+      \hline
+      \multirow{2}{*}{$l$} & \multicolumn{3}{c|}{\eqref{eq:problem1}} & \multicolumn{3}{c|}{\eqref{eq:problem2}} & \multicolumn{3}{c}{ Stabilized \eqref{eq:problem2}}\\
+      \cline{2-10}
+       & $\lvert W_{1, h}\rvert$  & $\lvert W_{2, h}\rvert$ & $\lvert W_{3, h}\rvert$ 
+       & $\lvert W_{1, h}\rvert$  & $\lvert W_{2, h}\rvert$ & $\lvert W_{3, h}\rvert$
+       & $\lvert W_{1, h}\rvert$  & $\lvert W_{2, \mathfrak{h}}\rvert$ & $\lvert W_{3, h}\rvert$\\
+      %& $\lvert X^1_{h, 0}(\Omega) \rvert$ & $\lvert X^1_{h, 0}(\Lambda) \rvert$ & $\lvert Q_h(\Gamma) \rvert$ &
+      %$\lvert X^1_{h, 0}(\Omega) \rvert$ & $\lvert X^1_{h, 0}(\Lambda) \rvert$ & $\lvert Q_h(\Lambda) \rvert$ &
+      %$\lvert X^1_{h, 0}(\Omega) \rvert$ & $\lvert X^1_{h^{\prime}, 0}(\Lambda) \rvert$ & $\lvert Q_h(\mathcal{G}_h) \rvert$\\
+      \hline
+     1& 125    & 5  & 40   & 125     & 5   & 5   & 180     & 13  & 24  \\
+     2& 729    & 9  & 144  & 729     & 9   & 9   & 900     & 25  & 48  \\
+     3& 4913   & 17 & 544  & 4913    & 17  & 17  & 5508    & 49  & 96  \\
+     4& 35937  & 33 & 2112 & 35937   & 33  & 33  & 38148   & 97  & 192 \\
+     5& 275K & 65 & 8320 & 275K  & 65  & 65  & 283K  & 193 & 384 \\
+     6& --     & -- & -    & 2.15M & 129 & 129 & 2.18M & 385 & 768 \\
+     %\bottomrule
+     \hline
+    \end{tabular}
+    }
+\end{center}
+    \caption{Number of degrees of freedom of the discrete spaces used in the numerical experiments.}
+    \label{tab:dof}
+\end{table}
+

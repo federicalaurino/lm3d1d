@@ -1,0 +1,134 @@
+\documentclass{article}
+\usepackage{fullpage}
+\newenvironment{answer}{\begin{paragraph}{Answer:}}{\end{paragraph}\vspace{0.5cm}}
+
+\title
+{ Reply to the reviews of the manuscript:\\
+\emph{Analysis and approximation of mixed-dimensional PDEs on 3D-1D domains coupled with Lagrange multipliers}\\
+by M. Kuchta, F. Laurino, K.A. Mardal, P. Zunino.
+}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+First of all, we would like to thank the referees for their insightful comments. 
+We believe that their observations have helped in delivering a substantially improved version of the original work,
+as discussed in the following point by point reply to their remarks. 
+For the sake of clarity, the main changes in the revised manuscript are reported in blue.
+
+\vspace{1cm}
+
+\section*{Reviewer \#1} 
+
+In the paper under review the authors study an example of mixed dimensional PDE, i.e. a 3D problem coupled with a 1D problem. Such problems naturally appear in various applications (e.g. biomedicine and geophysics) where slender cylindrical structures are coupled with larger 3D body. The main issue in the analysis of such problem is that trace is not well defined on set of co-dimension two for weak solutions. The authors circumvent this issue by exploiting the fact that the thin structure is not 1D curve, but rather a slender 3D structure. This leads to two formulation of the problems: 3D-1D-1D and 3D-1D-2D. The former is obtained from the latter by averaging procedure. Neumann (dynamic) coupling conditions are enforced by using a Lagrange multiplier. Well-posednes is proved for the continuous and the discrete version of the problem. Two different version of the discrete case are analyzed: the case when 3D and 1D mesh matches on the interface (the conforming case) and the case when the meshes do not necessarily match (the non-conforming case). Since the saddle point approach is used, the main technical step is to prove that inf-sup condition is satisfied. In the non-conforming case the stabilization operator is constructed in order to satisfy inf-sup condition. Finally, the comparison of the numerical solution with analytical solution for benchmark problem is presented.
+
+The result presented in the paper are interesting and to the best of my knowledge correct. I recommend the paper for publication in the SINUM.
+Remarks:
+\begin{enumerate}
+    \item Please explain what is unknown $\lambda$ in problem (1.1). I suggest including part of the Appendix from supplementary materials where $\lambda$ is introduces as a Langrange multiplier.
+    \item Sectio 2, page 2 - $\Omega$ is open? Maybe replace "in detail" with "More precisely".
+    \item P. 3. - Please provide references for $H^{1/2}_{00}$ and interpolation of weighted spaces. In addition, it would be instructive to provide an example for Riesz map S.
+    \item p.4. (l145-l50) I suggest rewriting this paragraph. First, please refer to the exact result that you are using (from [22] or [28]) and define or refer to definition of "domains having small geometric details". Second, it is not necessary to define operator norm, but enough to say that norm of $H_{\Omega}$ is uniformly bounded.
+    \item p4 l152. Is $H_{\Omega}$ harmonic extension? If so, please state this in previous paragraph.
+    \item p8 l177-l184 - I suggest adding a figure that illustrate the assumptions on the conforming mesh.
+    \item p9 (4.4) Reference for these properties of $SZ_h$
+    \item p9, after (4.5) Do you mean inverse Poincare inequality?
+    \item In statement of problem (5.1) include $\lambda$ and then say that one can construct explicit solution with $\lambda=0$.
+\end{enumerate}
+
+\section*{Reviewer \#2}
+
+In the present contribution the authors discuss coupling of pde's
+defined on domains of co-dimension 2. This case is more challenging
+than the case of co-dimension 1 since the in the standard functional
+spacesfor elliptic problems the weak solution does not
+have enough regularity to make the coupling conditions between the
+function in the 3D space and the function in the 1D space well
+defined. Here the authors follow a natural approach proposed in previous
+work that consists in introducing a cylindrical tube
+around the 1D domain (which is physically justified, since the 1D
+domain typically is an idealization of such a tubular region) and perform
+the coupling of the two systems through lifting to the tupe or
+averaging on the tube surface. This results in a global constrained
+system where the coupling conditions are imposed using Lagrange
+multipliers.
+First wellposedness of the pde-systems is discussed and then numerical
+discretization. Discrete spaces are introduces and stability
+proven. Both a conforming setting and a non-conforming setting is
+considered, where stabilization is introduced in the non-conforming
+case.
+
+This is an interesting contribution and I think that it is of
+sufficient originality to be published in SINUM. However in its
+present case the paper is a bit rough and can not be accepted. In particular the following
+points should be carefully considered in a revised version.
+
+\begin{enumerate}
+\item The authors argue that meshing the fine scale slender domain is
+  too costly. However from the present manuscript one can not deduce
+  that the proposed method is less costly. Indeed it is not clear how
+  fine the mesh needs to be in the vicinity of $\Lambda$. This depends
+  on the curvature of $\Lambda$ and the radius $R$ of the generalized
+  cylinder around it.
+Note in particular that the constants in (3.2)-(3.8) may depend on
+these quantities. Normally the wellposedness result of Thm 3.1 is
+accompanied with a stability result quantifying the continuous
+dependence of the problem. The authors should add this stability
+result and for each model track the dependence of the stability
+constant on the model parameters, at least the radius $R$ of the
+slender domain.
+
+Although no error estimates are given (and not required), the size of
+the (inverse of the) stability constant generally gives an idea of how fine the
+mesh needs to be in the vicinity of the lower dimensional domain. 
+\item In the conforming case the mesh constraints impose that $h \sim R$
+  it seems, this could be stated clearly. Is it considered an
+  advantage of the non-conforming method that this is not imposed?
+Is it still expected to be imposed for accuracy reasons? Please
+discuss (taking into account the stability arguments of the previous
+point). It would also be interesting to understand how the
+conditioning of the system depends on the radius of the slender
+domain. The academic numerical example does not give much information,
+since there both in the conforming and the nonconforming case $R  \sim h$.
+\item In the introduction the coupling conditions are presented as ``a
+  combination of Dirichlet and Neumann conditions'', this is slightly
+  obscure to me, since the later multiplier formalism simply imposes
+  continuity of the primal variable. This could be made clearer.
+\item Line 85: Typo in the definition of $\Gamma$.
+\item Line 128: Appendix, what appendix? Please add in the revised version.
+\item Corollary 2.2: Please add a two line proof showing how Lemma 2.1
+  is applied.
+\item Equation (3.4): The inequality should go the other way.
+\item Line 150: ``independent OF the (minimal)...''
+\item Line 178: Would it not be more realistic to introduce an
+  approximation of $\Gamma$, $\Gamma_h$ that conforms to the mesh?
+  Similarly you could introduce $\Lambda_h$ approximation of $\Lambda$
+  that is a piecewise linear manifold.
+\item Lemma 4.2: The proof is incomplete, please state clearly the
+  interpolation results that you wish to apply (with reference) and
+  how you obtain the desired bound using the weaker and stronger
+  stabilities.
+\item Lemma 4.3: Maybe $\gamma_h$ since you used $\beta_h$ in
+  Corollary 4.1? Also in Lemma 4.6.
+\item Proof of Theorem 4.4: The proof is incomplete, please provide a
+  full proof of the claim on page 10, line -2 that the trace of the
+  Scott-Zhang interpolant (how do you define S-Z here?) coincides with
+  the identity.
+\item Theorem 4.7: Why do you change the style of presentation of the
+  inf-sup condition here?
+\item Page 12, line 2: Please provide a full proof of the claim that
+  the average of the S-Z interpolation of the harmonic extension
+  coincides with the identity operator on $Q_h$.
+\item Lemma 4.9, maybe subscript on $\beta$?
+\item Page 20, In the comparison the accuracy of the Lagrange
+  multiplier is discussed, but what is the physical significance of
+  the multiplier, i.e. why should the reader be concerned of its
+  accuracy, does it provide information that can not be obtained from
+  the primal variables?
+\item It should be easy to consider the same example but with a
+  slender domain half as wide, to see how this affect accuracy and conditioning.
+\end{enumerate}
+\end{document}

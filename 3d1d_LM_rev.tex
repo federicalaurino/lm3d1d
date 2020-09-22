@@ -22,7 +22,7 @@
 \usetikzlibrary{calc}
 \usepackage{pgfplots}
 \usepgfplotslibrary{fillbetween}
-\pgfplotsset{compat=1.16}
+%\pgfplotsset{compat=1.16}
 
 \usepackage{booktabs}  % for tables
 \usepackage{capt-of}
@@ -152,7 +152,11 @@ Here, $u$, $\ud$,  $\lambda$ are unknowns,  $\Omega$ is a bounded domain in $\R^
 parameterized in terms of $s$ and $d_s$ is the derivative with respect to $s$. 
 The term $\lambda\delta_{\Lambda}$ is a Dirac measure such that 
 $\int_{\Omega}\lambda(x)\delta_{\Lambda}v(x)\,\mathrm{d}x=\int_{\Lambda}\lambda(t)v(t) \,\mathrm{d}t$
-for a continuous function $v$ and $\mathcal{T}_\Lambda: \Omega\rightarrow\Lambda$ is a suitable restriction operator from 3D to 1D. 
+for a continuous function $v$ and $\mathcal{T}_\Lambda: \Omega\rightarrow\Lambda$ is a suitable restriction operator from 3D to 1D.
+\miro{We remark that $\lambda$ can be viewed as a Lagrange multiplier associated with the
+  coupling constraint \eqref{eq:coupling}, see \S\ref{sec:derivation} for
+  detailed interpretation.
+}
 
 Using models based on mixed dimensional PDEs is motivated by the fact that many problems in geo- and biophysics are characterized by slender cylindrical structures coupled to a larger 3D body, where the characteristic transverse length scale of the slender structure is many orders of magnitude smaller than the longitudinal length.  For example, in geophysical applications the radii of wells are often of the order of 10 cm while the length may be several kilometers~\cite{Peaceman1978183, Peaceman1983531}. Similarly, in applications involving the blood flow and oxygen transport of the micro-circulation the capillary radius is a few microns, while simulations are often performed on mm to cm scale, with thousands of vessels~\cite{berg2020modelling,fang2008oxygen,gould2017capillary, secomb2004green}. Finally, in neuro-science applications a neuron has width of a few microns, while  its length is much longer. For example, an axon of a motor neurons may be as long as a meter.  Hence,  at least 4 orders of magnitude in difference in transverse and longitudinal direction is common in both geo-physics, bio-mechanics and neuro-science. Meshes dictated by resolving the transverse length scale in 3D would then possibly lead to the order of $10^{12}$ degrees of freedom. Even if adaptive and strongly anisotropic meshes are allowed for, the computations quickly become demanding if many slender structures and their interactions are under study.  
 
@@ -243,7 +247,49 @@ then
 \|u\|^2_{H^s(\Gamma), w} = \sum_k \lambda_k^{-s} c_k^2 .   
 \]
 The space $H_{00}^s(\Gamma; w)$ is defined analogously, but with $S$ above defined in terms of the $H^1_0$ inner product. Owing to the positivity and boundedness of $w$ the weighted spaces equal the corresponding non-weighted spaces as sets, but their norms are different.
- }
+}
+
+\miro{
+We will frequently use inner products and norms that are weighted. The
+$L_2$ and $H^1$ inner products
+weighted by a scalar function 
+$w$, which is strictly positive and bounded almost everywhere,
+are defined as 
+follows
+\begin{equation*}
+%(u,v)_{\Gamma, w} = 
+(u,v)_{L^2(\Omega), w} = 
+\int_{\Omega} w \, u \, v d\omega \ \mbox{   and   } \
+%(u,v)_{\Gamma, w} = 
+(u,v)_{H^1(\Omega), w} = 
+\int_{\Omega}  w \, u \, v d\omega
++ \int_{\Omega} w \, \nabla u \cdot \nabla v d\omega
+\end{equation*}
+whereas a weighted fractional
+space \miroold{$H_{00}^s(\Gamma; w)$} is defined in terms of the interpolation
+of the corresponding weighted spaces (see \cite[ch. 2.1]{MR0350177}, \cite{chandler2015interpolation}). 
+For the norm of such spaces, we introduce 
+the Riesz map $S$ such that 
+for $u, v \in H_0^1(\Gamma)$ we have 
+\[
+\int_{\Omega} w \nabla\left(S u\right)\cdot\nabla vd\omega  = (u,v)_{L^2(\Gamma), w}.
+\]
+Then $S=-\Delta^{-1}$ is a compact self-adjoint operator. 
+Assuming that $\{\lambda_k\}_k$ is the set of eigenvalues, 
+$\{\phi_k\}_k$ the set of eigenvectors of $S$ 
+orthonormal with respect to the inner 
+product $(\cdot, \cdot)_{L^2(\Gamma), w}$ and $u\in H_0^1(\Gamma)$ can be expressed 
+as $u=\sum_k c_k \phi_k$ 
+then
+\[
+\|u\|^2_{H_{00}^s(\Gamma), w} = \sum_k \lambda_k^{-s} c_k^2 .   
+\]
+%The space $H_{00}^s(\Gamma; w)$ is defined analogously, but with $S$ above defined in terms of the $H^1_0$ inner product.
+Owing to the positivity and boundedness of $w$ the weighted spaces equal the corresponding non-weighted spaces as sets,
+but their norms are different.
+}
+
+
 
 Central in our analysis are the transverse averages $\avrc{w},\,\avrd{w}$ defined as, 
 \begin{gather*}
@@ -1355,6 +1401,8 @@ for illustration.
    (Left)
 $\Lambda$ and $\Gamma$ conforming discretization of $\Omega$
    used for \eqref{eq:problem1} and \eqref{eq:problem2}.
+   Each cell of $\mathcal{T}^{\Gamma}_h$ (in blue, filled marker vertices) and $\mathcal{T}^{\Lambda}_h$ (in red, filled marker vertices)
+   is a facet, respectively edge, of $\mathcal{T}^{\Omega}_h$ (in black, empty square marker vertices).
    (Right) Sample discretization of the benchmark geometry in the non-conforming case for \eqref{eq:problem2}. 
  }
 \label{fig:mesh}

@@ -34,16 +34,52 @@ In the paper under review the authors study an example of mixed dimensional PDE,
 The result presented in the paper are interesting and to the best of my knowledge correct. I recommend the paper for publication in the SINUM.
 Remarks:
 \begin{enumerate}
-    \item Please explain what is unknown $\lambda$ in problem (1.1). I suggest including part of the Appendix from supplementary materials where $\lambda$ is introduces as a Langrange multiplier.
-    \item Sectio 2, page 2 - $\Omega$ is open? Maybe replace "in detail" with "More precisely".\\
+\item Please explain what is unknown $\lambda$ in problem (1.1). I suggest including part of the Appendix from supplementary materials where $\lambda$ is introduces as a Langrange multiplier.
+  \miro{
+    In the revised text we newly comment that $\lambda$ can be seen as a Lagrange multiplier related to
+    the coupling constraint and refer readers to the Supplementary material where the exact definition of
+    $\lambda$ is given.
+
+    Let us note that (1.1) is a ``template'' problem where we simply wish to illustrate
+    that the 3$D$ and the 1$D$ problems are coupled via $\lambda\delta_{\Gamma}$ where the strength
+    of the coupling, i.e. $\lambda$, is unknown. 
+    }
+    \item Section 2, page 2 - $\Omega$ is open? Maybe replace "in detail" with "More precisely".\\
     \fede{The standard definition of domain is used, i.e. $\Omega$ is a open and connected set. For clarity, the definition has been added to the manuscript. }
-    \item P. 3. - Please provide references for $H^{1/2}_{00}$ and interpolation of weighted spaces. In addition, it would be instructive to provide an example for Riesz map S.
+  \item P. 3. - Please provide references for $H^{1/2}_{00}$ and interpolation of weighted spaces. In addition, it would be instructive to provide an example for Riesz map S.
+    \miro{
+      \textit{We actually don't use $H^s$, only $H^s_{00}$. For this reason I'd like to
+      simplify the text and only discuss $-\Delta u=\lambda u$ on $H^1_0(\Gamma)$.
+      An advantage is that then the Riesz map is $-\Delta^{-1}$. I don't know if
+      in $H^s$ we can say that $(-\Delta+I)^{-1}$ is the Riesz map.}
+
+      \textit{
+        I included refences for $H^{1/2}_{00}$ and general interpolation in
+        Hilbert spaces.
+      }
+      The reference has been added in the revised manuscript. We have
+      also simplified the exposion: definition of the space $H^s$,
+      which was not used further in the analysis, was removed and only
+      the space $H^s_{00}$ is introduced. Per reviewer's suggestion the
+      relevant Riesz map, $-\Delta^{-1}$, is newly given in the text.
+      }
+    
     \item p.4. (l145-l50) I suggest rewriting this paragraph. First, please refer to the exact result that you are using (from [22] or [28]) and define or refer to definition of "domains having small geometric details". Second, it is not necessary to define operator norm, but enough to say that norm of $H_{\Omega}$ is uniformly bounded.\\
     \fede{We thank the reviewer for the suggestion. In the revised manuscript, the extension operator has been replaced by the harmonic extension, therefore the reference to [28] is not needed.\\
     WHAT DOES THE SECOND PART MEAN? }
     \item p4 l152. Is $H_{\Omega}$ harmonic extension? If so, please state this in previous paragraph.\\
     \fede{Yes, the definition has been added in the revised manuscript.}
-    \item p8 l177-l184 - I suggest adding a figure that illustrate the assumptions on the conforming mesh.
+  \item p8 l177-l184 - I suggest adding a figure that illustrate the assumptions on the conforming mesh.
+
+    \miro{
+      \textit{I modified the existing figure and the caption to highlight.
+        Is it sufficient?}
+      In the previous version we tried to illustrate the assumptions on the conforming
+      mesh with Figure 5.1. This figure has newly been modified to emphasize
+      correpondence of the cells of $\mathcal{T}^{\Lambda}_h$, $\mathcal{T}^{\Gamma}_h$ to
+      entities of $\mathcal{T}^{\Omega}_h$.
+      }
+    
     \item p9 (4.4) Reference for these properties of $SZ_h$\\
     \fede{The reference has been added in the revised manuscript.\\
     

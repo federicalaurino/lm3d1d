@@ -30,10 +30,18 @@
 \usepackage[displaymath, mathlines]{lineno}
 
 
-\newcommand{\fede}[1]{{\color{green}#1}}
+\newcommand{\fede}[1]{{\color{green!55!blue}#1}}
 \newcommand{\kent}[1]{{\color{red}#1}}
 \newcommand{\miro}[1]{{\color{blue}#1}}
 \newcommand{\paolo}[1]{{\color{magenta}#1}}
+
+% old commands: used for changes before review
+\newcommand{\kentold}[1]{{\color{black}#1}}
+\newcommand{\miroold}[1]{{\color{black}#1}}
+\newcommand{\paoloold}[1]{{\color{black}#1}}
+
+
+
 % Title. If the supplement option is on, then "Supplementary Material"
 % is automatically inserted before the title.
 %\title{On the weak coupling of 3D and 1D second order elliptic problems}
@@ -136,7 +144,7 @@ In this study we consider coupled partial differential equations on domains with
 \label{eq:pde2}
  d_s^2 \ud + \ud - \lambda &= g &\mbox{ on } \Lambda,\\
 \label{eq:coupling}
-\mathcal{T}_\Lambda u - \ud  &=  \paolo{q} &\mbox{ on } \Lambda . 
+\mathcal{T}_\Lambda u - \ud  &=  \paoloold{q} &\mbox{ on } \Lambda . 
 \end{align}
 \end{subequations}
 Problem \eqref{eq:pde} can be described as an example of \emph{mixed dimensional PDEs}.
@@ -154,17 +162,16 @@ The challenge of coupling PDEs on domains with high dimensionality gap has recen
 Stemming from this literature, in this work we adopt and analyze a different approach, closely related to \cite{KVWZ,laurino_m2an}. That is, we exploit the fact that $\Lambda$ is not strictly a 1D curve, but rather a very thin 3D structure with a cross-sectional area far below from what can be resolved. With this additional assumption, we show that robustness with respect to the cross-sectional area can be restored. The major novelty with respect to the previous works is that we address essential type coupling conditions, namely Dirichlet-Neumann conditions, rather than natural type ones, such as the Neumann-Robin or Robin-Robin cases. These coupling conditions pose additional difficulties as the conditions 
 are not a natural part of the weak formulation of the problem. We overcome this difficulty by  resorting to a weak formulation of the Dirichlet-Neumann coupling conditions across dimensions by using Lagrange multipliers.
 
-\paolo{Although the focus of the present work is mostly about analysis and approximation of the proposed approach, we stress that it aims to build the mathematical foundations to tackle various applications involving 3D-1D mixed dimensional PDEs, such as FSI of slender bodies \cite{Mori2019887}, microcirculation and lymphatics \cite{Possenti2019101,Vinje2019}, subsurface flow models with wells \cite{Cerroni2019} and the electrical activity of neurons.}
+\paoloold{Although the focus of the present work is mostly about analysis and approximation of the proposed approach, we stress that it aims to build the mathematical foundations to tackle various applications involving 3D-1D mixed dimensional PDEs, such as FSI of slender bodies \cite{Mori2019887}, microcirculation and lymphatics \cite{Possenti2019101,Vinje2019}, subsurface flow models with wells \cite{Cerroni2019} and the electrical activity of neurons.}
 
 %>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 \section{Preliminaries}\label{sec:setting}
-
-Let the domain $\Omega\subset \R^3 $ be convex and composed of two parts, 
+Let the domain $\Omega\subset \R^3 $\fede{, i.e. open and connected,} be convex and composed of two parts, 
 $\Omega_{\ominus}$ and $\Omega_{\oplus}:=\Omega\setminus\overline{\Omega}_{\ominus}$. 
 Let 
 $\Omega_{\ominus}$ be a \emph{generalized cylinder}, c.f.  \cite{MR1940257}, 
 that is; the swept volume of a two dimensional set, $\partial\mathcal{D}$, moved along a curve, $\Lambda$, in the three-dimensional domain, $\Omega$, see for Figure \ref{fig1} for an illustration. 
-In detail, the curve 
+\fede{More precisely}, the curve 
 $\Lambda = \{\boldsymbol \lambda(s), \ s\in(0,S)\}$,  where 
 $\boldsymbol \lambda(s) = [\xi(s), \tau(s), \zeta(s)], \ s\in(0,S)$ is a $\mathcal{C}^2$-regular curve in the three-dimensional domain $\Omega$.
 For simplicity, let us assume that $\|\boldsymbol \lambda^\prime(s)\|=1$ such that the arc-length and the coordinate $s$ coincide.
@@ -173,7 +180,7 @@ and $\Gamma$ be the lateral surface of $\Omega_{\ominus}$, i.e.
 $\Gamma=\{ \ \partial \mathcal{D}(s) \  | \ s \in \Gamma\}$,
 while the upper and lower faces of $\Omega_{\ominus}$ belong to $\partial\Omega$. 
 We assume that $\Omega_{\ominus}$ crosses $\Omega$ from side to side.
- \paolo{Finally, $|\cdot|$ denotes the Lebesgue measure of a set, e.g. $|\mathcal{D}(s)|$ is the cross-sectional area of the cylinder. In general, $|\D(s)|$ must be strictly positive and bounded.}
+ \paoloold{Finally, $|\cdot|$ denotes the Lebesgue measure of a set, e.g. $|\mathcal{D}(s)|$ is the cross-sectional area of the cylinder. In general, $|\D(s)|$ must be strictly positive and bounded.}
 According to the geometrical setting, we will denote with $v,\,v_\oplus,\,v_\ominus,\,\vd$,
 functions defined on $\Omega,\,\Omega_{\oplus},\,\Omega_{\ominus},\,\Lambda$, respectively.
 
@@ -186,7 +193,7 @@ The space $H^q_0(D)$ represents the closure in $H^q(D)$ of smooth functions with
 
 
 
-Let $\Sigma$ be a Lipschitz co-dimension one subset of $D$. We denote with $\mathcal{T}_\Sigma: H^q(D) \rightarrow H^{q-\frac 1 2}(\Sigma)$ the trace operator from \kent{$D$} to $\Sigma$.
+Let $\Sigma$ be a Lipschitz co-dimension one subset of $D$. We denote with $\mathcal{T}_\Sigma: H^q(D) \rightarrow H^{q-\frac 1 2}(\Sigma)$ the trace operator from \kentold{$D$} to $\Sigma$.
 The space of functions in $H^{\frac 1 2}(\Sigma)$ with continuous extension by zero outside $\Sigma$ is denoted 
 $H^{\frac 1 2}_{00}(\Sigma)$ and we remark that 
 $H^{\frac 1 2}_{00}(\Sigma) = \mathcal{T}_\Sigma H^1_0(D)$
@@ -201,7 +208,7 @@ and  $H^{-\frac 1 2}(\Sigma) = (H^{\frac 1 2}_{00}(\Sigma))^*$
 \end{figure}
 
 
-\kent{
+\kentold{
 We will frequently use inner products and norms that are weighted. The
 $L_2$ and $H^1$ inner products
 weighted by a scalar function 
@@ -218,7 +225,7 @@ follows
 + \int_{\Omega} w \, \nabla u \cdot \nabla v d\omega
 \end{equation*}
 whereas a weighted fractional
-space \miro{$H^s(\Gamma; w)$} is defined in terms of the interpolation of the corresponding weighted spaces. 
+space \miroold{$H^s(\Gamma; w)$} is defined in terms of the interpolation of the corresponding weighted spaces. 
 For the norm of such spaces, we introduce 
 the Riesz map $S$ such that 
 for $u, v \in H^1(\Gamma)$ we have 
@@ -258,7 +265,7 @@ Analogously, for functions defined on $\Lambda$ and $\Omega_\ominus$ respectivel
 we let  $d_s$ and $\partial_s$ be the ordinary and partial derivative with respect to the arclength.
 
 The operator obtained from a combination of the average operator $\avrc{(\cdot)}$ with the trace on $\Gamma$ will be denoted with $\mtrace = \avrc{(\cdot)} \circ \trace$, as it maps functions on $\Omega$ to functions on $\Lambda$.
-Further, let the extension operator $\mathcal{E}_{\Gamma}: H^{\frac 1 2}_{00}(\Lambda) \rightarrow H^{\frac 1 2}_{00}(\Gamma)$ be defined such that $(\mathcal{E}_{\miro{\Gamma}}\vd)(x)=\vd(s)$, for any $x\in \DD(s)$. Then, the following identity shows that the transversal uniform extension operator is the inverse of the transversal average,
+Further, let the extension operator $\mathcal{E}_{\Gamma}: H^{\frac 1 2}_{00}(\Lambda) \rightarrow H^{\frac 1 2}_{00}(\Gamma)$ be defined such that $(\mathcal{E}_{\miroold{\Gamma}}\vd)(x)=\vd(s)$, for any $x\in \DD(s)$. Then, the following identity shows that the transversal uniform extension operator is the inverse of the transversal average,
 \begin{equation}\label{eq:ext}
 \langle \mtrace u, \vd \rangle_{\Lambda, |\DD|} 
 = \int _{\Lambda} |\DD| \left( \frac{1}{|\DD|} \int_{\DD} \trace u \, d\gamma \right) \vd \, ds 
@@ -282,8 +289,8 @@ Further, let the extension operator $\mathcal{E}_{\Gamma}: H^{\frac 1 2}_{00}(\L
 %\| v \|_{H^{-\frac 12}(\Lambda)} = \sup_{u\in H^{\frac 12}_{00}(\Lambda)}\frac{\langle u, v \rangle_{\Lambda, |\DD|}}{\|u\|_{H^{\frac 12}_{00}(\Lambda), |\DD|}}\,.
 %\end{equation}
 
-\kent{With the above notation we are now able to formulate the precise weak formulations of the problems \eqref{eq:pde}, which we will call the \textbf{Problem 3D-1D-1D}. The problem} reads:
-\paolo{given $f\in L^2(\Omega), \ g \in L^2(\Omega_{\ominus}), \ q \in H^\frac12_{00}(\Gamma)$}
+\kentold{With the above notation we are now able to formulate the precise weak formulations of the problems \eqref{eq:pde}, which we will call the \textbf{Problem 3D-1D-1D}. The problem} reads:
+\paoloold{given $f\in L^2(\Omega), \ g \in L^2(\Omega_{\ominus}), \ q \in H^\frac12_{00}(\Gamma)$}
 find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ \ld \in H^{-\frac 1 2}(\Lambda)$, such that
 \begin{subequations}\label{eq:problem2}
 \begin{align}
@@ -299,7 +306,7 @@ find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ \ld \in H^{-\frac 1 2}(\La
 \\
 \label{eq:problem2c}
 \langle \mtrace u -   \ud, \md \rangle_{\Lambda,|\DD|} 
-&= \paolo{\langle \avrc{q},\md\rangle_{\Lambda,|\DD|}}
+&= \paoloold{\langle \avrc{q},\md\rangle_{\Lambda,|\DD|}}
 &\forall \md \in H^{-\frac 1 2}(\Lambda)\,.
 \end{align}
 \end{subequations}
@@ -307,7 +314,7 @@ find $u \in H^1_0(\Omega),\ \ud \in H^1_0(\Lambda), \ \ld \in H^{-\frac 1 2}(\La
 In addition to the 3D-1D-1D problem we will also consider an 
 intermediate problem where the 3D and 1D problems are coupled at an
 intermediate 2D surface  encapsulating the 1D structure. The strong form is:  
-\paolo{
+\paoloold{
 \begin{subequations}
 \label{inteq:pde}
 \begin{align}
@@ -321,7 +328,7 @@ intermediate 2D surface  encapsulating the 1D structure. The strong form is:
 \end{subequations}
 }
 The corresponding weak formulation of \eqref{inteq:pde}, referred to as the \textbf{Problem 3D-1D-2D}, reads: 
-\paolo{given $f\in L^2(\Omega), \ g \in L^2(\Omega_{\ominus}), \ q \in H^\frac12_{00}(\Gamma)$}
+\paoloold{given $f\in L^2(\Omega), \ g \in L^2(\Omega_{\ominus}), \ q \in H^\frac12_{00}(\Gamma)$}
 find $u \in H^1_0(\Omega), \ \ud \in H^1_0(\Lambda), \ \lambda \in H^{-\frac 1 2}(\Gamma ) $ such that
 \begin{subequations}\label{eq:problem1}
 \begin{align}
@@ -331,7 +338,7 @@ find $u \in H^1_0(\Omega), \ \ud \in H^1_0(\Lambda), \ \lambda \in H^{-\frac 1 2
 &=  (\avrd{g},\vd)_{L^2(\Lambda),|\D|} &\forall\vd \in H^1(\Lambda)\, ,
 \\
 \langle \trace u - \ext \ud , \mu \rangle_\Gamma 
-&= \paolo{\langle q,\md\rangle_\Gamma} 
+&= \paoloold{\langle q,\md\rangle_\Gamma} 
 &\forall \mu \in H^{-\frac 1 2}(\Gamma)\,.
 \end{align}
 \end{subequations}
@@ -366,12 +373,12 @@ The proof of \ref{lemma:H12norm} is based on the representation of fractional no
 
 Under the geometric assumptions stated above for $\Omega,\,\Gamma,\,\Lambda$, Lemma \ref{lemma:H12norm} implies the following result.
 \begin{corollary}\label{corollary:H12norm}
-If $u\in H^{\frac 12}_{00}(\Gamma)$ then $\avrc{u}\in H^{\frac 12}_{00}(\Lambda)$ and there exists a constant $C_\Gamma$, \paolo{bounded independently of $\D$ and $\DD$, such that}
+If $u\in H^{\frac 12}_{00}(\Gamma)$ then $\avrc{u}\in H^{\frac 12}_{00}(\Lambda)$ and there exists a constant $C_\Gamma$, \paoloold{bounded independently of $\D$ and $\DD$, such that}
 \begin{equation*}
 \|\avrc{u}\|_{H^{\frac 12}_{00}(\Lambda), |\DD|} \leq C_\Gamma \|u\|_{H^{\frac 12}_{00}(\Gamma)}.
 \end{equation*}
 \end{corollary}
-\paolo{
+\paoloold{
 Furthermore, from the
 above Corollary, it is clear that
 $\mtrace: H^1_0(\Omega) \rightarrow H^\frac 1 2_{00}(\Lambda)$.
@@ -419,7 +426,7 @@ b([v, \vd], \mu)&= \langle \trace v - \ext \vd , \mu \rangle_\Gamma,
 \\
 c([v,\vd])&= (f,v)_{L^2(\Omega)} + (\avrd{g},\vd)_{L^2(\Lambda),|\D|},
 \\
-d(\mu)&=\paolo{\langle q,\mu\rangle_\Gamma}.
+d(\mu)&=\paoloold{\langle q,\mu\rangle_\Gamma}.
 \end{align*}
 We prove that the conditions of Theorem \ref{th:bnb} are fulfilled choosing 
 $X=H^1_0(\Omega) \times H^1_0(\Lambda)$, $Q=H^{-\frac 12}(\Gamma)$, where $X$  is equipped with the norm $\vertiii{[u,\ud ]}^2=\|u\|^2_{H^1(\Omega)} + \|\ud\|^2_{H^1(\Lambda),|\D|}$.
@@ -449,7 +456,7 @@ b([v, \vd], \mu)&= \langle \trace v - \ext \vd , \mu \rangle_\Gamma
 
 
 
-\paolo{
+\paoloold{
 To show the inf-sup condition, we will employ  
 a lifting operator,  
 $\mathcal{H}_\Omega$,
@@ -461,7 +468,11 @@ $\|v \|_{H^1(\Omega)}\leq \|\mathcal{H}_\Omega\| \|\xi \|_{H^{1/2}_{00}(\Gamma)}
 where $\| \mathcal{H}_\Omega \|$ is a constant independent the (minimal) radius of $\Gamma$.
 }
 
+\fede{I THINK THE RESULT FROM [28] IS NOT WHAT WE NEED. IN [28] THEY BUILD AN EXTENSION OPERATOR FROM THE EXTERNAL DOMAIN TO THE SMALL INCLUSION. HERE WE NEED AN EXTENSION FROM THE BOUNDARY OF THE SMALL INCLUSION TO THE EXTERNAL DOMAIN, WHICH IS THE HARMONIC EXTENSION. FOR THIS OPERATOR, THE STABILITY CONSTANT SHOULD DEPEND ON THE RADIUS OF THE INCLUSION. \\
 
+To show the inf-sup condition, we will employ the harmonic extension $\mathcal{H}_\Omega$ from $H^{1/2}_{00}(\Gamma)$ to $H^1_0(\Omega)$ such that $\mathcal{H}_\Omega \xi = v$ for any $\xi \in H^{1/2}_{00}(\Gamma)$ with $v\in H^1_0(\Omega)$. The boundedness of this operator guarantees that there exists 
+$\| \mathcal{H}_\Omega \| \in \mathbb{R}$ such that
+$\|v \|_{H^1(\Omega)}\leq \|\mathcal{H}_\Omega\| \|\xi \|_{H^{1/2}_{00}(\Gamma)}$.}
 % $\|v \|_{H^1(\Omega)}\leq \|\mathcal{H}_\Omega\| \|\xi \|_{H^{\frac 12}_{00}(\Gamma)}$. 
 % is $\mathcal{H}_\Omega \xi = v$ where $v$ is the weak solution of
 % \begin{equation}\label{eq:harmonic}
@@ -501,7 +512,7 @@ b([v, \vd], \md)&=  \langle  \mtrace v - \vd, \md \rangle_{\Lambda, |\DD|},
 \\
 c([v,\vd])&= (f,v)_{L^2(\Omega)} + (\avrd{g},\vd)_{L^2(\Lambda),|\D|},
 \\
-d(\md)&=\paolo{\langle \avrc{q},\md\rangle_{\Lambda,|\DD|}}.
+d(\md)&=\paoloold{\langle \avrc{q},\md\rangle_{\Lambda,|\DD|}}.
 \end{align*}
 
 We prove that the hypotesis of  Theorem \ref{th:bnb} are fulfilled with the following spaces $X=H^1_0(\Omega) \times H^1_0(\Lambda)$, $Q=H^{-\frac 12}(\Lambda)$.
@@ -576,7 +587,7 @@ the discrete counterpart of \eqref{BNB4} is satisfied, i.e.
 there exists a constant $\beta_h>0$ such that
 \begin{align}
 \label{eq:infsup_discrete}
- \sup_{v_h\in X_h} \frac{b(v_h,\mu_h)}{\|v_h\|_{X}}\geq \beta_h \|\mu_h\|_{Q}\,, \kent{\quad \forall \mu_h \in Q_h.}
+ \sup_{v_h\in X_h} \frac{b(v_h,\mu_h)}{\|v_h\|_{X}}\geq \beta_h \|\mu_h\|_{Q}\,, \kentold{\quad \forall \mu_h \in Q_h.}
 \end{align}
 \end{corollary}
 
@@ -599,7 +610,7 @@ find $u_h \in X_{h,0}^k (\Omega) ,\, {\ud}_h \in X_{h,0}^k(\Lambda) ,\, \lambda_
 \quad \forall v_h \in X_{h,0}^k(\Omega), \ {\vd}_h \in X_{h,0}^k(\Lambda)\,,
 \\
 &\langle \trace u_h - \mathcal{E}_{\Lambda} {\ud}_h , \mu_h \rangle_\Gamma 
-= \paolo{\langle q,\mu_h \rangle_\Gamma}
+= \paoloold{\langle q,\mu_h \rangle_\Gamma}
 \quad \forall \mu_h \in Q_h\,.
 \end{align}
 \end{subequations}
@@ -736,7 +747,7 @@ We aim to find  $u_h \in X_{h,0}^k(\Omega) ,\ {\ud}_h \in X_{h,0}^k(\Lambda), \ 
 \quad \forall v_h \in X_h(\Omega), \ {\vd}_h \in X_h(\Lambda)\,,
 \\
 & \langle \mtrace u_h - {\ud}_h, \mdh \rangle_{\Lambda,| \DD| } 
-= \paolo{\langle \avrc{q},\mdh \rangle_{\Lambda,|\DD|}}
+= \paoloold{\langle \avrc{q},\mdh \rangle_{\Lambda,|\DD|}}
 \quad \forall \mdh \in Q_h\,.
 \end{align}
 \end{subequations}
@@ -806,7 +817,7 @@ With little abuse of notation, we use the sub-index $h$ for the product space
 $X_h = X_{h,0}^1(\Omega) \times X_{\fkh,0}^1(\Lambda)$.
 Concerning the multiplier space, let $\mathcal{G}_h = \{K \in \mathcal{T}^{\Omega}_h: \, K\cap \Lambda \neq \emptyset\}$, be the set of the 3D elements that intersect $\Lambda$. Then we define $Q_h=\{\ldh : \ldh \in P^0(K) \, \forall K \in \mathcal{G}_h\}$. We notice that the multiplier functions are defined on the 3D elements. Again with a little abuse of notation, we denote with $Q_h$ also the restriction to $\Lambda$ of the space of piecewise constant functions defined in 3D. As a result, we have $Q_h \subset L^2(\Lambda) \subset H^{-\frac12}(\Lambda)$.
 However, with this choice of multipliers the problem is not inf-sup stable, therefore the idea is to add a stabilization term $s(\ldh, \mdh): \ Q_h \times Q_h \rightarrow \mathbb{R}$ to \eqref{eq:prob2_discrete} following the approach introduced in \cite{burman2014}. 
-The objective of this section is to analyze the stabilized version of the 3D-1D-1D problem: find $[u_h, \kent{\udfh]} \in X_h$ and $\ldh \in Q_h$ such that
+The objective of this section is to analyze the stabilized version of the 3D-1D-1D problem: find $[u_h, \kentold{\udfh]} \in X_h$ and $\ldh \in Q_h$ such that
 \begin{multline}\label{eq:prob2_stabilized}
 a([u_h, \udfh], [v_h, \vdfh]) +
 b([v_h, \vdfh], \ldh)
@@ -885,13 +896,13 @@ As previously pointed out for $Q_h$, we denote with $Q_H$ also the restriction o
 %\end{figure}
 Moreover, we associate to each patch $\patch$ a shape-regular extended patch (using the classical definition of shape-regularity, see for example \cite{MR2050138}), still denoted by $\omega_j$ for notational simplicity, which is built adding to $\patch$ a sufficient number of elements of $\mathcal{T}_h^{\Omega}$ and we assume that the interiors of the new extended patches $\omega _j$ are still disjoint (see Figure \ref{fig:gamma_generated}). The extended patches $\omega _j$ are built such that they fulfill the conditions meas$(\patch)=\mathcal{O}(H^3)$ and diam$(\Gamma_{\patch\cap \Lambda}\cap \omega_j)=\mathcal{O}(H)$ ($\mathcal{O}(X)$ means $cX \leq \mathcal{O}(X) \leq CX$), where $\Gamma_{\patch\cap \Lambda}$ is the portion of $\Gamma$ with centerline $\patch\cap \Lambda$. The latter assumption is required to ensure that the intersection of $\Gamma_{\patch\cap \Lambda}$ and $\omega_j$ is not too small and it will be needed later on to prove the inf-sup stability of the space $Q_H$ in Lemma \ref{lemma:Lh_infsup}. A representation of this construction in the simple case in which $\omega _j$ is composed just by one tetrahedron is shown in Figure \ref{fig:gamma_generated}.
 Thanks to the shape regularity of these extended patches, the following discrete trace inequality holds true for any function $v\in H^1(\omega_j)$, 
-\paolo{
+\paoloold{
 \begin{equation}\label{discr_trace_ineq}
 \|\trace v\|_{L^2(\Gamma\cap \omega_j)} \leq C_I H^{-\frac 12} \|v\|_{L^2(\omega_j)}
 \end{equation}
 }
 Moreover, $\forall u_h \in X^1_{h,0}(\Omega)$ we have the following average inequality, 
-which is a consequence of the definition of $\mtrace$, Jensen inequality, \kent{and the fact that the patches are disjoint}
+which is a consequence of the definition of $\mtrace$, Jensen inequality, \kentold{and the fact that the patches are disjoint}
 \begin{multline}\label{eq:avrg_ineq}
 \sum _j \|\mtrace u_h\|^2_{L^2(\patch \cap \Lambda),|\DD| }
 = \int_{\Lambda} |\DD| \left( \frac{1}{|\DD|} \int_{\DD} \trace u_h \right)^2
@@ -901,7 +912,7 @@ which is a consequence of the definition of $\mtrace$, Jensen inequality, \kent{
 = \sum _j \int_{\patch \cap \Gamma} (\trace u_h)^2
 = \sum _j \|\trace u_h\|^2_{L^2(\patch \cap \Gamma)}.
 \end{multline}
-%\kent{Earlier in the paper we always specified the measure, ds, dx etc}
+%\kentold{Earlier in the paper we always specified the measure, ds, dx etc}
 
 % As shown in \cite[Section III]{burman2014}, we can always choose $\pi_H$ as the $L_2$ orthogonal projection operator from $\Lambda_h$ to $Q_H$ in order to satisfy \eqref{condition_pi_L} and then in practice replace it with any interpolation $\tilde{\pi}_L$ of $\Lambda_h$ in $Q_H$. In particular, for any $\lambda_h \in \Lambda_h$ we define,
 % \begin{equation*}
@@ -962,7 +973,7 @@ and $\varphi_j \in X_{h,0}^1(\Omega)$ is such that supp$(\varphi_j)\subset \omeg
 \end{equation}
 We notice that supp$(\trace \varphi_j) \subset \Gamma_{\patch\cap \Lambda}\cap \omega_j$ ensures that $\mtrace \varphi_j \subset \omega_j\cap \Lambda$. Therefore, since the interiors of $\omega_j\cap \Lambda$  are disjoint and $\varphi _j = 0 $ on $\partial \omega_j$,  the functions $\mtrace \varphi_j\, \forall j$ have all disjoint supports. Provided $H$ is sufficiently larger that $h$, the functions $\varphi _j$ and their traces $\trace \varphi _j$ have a sufficiently large support thanks to the fact that $\mathrm{meas}(\patch) = \mathcal{O}(H^3)$ and $\mathrm{diam}(\Gamma_{\patch\cap \Lambda} \cap \omega_j)=\mathcal{O}(H)$.
 Owing to these properties it is possible to satisfy \eqref{phi_properties}. 
-\kent{Then, by construction,}
+\kentold{Then, by construction,}
 \begin{multline*}
 \left(\mtrace v - \mtrace \pi _F v  , {\md}_H\right)_{\Lambda, |\DD|} = \sum _j \int_{\patch\cap \Lambda} |\DD |\left[ \mtrace v-\mtrace I_h v-\sum _i \alpha_i \mtrace \varphi _i \right]{\md}_H \\
 =\sum _j \int_{\patch\cap \Lambda}|\DD| \left[ \mtrace v-\mtrace I_h v-\alpha_j \mtrace \varphi _j \right]{\md}_H
@@ -982,11 +993,11 @@ For the second term,
 using that $\|\nabla \varphi _j\|_{{L^2(\omega_j)}}=\mathcal{O}(1)$, 
 $\int_{\patch\cap \Lambda}|\DD|\mtrace \varphi_j=\mathcal{O}(H)$ and that
 $|\patch\cap \Lambda| \leq cH$,
-\kent{exploiting Jensen's average inequality} \eqref{eq:avrg_ineq} 
+\kentold{exploiting Jensen's average inequality} \eqref{eq:avrg_ineq} 
 and trace inequality \eqref{discr_trace_ineq},
 and finally applying the approximation properties of $I_h$,
 the following upper bound holds true
-\paolo{(where all the constants have been condensed into $C$),}
+\paoloold{(where all the constants have been condensed into $C$),}
 \begin{multline*}
 \sum_j \alpha_j ^2\|\nabla \varphi _j\|^2_{L^2(\omega_j)}
 \leq C \sum_j \frac{\left(\int_{\patch\cap \Lambda} |\DD| (\mtrace v-\mtrace I_h v)\right)^2}{\left(\int_{\patch\cap \Lambda}|\DD|\mtrace \varphi_j \right)^2}
@@ -1004,10 +1015,10 @@ the following upper bound holds true
 that is the $H^1$-stability of $\pi_F$. We notice that the constant in the inequality \eqref{eq:cont_Fortin} is independent of how $\Lambda$  cuts the elements of the mesh $\mathcal{T}_h^{\Omega}$.
 \end{proof}
 
-For the second assumption of Lemma \ref{lemma23burman}, we recall that $b(v_h,\mdh)$ is continuous \kent{with respect to the norms} $\vertiii{v_h},\,\|\mdh\|_{L^2(\Lambda)}$. 
+For the second assumption of Lemma \ref{lemma23burman}, we recall that $b(v_h,\mdh)$ is continuous \kentold{with respect to the norms} $\vertiii{v_h},\,\|\mdh\|_{L^2(\Lambda)}$. 
 Using Lemma \ref{lemma:Lh_infsup}, and in particular the existence of a Fortin projector,
 there exists a constant $\beta$ such that 
-(the proof is \miro{analogous} to the one of Lemma 2.1 in \cite{burman2014})
+(the proof is \miroold{analogous} to the one of Lemma 2.1 in \cite{burman2014})
 \begin{equation}\label{relax_infsup}
 \beta \|\mdh\|_{H^{-\frac12}(\Lambda)} \leq \sup\limits_{v_h \in X_h} \frac{b(v_h,\mdh)}{\vertiii{v_h}} + \|\mdh-\pi_H \mdh\|_{L^2(\Lambda)}, \quad \forall \mdh \in Q_h\,.
 \end{equation}
@@ -1079,7 +1090,7 @@ Using the definitions of $\pi_H$ and $\xi_h([u_h, \udfh])$ previously presented 
 \end{multline*}
 Now, we seek for an upper bound of the second and third (negative) terms of the last inequality.
 For the second term, we apply the additional assumption that the operators $\mtrace$ and $\partial_s$ commute. This is true if the cross section $\D$ does not depend on the arclength $s$.
-\paolo{
+\paoloold{
 Then, we use the Poincar\'e inequality \eqref{disc_poincare_ineq}, the average inequality \eqref{eq:avrg_ineq} and the trace inequality \eqref{discr_trace_ineq} to show that,
 \begin{multline*}
 \sum _j  \|(\pi_H - \mathcal{I})\mtrace u_h\|^2_{L^2(\patch\cap \Lambda),|\DD|} 
@@ -1099,8 +1110,8 @@ Then, we use the Poincar\'e inequality \eqref{disc_poincare_ineq}, the average i
 % \\ 
 % (\text{Poincare, see \cite[Corollary B.65]{MR2050138}})\leq \sum _j  H c_P ^2 \|\nabla u_h\|^2_{L^2(\omega _j)}.
 % \end{multline*}
-% \kent{Is it $C_P$}
-% \paolo{For the third term we observe that since $H \lesssim 1$, there exists a constant $C$ 
+% \kentold{Is it $C_P$}
+% \paoloold{For the third term we observe that since $H \lesssim 1$, there exists a constant $C$ 
 % such that $C_P^2 H|\DD| \leq C |\D|$.
 For the third term, the following upper bound holds true,
 \begin{multline*}
@@ -1148,7 +1159,63 @@ Concerning inequality \eqref{stab_stability}, the proof is analogous to the one 
 
 %>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 \section{A benchmark problem with analytical solution}
+\fede{Let $\Omega=[0,1]^3$, $\Lambda=\{x=\tfrac{1}{2}\}\times \{y=\tfrac{1}{2}\} \times [0,1] $
+and $\Omega_{\ominus}=[\tfrac{1}{4}, \tfrac{3}{4}]\times [\tfrac{1}{4}, \tfrac{3}{4}]\times [0, 1]$.
+As a benchmark for the two formulations \eqref{eq:problem1} and \eqref{eq:problem2} we consider the case in which the source terms are defined as
+\begin{equation*}
+f=8\pi ^2 \sin (2\pi x) \sin (2\pi y),\quad \avrd{g}={\pi ^2}\sin \left({\pi z}\right)
+\end{equation*}
+and the coupling constraints , denoted as $q_1$ for \eqref{eq:problem1} and $\avrc{q}_2$ for \eqref{eq:problem2}, are given by
+\begin{equation*}
+q_1=\sin (2\pi x) \sin (2\pi y) - \sin \left({\pi z}\right),\quad \avrc{q}_2=-\sin \left({\pi z}\right).
+\end{equation*}
+At the boundary $\partial \Omega$, non-homogeneous Dirichlet conditions are imposed 
+\begin{equation*}
+u=u_b \text{ on $\partial \Omega$ \quad with $u_b=\sin (2\pi x) \sin (2\pi y)$}.
+\end{equation*}
+Under these conditions, the solution of \eqref{eq:problem1} and \eqref{eq:problem2} is given by
+\begin{equation}
+\label{benchm_sol3d-1d_}
+u=\sin (2\pi x) \sin (2\pi y),
+\quad
+%\ud=1+\exp(-z).
+\ud=\sin \left({\pi z}\right),
+\quad
+\lambda = \ld = 0.
+\end{equation}
+We show that \eqref{benchm_sol3d-1d_} is solution of \eqref{eq:problem2}. We notice that, regardless the coupling constraints, $u$ and $\ud$ are solutions of the following coupled problem
+\begin{subequations}\label{benchmark_}
+\begin{align}
+\label{benchm_3d_}
+-\Delta u=f \quad &\text{in $\Omega$},\\
+\label{benchm_1d_}
+-d_{zz}^2 \ud =\avrd{g} \quad &\text{on $\Lambda$},\\
+u=u_b \quad &\text{on $\partial \Omega$}.
+\end{align}
+\end{subequations}
+Using the integration by part formula and homogeneous
+boundary conditions on $\Omega$ and $\Lambda$, from \eqref{eq:problem2} we have
+\begin{align*}
+&-(\Delta u, v)_{L^2(\Omega)} - |{\cal D}|(d^2_{ss} \ud, \vd)_{L^2(\Lambda)} 
++ |{\cal D}|\langle \avrc{v}  - \vd, \ld \rangle_\Lambda
+\\
+\nonumber
+&\qquad\qquad= (f,v)_{L^2(\Omega)} + |{\cal D}| (\avrd{g},\vd)_{L^2(\Lambda)}
+\quad \forall v \in H^1_0(\Omega), \vd \in H^1(\Lambda).
+\end{align*}
+Since $\ld=0$ and the first of \eqref{benchm_sol3d-1d_} satisfies \eqref{benchm_3d_} and the second satisfies \eqref{benchm_1d_}, we have that
+\begin{align*}
+-(\Delta u, v)_{L^2(\Omega)} =  (f,v)_{L^2(\Omega)}, 
+\\
+-|{\partial \cal D}|(d^2_{ss} \ud, \vd)_{L^2(\Lambda)}  = |{\cal D}| (\avrd{g},\vd)_{L^2(\Lambda)}.
+\end{align*}
+Thus \eqref{benchm_sol3d-1d_} satisfy equations \eqref{eq:problem2a}, \eqref{eq:problem2b}.
+The fact that the solution satisfy \eqref{eq:problem2c} follows from \eqref{benchm_sol3d-1d_} and the definition of $\avrc{q}_2$.
 
+We can prove in a similar way that \eqref{benchm_sol3d-1d_}
+satisfies \eqref{eq:problem1}. Note in particular that $q_1$ is such that
+$\trace{u} - \ext{\ud} = q_1$ on $\Gamma$.\\
+}
 Let $\Omega=[0,1]^3$, $\Lambda=\{x=\tfrac{1}{2}\}\times \{y=\tfrac{1}{2}\} \times [0,1] $
 and $\Omega_{\ominus}=[\tfrac{1}{4}, \tfrac{3}{4}]\times [\tfrac{1}{4}, \tfrac{3}{4}]\times [0, 1]$.
 %Finally we let $\DD$ be the cross section of the virtual interface $\Gamma=\partial \Sigma$.
@@ -1205,7 +1272,7 @@ with $n_{\oplus,z}$ the $z-$component of the normal unit vector to $\Gamma$.
 % - \Delta \uf &= g  && \text{ in } \Omega_{\ominus},\\
 % -\nabla \uf \cdot \nn_{\ominus} &= -\nabla \up \cdot \nn_{\ominus}  && \text{ on } \Gamma,\\
 % \uf - \up &= q_i  && \text{ on }  \Gamma,\\
-% \up &= \paolo{u_b} && \text{ on } \partial \Omega,
+% \up &= \paoloold{u_b} && \text{ on } \partial \Omega,
 % \end{align}
 % \end{subequations}
 % Therefore the reduced problems in \eqref{eq:problem1} and
@@ -1244,7 +1311,7 @@ with $n_{\oplus,z}$ the $z-$component of the normal unit vector to $\Gamma$.
 % \end{align}
 % \end{subequations}
 
-\paolo{We prove that the solution of \eqref{benchmark} is equivalent to the one of \eqref{eq:problem2}.}
+\paoloold{We prove that the solution of \eqref{benchmark} is equivalent to the one of \eqref{eq:problem2}.}
 Precisely, we prove that \eqref{benchm_sol3d-1d} is the solution of
 \eqref{eq:problem2}. Using the integration by part formula and homogeneous
 boundary conditions on $\Omega$ and $\Lambda$, from \eqref{eq:problem2} we have

@@ -1,6 +1,12 @@
 \documentclass{article}
 \usepackage{fullpage}
 \newenvironment{answer}{\begin{paragraph}{Answer:}}{\end{paragraph}\vspace{0.5cm}}
+\usepackage{xcolor}
+
+\newcommand{\fede}[1]{{\color{green!55!blue}#1}}
+\newcommand{\kent}[1]{{\color{red}#1}}
+\newcommand{\miro}[1]{{\color{blue}#1}}
+\newcommand{\paolo}[1]{{\color{magenta}#1}}
 
 \title
 { Reply to the reviews of the manuscript:\\
@@ -29,14 +35,23 @@ The result presented in the paper are interesting and to the best of my knowledg
 Remarks:
 \begin{enumerate}
     \item Please explain what is unknown $\lambda$ in problem (1.1). I suggest including part of the Appendix from supplementary materials where $\lambda$ is introduces as a Langrange multiplier.
-    \item Sectio 2, page 2 - $\Omega$ is open? Maybe replace "in detail" with "More precisely".
+    \item Sectio 2, page 2 - $\Omega$ is open? Maybe replace "in detail" with "More precisely".\\
+    \fede{The standard definition of domain is used, i.e. $\Omega$ is a open and connected set. For clarity, the definition has been added to the manuscript. }
     \item P. 3. - Please provide references for $H^{1/2}_{00}$ and interpolation of weighted spaces. In addition, it would be instructive to provide an example for Riesz map S.
-    \item p.4. (l145-l50) I suggest rewriting this paragraph. First, please refer to the exact result that you are using (from [22] or [28]) and define or refer to definition of "domains having small geometric details". Second, it is not necessary to define operator norm, but enough to say that norm of $H_{\Omega}$ is uniformly bounded.
-    \item p4 l152. Is $H_{\Omega}$ harmonic extension? If so, please state this in previous paragraph.
+    \item p.4. (l145-l50) I suggest rewriting this paragraph. First, please refer to the exact result that you are using (from [22] or [28]) and define or refer to definition of "domains having small geometric details". Second, it is not necessary to define operator norm, but enough to say that norm of $H_{\Omega}$ is uniformly bounded.\\
+    \fede{We thank the reviewer for the suggestion. In the revised manuscript, the extension operator has been replaced by the harmonic extension, therefore the reference to [28] is not needed.\\
+    WHAT DOES THE SECOND PART MEAN? }
+    \item p4 l152. Is $H_{\Omega}$ harmonic extension? If so, please state this in previous paragraph.\\
+    \fede{Yes, the definition has been added in the revised manuscript.}
     \item p8 l177-l184 - I suggest adding a figure that illustrate the assumptions on the conforming mesh.
-    \item p9 (4.4) Reference for these properties of $SZ_h$
-    \item p9, after (4.5) Do you mean inverse Poincare inequality?
-    \item In statement of problem (5.1) include $\lambda$ and then say that one can construct explicit solution with $\lambda=0$.
+    \item p9 (4.4) Reference for these properties of $SZ_h$\\
+    \fede{The reference has been added in the revised manuscript.\\
+    
+    CHECK: LEMMA 1.130 FROM ERN AND GUERMOND. (4.4) IS OBTAINED FROM (i) WITH l=1, p=2, m=1. (4.5) IS OBTAINED FROM (ii) WITH l=1, p=2, m=0}
+    \item p9, after (4.5) Do you mean inverse Poincare inequality?\\
+    \fede{Yes it is a discrete inverse Poincare inequality. We adopt the terminology used in [Ern and Guermond, Ch. 1.7] where these inequalities are more in general addressed as inverse inequalities. }
+    \item In statement of problem (5.1) include $\lambda$ and then say that one can construct explicit solution with $\lambda=0$.\\
+    \fede{The entire paragraph has been revised. Notice that $\lambda$ cannot be included in problem (5.1) because (5.1) is not the strong formulation of problems (2.2) and (2.4). It is only an auxiliary problem used to fabricate the weak solution of problems (2.2) and (2.4).}
 \end{enumerate}
 
 \section*{Reviewer \#2}

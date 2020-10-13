@@ -12,8 +12,8 @@ import numpy as np
 def setup_mms(params):
     '''Manufactured solution from notes'''
     
-    u3d = Expression('sin(2*pi*x[0])*sin(2*pi*x[1])', degree=4)
-    f3d = Expression('(8*pi*pi)*sin(2*pi*x[0])*sin(2*pi*x[1])', degree=4)
+    u3d = Expression('sin(4*pi*x[0])*sin(4*pi*x[1])', degree=4)
+    f3d = Expression('(32*pi*pi)*sin(4*pi*x[0])*sin(4*pi*x[1])', degree=4)
 
     f1d = Expression('pi*pi*sin(pi*x[2])', degree=4)
     u1d = Expression('sin(pi*x[2])', degree=4)
@@ -43,9 +43,11 @@ def setup_problem(n, mms, params):
     u3, u1, p = map(TrialFunction, W)
     v3, v1, q = map(TestFunction, W)
 
+    assert params.radius in (0.25, 0.5)
+
     # The size of averaging square is 0.5
-    alen = 0.5
-    avg_shape = SquareRim(lambda x: np.array([0.25, 0.25, x[-1]]), degree=10)
+    alen = params.radius
+    avg_shape = SquareRim(lambda x: np.array([alen/2, alen/2, x[-1]]), degree=10)
 
     # Setup bounding curve
     Pi_u3, Pi_v3 = (Average(f, gamma, avg_shape) for f in (u3, v3))
@@ -117,7 +119,7 @@ def setup_error_monitor(mms_data, params):
         e = np.sqrt(e.inner(Hs*e))
         # On big meshes constructing the error for interpolation space
         # is expensive so wi reduce order then
-        degree_rise = 1 if u3h.function_space().dim() < 2E6 else 0
+        degree_rise = 1 if u3h.function_space().dim() < 3E6 else 0
         # NOTE: the error is interpolated to P2 disc, or P1 disc
         return (H1_norm(u3, u3h, degree_rise=degree_rise),
                 H1_norm(u1, u1h),  
@@ -137,7 +139,9 @@ def cannonical_inner_product(W, mms, params, AA):
     V1_inner = AA[1][1]
 
     bcs = DirichletBC(Q, Constant(0), 'on_boundary')
-    Q_inner = matrix_fromHs(Hs0Norm(Q, s=-0.5, bcs=bcs))
+    # This is what we reported in the paper
+    Q_inner = matrix_fromHs(Hs0Norm(Q, s=-0.5, kappa=Constant(1.0),
+                                    bcs=bcs))
 
     B = block_diag_mat([V3_inner, V1_inner, Q_inner])
 
@@ -207,4 +211,4 @@ W_RIESZ_MAPS = {0: cannonical_riesz_map,
                 2: just_identity}
 
 # How is the problem parametrized
-PARAMETERS = ()
+PARAMETERS = ('radius', )
